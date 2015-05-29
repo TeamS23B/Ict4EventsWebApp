@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Check.aspx" />
+    <Content Include="Login.aspx" />
     <Content Include="scripts\jquery-1.11.2.min.map" />
     <Content Include="newPost.json" />
     <None Include="Web.Debug.config">
@@ -79,6 +80,7 @@
     <Content Include="scripts\jquery-1.11.2.min.js" />
     <Content Include="scripts\ui.js" />
     <Content Include="styles\CheckBetaling.css" />
+    <Content Include="styles\Login.css" />
     <Content Include="styles\MateriaalVerhuur.css" />
     <Content Include="styles\reset.css" />
     <Content Include="styles\SMSStyle.css" />
@@ -95,6 +97,13 @@
     </Compile>
     <Compile Include="Check.aspx.designer.cs">
       <DependentUpon>Check.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="MateriaalVerhuur.aspx.cs">
       <DependentUpon>MateriaalVerhuur.aspx</DependentUpon>
