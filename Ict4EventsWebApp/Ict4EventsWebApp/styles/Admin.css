@@ -1,0 +1,37 @@
+﻿#form1 {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 62px;
+    background: #fff;
+    box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.3);
+    padding: 6px;
+}
+
+#form1 select{
+    width:100px;
+    display:block;
+}
+
+#form1 h1{
+    font-size: 20px;
+    text-align:center;
+}
+
+.leftSettings {
+    float: left;
+    width: 50%;
+}
+
+.rightSettings {
+    float: right;
+    width: 50%;
+}
+
+.rightSettings span{
+    margin-top:10px;
+}
+
+.debug {
+    clear:both;
+}
