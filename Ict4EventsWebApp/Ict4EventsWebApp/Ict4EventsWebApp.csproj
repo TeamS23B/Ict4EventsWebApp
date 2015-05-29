@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin.aspx" />
     <Content Include="scripts\jquery-1.11.2.min.map" />
     <Content Include="newPost.json" />
     <None Include="Web.Debug.config">
@@ -77,6 +78,7 @@
     <Content Include="scripts\jquery-1.11.2.js" />
     <Content Include="scripts\jquery-1.11.2.min.js" />
     <Content Include="scripts\ui.js" />
+    <Content Include="styles\Admin.css" />
     <Content Include="styles\MateriaalVerhuur.css" />
     <Content Include="styles\reset.css" />
     <Content Include="styles\SMSStyle.css" />
@@ -87,6 +89,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin.aspx.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin.aspx.designer.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MateriaalVerhuur.aspx.cs">
       <DependentUpon>MateriaalVerhuur.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
