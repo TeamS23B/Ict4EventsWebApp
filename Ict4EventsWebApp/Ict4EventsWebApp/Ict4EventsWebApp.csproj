@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Check.aspx" />
+    <Content Include="images\Camping.png" />
     <Content Include="Login.aspx" />
     <Content Include="ReservationMaterial.aspx" />
     <Content Include="scripts\jquery-1.11.2.min.map" />

@@ -17,19 +17,19 @@
     <title></title>
 </head>
 <body>
-    <div id="topBar">
+    <div id="topBar" >
 		<div id="menuButton">
 		    <img src="images/Menu.png" alt="Menu"/>
 		</div>
 	</div>
     <div id=" "></div>
-	<div id="leftBar">
+	<div id="leftBar" >
 		<input type="text" id="search" placeholder="Search..."/><input type="button" id="searchButton" value=" "/>
 		<div class="leftBarButton" id="btAddPost">Add A Post</div>
 	</div>
     <div id="content">
         <form id="form1" runat="server">
-            <div id="top">
+            <div class="top">
                 <asp:Label  runat="server" Font-Bold="True">Reservering materiaal</asp:Label>
             </div>
         <div class="left">
@@ -65,8 +65,35 @@
             <asp:Button ID="btRMaterialTerug" runat="server" Text="Terug"/>
             <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder"/>
         </div>
+            <br />
+            <br />
+            <div class="top">
+                <asp:Label  runat="server" Font-Bold="True">Totaaloverzicht</asp:Label>
+            </div>
+            <div id="Confirmation">
+                <div class="textmiddle margenperfect">Gereserveerde plaasten</div>
+                <div>
+                    <asp:ListBox ID="ConfirmLocation" runat="server"></asp:ListBox>
+                </div>
+                <div class="textmiddle margenperfect">Gereserveerde locaties</div>
+                <div>
+                    <asp:ListBox ID="ConfrimMaterial" runat="server"></asp:ListBox>
+                </div>
+                <div class="margenperfect">
+                <asp:Label ID="ReserveringDetails" class="ScanInfo" runat="server">Totale bedrag: &#8364;0,-<br/></asp:Label>
+                </div>
+            </div>
+
+            <div>
+            <asp:Button ID="btCMaterialTerug" runat="server" Text="Terug"/>
+            <asp:Button ID="btCMaterialVerder" runat="server" Text="Verder"/>
+            </div>
 
         </form>
+        <div id="fullscreen">
+            <a href="#">
+                <img class="displayed" src="images/Camping.png"  alt="Alternate Text" ismap/></a>
+            </div>
     </div>
 </body>
 </html>
