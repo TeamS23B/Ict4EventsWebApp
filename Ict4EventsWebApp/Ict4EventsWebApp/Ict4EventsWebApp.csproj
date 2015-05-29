@@ -73,9 +73,15 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin.aspx" />
+    <Content Include="Check.aspx" />
+    <Content Include="images\Camping.png" />
+    <Content Include="Login.aspx" />
+    <Content Include="ReservationMaterial.aspx" />
     <Content Include="Global.asax" />
     <Content Include="scripts\jquery-1.11.2.min.map" />
     <Content Include="newPost.json" />
+    <Content Include="RegistrationCustomerInfo.aspx" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -95,7 +101,10 @@
     <Content Include="scripts\jquery-1.11.2.js" />
     <Content Include="scripts\jquery-1.11.2.min.js" />
     <Content Include="scripts\ui.js" />
+    <Content Include="styles\CheckBetaling.css" />
+    <Content Include="styles\Login.css" />
     <Content Include="styles\MateriaalVerhuur.css" />
+    <Content Include="styles\RegistrationCustomerInfo.css" />
     <Content Include="styles\reset.css" />
     <Content Include="styles\SMSStyle.css" />
     <Content Include="styles\style.css" />
@@ -105,6 +114,27 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin.aspx.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin.aspx.designer.cs">
+      <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Check.aspx.cs">
+      <DependentUpon>Check.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Check.aspx.designer.cs">
+      <DependentUpon>Check.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -118,6 +148,20 @@
     </Compile>
     <Compile Include="Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReservationMaterial.aspx.cs">
+      <DependentUpon>ReservationMaterial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReservationMaterial.aspx.designer.cs">
+      <DependentUpon>ReservationMaterial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistrationCustomerInfo.aspx.cs">
+      <DependentUpon>RegistrationCustomerInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistrationCustomerInfo.aspx.designer.cs">
+      <DependentUpon>RegistrationCustomerInfo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SmsController.cs" />
   </ItemGroup>
   <ItemGroup>
