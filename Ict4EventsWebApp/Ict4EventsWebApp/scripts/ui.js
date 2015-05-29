@@ -12,3 +12,13 @@ $(document).ready(function(){
 		}
 	});
 });
+
+keepStadyBegin = function(height) {
+    $('body').append('<div id="scroller" style="top:' + ($("body").scrollTop() + height) + 'px; position: absolute"></div>');
+};
+
+keepStadyEnd = function (appendedHeight) {
+    $("#scroller").css("top","+="+appendedHeight+"px");
+    window.location.href = "#scroller";
+    $("#scroller").remove();
+};

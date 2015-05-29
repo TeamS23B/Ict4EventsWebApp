@@ -1,27 +1,34 @@
-/// <reference path="../typings/jquery/jquery.d.ts"/>
-/// <reference path="jquery-1.11.2.min.js"/>
 function loadNewPosts(){
-	$.getJSON("newPost.json",function (data,textStatus) {
-		console.log(textStatus);
-		$.each(data,function(key,value){
-			$("#postSpacerTop").after("<div class=\"post\">"+
-				"<div class=\"title\">"+value[0].title+"</div>"+
-				"<div class=\"username\">"+value[0].uploader+"</div>"+
-				"<div class=\"content\">"+value[0].content+"</div>"+
-				"<div class=\"likeFlag\">Likes: "+value[0].likes+" flags"+value[0].flags+"</div>"+
-			"</div>");
-		});
-	});
+    $.getJSON("/api/Sms/NewPosts", function (data, textStatus) {
+        console.log(textStatus);
+        $.each(data, function (key, value) {
+		    console.log(value);
+		    var totalHeight = 0;
+            keepStadyBegin(0);
+		    $.each(value, function (k, post) {
+		        var p = $("<div class=\"post\">" +
+				"<div class=\"title\">" + post.Title + "</div>" +
+				"<div class=\"username\">" + post.Uploader + "</div>" +
+				"<div class=\"content\">" + post.Content + "</div>" +
+				"<div class=\"likeFlag\">Likes: " + post.Likes + " Flags: " + post.Flags + "</div>" +
+			    "</div>");
+		        $("#postSpacerTop").after(p);
+		        totalHeight += p.height()+32;
+		    });
+            console.log(totalHeight);
+            keepStadyEnd(totalHeight);
+        });
+    });
 }
 
 $(document).ready(function(){
 	$("#btAddPost").click(function () {
 		loadNewPosts();
 	});
-	$(".addComment").click(function(){
-		if(!$(this).children("input").length)
-		$(this).html('<input type="text" class="commentInput" placeholder="type a comment"/>');
-		console.log($(".commentInput"));
-		$(".commentInput").focus();
+	$(".addComment").click(function() {
+	    if (!$(this).children("input").length) {
+	        $(this).html('<input type="text" class="commentInput" placeholder="type a comment"/>');
+	        $(".commentInput").focus();
+	    }
 	});
 });
