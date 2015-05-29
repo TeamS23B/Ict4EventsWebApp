@@ -63,6 +63,7 @@
     <Content Include="ReservationMaterial.aspx" />
     <Content Include="scripts\jquery-1.11.2.min.map" />
     <Content Include="newPost.json" />
+    <Content Include="RegistrationCustomerInfo.aspx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -84,6 +85,7 @@
     <Content Include="styles\CheckBetaling.css" />
     <Content Include="styles\Login.css" />
     <Content Include="styles\MateriaalVerhuur.css" />
+    <Content Include="styles\RegistrationCustomerInfo.css" />
     <Content Include="styles\reset.css" />
     <Content Include="styles\SMSStyle.css" />
     <Content Include="styles\style.css" />
@@ -120,6 +122,13 @@
     </Compile>
     <Compile Include="ReservationMaterial.aspx.designer.cs">
       <DependentUpon>ReservationMaterial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistrationCustomerInfo.aspx.cs">
+      <DependentUpon>RegistrationCustomerInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistrationCustomerInfo.aspx.designer.cs">
+      <DependentUpon>RegistrationCustomerInfo.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <PropertyGroup>

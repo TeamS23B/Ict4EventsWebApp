@@ -9,11 +9,7 @@
     <link href="styles/style.css" rel="stylesheet" />
     <script src="scripts/jquery-1.11.2.min.js"></script>
     <script src="scripts/ui.js"></script>
-    <script type="text/javascript">
-        function onDateChange(sender, selectedDate) {
-            alert("You've selected \n" + selectedDate.toString());
-        }
-    </script>
+    <script src="scripts/Login.js"></script>
     <title></title>
 </head>
 <body>
@@ -29,11 +25,13 @@
     <div id="content">
         <form id="form1" runat="server">
             <asp:Label ID="lblUsername" runat="server" Text="Gebruikersnaam" CssClass="lblUsername" Font-Size="X-Large"></asp:Label>
-            <asp:TextBox ID="tbUsername" runat="server" CssClass ="tbUsername" Height="20px" Width="200px"></asp:TextBox>
+            <asp:TextBox ID="tbUsername" runat="server" CssClass ="tbUsername" Height="20px" Width="200px" placeholder="Vul gebruikersnaam in"></asp:TextBox>
             <asp:Label ID="lblPassword" runat="server" Text="Wachtwoord" CssClass="lblPassword" Font-Size="X-Large"></asp:Label>
-            <asp:TextBox ID="tbPassword" runat="server" CssClass ="tbPassword" Height="20px" Width="200px"></asp:TextBox>
+            <asp:TextBox ID="tbPassword" runat="server" CssClass ="tbPassword" Height="20px" Width="200px" placeholder="Vul wachtwoord in"></asp:TextBox>
+            <div id="ButtonMiddle">
             <asp:Button ID="BtnLogin" runat="server" Text="Login" CssClass="BtnLog"/>
             <asp:Button ID="BtnLogout" runat="server" Text="Logout" CssClass="BtnLog"/>
+            </div>
         <div id="clearDiv"></div>
         </form>
     </div>
