@@ -1,0 +1,73 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ReservationMaterial.aspx.cs" Inherits="Ict4EventsWebApp.ReservationMaterial" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <link href="styles/reset.css" rel="stylesheet" />
+    <link href="styles/style.css" rel="stylesheet" />
+    <link href="styles/ReservationMaterial.css" rel="stylesheet" />
+    <script src="scripts/jquery-1.11.2.min.js"></script>
+    <script src="scripts/ui.js"></script>
+    <script type="text/javascript">
+        function onDateChange(sender, selectedDate) {
+            alert("You've selected \n" + selectedDate.toString());
+        }
+    </script>
+    <title></title>
+</head>
+<body>
+    <div id="topBar">
+		<div id="menuButton">
+		    <img src="images/Menu.png" alt="Menu"/>
+		</div>
+	</div>
+    <div id=" "></div>
+	<div id="leftBar">
+		<input type="text" id="search" placeholder="Search..."/><input type="button" id="searchButton" value=" "/>
+		<div class="leftBarButton" id="btAddPost">Add A Post</div>
+	</div>
+    <div id="content">
+        <form id="form1" runat="server">
+            <div id="top">
+                <asp:Label  runat="server" Font-Bold="True">Reservering materiaal</asp:Label>
+            </div>
+        <div class="left">
+            <div class="textmiddle">
+                <asp:Label  runat="server">Wat je wilt reserveren</asp:Label>
+            </div>
+            <asp:ListBox ID="lbMaterialToReserve" runat="server"></asp:ListBox>
+            <div class="ScanInfo">
+            <asp:Label ID="Details" runat="server">Totale bedrag: &#8364;0,-<br/></asp:Label>
+            </div>
+            
+        </div>
+        <div class="middle">
+            <div>
+                <div class="btmiddle">
+                <asp:Button ID="btMaterialAdd" runat="server" Text="<<Toevoegen"/>
+                </div>
+                <div class="btmiddle">
+                <asp:Button ID="btMaterialDelete" runat="server" Text="Verwijderen>>"/>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="textmiddle">
+            <asp:Label runat="server">Beschikbaar materiaal</asp:Label>
+            </div>
+            <asp:ListBox ID="lbavailableMaterial" runat="server"></asp:ListBox>
+            
+        </div>
+        <div id="clearDiv"></div>
+        
+        <div>
+            <asp:Button ID="btRMaterialTerug" runat="server" Text="Terug"/>
+            <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder"/>
+        </div>
+
+        </form>
+    </div>
+</body>
+</html>
+
