@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div.newCSS {
+    width: 200px;
+    height: 100px;
+    background-color: white;
+    display:table-cell;
+    vertical-align:middle;
+    text-align: center;
+    border: 1px solid black;
+    
+}
+
+#transform2D:hover{
+	-webkit-transform: rotate(200deg);
+}
+
+#transform2DA:hover{
+	-webkit-animation-name: extransform2D;
+    -webkit-animation-duration: 10s;
+    -webkit-animation-iteration-count: 1;
+}
+
+@-webkit-keyframes extransform2D{
+	25%{-webkit-transform: rotate(360deg);}
+	50%{-webkit-transform: skewY(25deg);}
+	75%{-webkit-transform: skewX(25deg);}
+	100%{-webkit-transform: scale(.6,.6)}
+}
+
+#transform3D:hover{
+	-webkit-transform: rotateY(50deg);
+}
+
+#transform3DA:hover{
+	-webkit-animation-name: extransform3D;
+    -webkit-animation-duration: 4s;
+}
+
+@-webkit-keyframes extransform3D{
+	100%{-webkit-transform: rotateY(360deg);}
+}
+
+
+#transition:hover{
+	-webkit-transition: width 3s;
+	width: 300px;
+}
+
+#transitionTransform:hover{
+	-webkit-transition: -webkit-transform 4s, background-color 4s;
+	-webkit-transform: rotateY(180deg);
+	background-color: green;
+}
+
+
+#animation{
+	-webkit-animation-name: animations;
+    -webkit-animation-duration: 10s;
+    -webkit-animation-iteration-count:infinite;
+}
+@-webkit-keyframes animations{
+	0% {-webkit-transform: rotate(10deg);}
+
+	25% {-webkit-transform: rotate(360deg);}
+
+	50% {-webkit-transform: scale(1.5,1.5);}
+    75%{-webkit-transform: scale(1,1);}
+    100%{-webkit-transform: rotateY(360deg);}
+}
+
+#animation:hover{
+	-webkit-animation-play-state: paused;
+}
+
+#Text {
+    -webkit-column-count: 3;
+}
+#Text:hover{
+	-webkit-column-count: 2;	
+}
+
+
+</style>
+</head>
+<body>
+<p>Transform 2D</p>
+<div class="newCSS" id="transform2D">Hello World</div>
+<div class="newCSS" id="transform2DA">Hello World</div><br>
+<p>Transform 3D</p>
+<div class="newCSS" id="transform3D">Hello World</div>
+<div class="newCSS" id="transform3DA">Hello World</div><br>
+<p>Transition</p>
+<div class="newCSS" id="transition">Hello World</div><br>
+<p>Transition + Transform 2D&3D</p>
+<div class="newCSS" id="transitionTransform">Hello World</div><br>
+<p>Animation  Transform 2D&3D</p><br>
+<div class="newCSS" id="animation">Hello World</div><br>
+
+
+<P>Colums</P>
+<br>
+<div id="Text">
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius.
+</div>
+
+</body>
+</html>

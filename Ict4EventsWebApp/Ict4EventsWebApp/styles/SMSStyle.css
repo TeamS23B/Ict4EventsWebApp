@@ -1,0 +1,85 @@
+
+/*post*/
+
+#postSpacerTop{
+	height: 68px;
+}
+
+#content > .post ~ .post{
+	margin-top: 32px;
+}
+
+.post{
+	width: 500px;
+	background-color: #fff;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 0px 5px 10px 2px rgba(0,0,0,0.3);	
+}
+
+.title{
+	font-size: x-large;
+	font-weight: bold;
+	float: left;
+	margin-left: 6px;
+	margin-top: 6px;
+}
+
+.username{
+	font-size: x-large;
+	font-weight: bold;
+	float: right;
+	margin-right: 6px;
+	margin-top: 6px;
+}
+
+.content{
+	clear: both;
+	padding: 6px;
+}
+
+.likeFlag{
+	height: 26px;
+	background-color: #1C8566;
+	margin-bottom: 0px;
+	color: #fff;
+	line-height: 26px;
+	font-size: 16px;
+	padding-left: 6px;
+}
+
+.video video{
+	width: 100%;
+}
+
+/*Comments*/
+.comments{
+	width: 450px;
+	background-color: #DDD;
+	padding-left: 6px;
+	padding-right: 6px;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 0px 5px 10px 2px rgba(0,0,0,0.3);	
+}
+.comment{
+	width: 100%;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+.commentUsername{
+	font-size:18px;
+	font-weight: bolder;
+	float: left;
+}
+
+.commentText{
+	float: left;
+}
+.comment:after{
+	clear: both;
+}
+
+.commentInput{
+	width: 100%;
+	border: none;
+}

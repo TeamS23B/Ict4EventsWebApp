@@ -57,6 +57,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="scripts\jquery-1.11.2.min.map" />
+    <Content Include="newPost.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -65,9 +67,33 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Examples CSS.html" />
+    <Content Include="images\login.jpg" />
+    <Content Include="images\Menu.png" />
+    <Content Include="index.html" />
+    <Content Include="login.html" />
+    <Content Include="MateriaalVerhuur.aspx" />
+    <Content Include="scripts\index.js" />
+    <Content Include="scripts\jquery-1.11.2.js" />
+    <Content Include="scripts\jquery-1.11.2.min.js" />
+    <Content Include="scripts\ui.js" />
+    <Content Include="styles\MateriaalVerhuur.css" />
+    <Content Include="styles\reset.css" />
+    <Content Include="styles\SMSStyle.css" />
+    <Content Include="styles\style.css" />
+    <Content Include="videos\Deez Nuts.mp4" />
+    <Content Include="videos\Flute.mp4" />
+    <Content Include="videos\Sad.mp4" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MateriaalVerhuur.aspx.cs">
+      <DependentUpon>MateriaalVerhuur.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MateriaalVerhuur.aspx.designer.cs">
+      <DependentUpon>MateriaalVerhuur.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup>
