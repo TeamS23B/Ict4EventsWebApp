@@ -120,6 +120,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReservationMaterial.aspx.cs">
       <DependentUpon>ReservationMaterial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ReservationMaterial.aspx.designer.cs">
       <DependentUpon>ReservationMaterial.aspx</DependentUpon>
