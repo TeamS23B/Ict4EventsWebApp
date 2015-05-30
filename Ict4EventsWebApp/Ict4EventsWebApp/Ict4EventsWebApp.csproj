@@ -86,6 +86,7 @@
     <Content Include="styles\Login.css" />
     <Content Include="styles\MateriaalVerhuur.css" />
     <Content Include="styles\RegistrationCustomerInfo.css" />
+    <Content Include="styles\ReservationMaterial.css" />
     <Content Include="styles\reset.css" />
     <Content Include="styles\SMSStyle.css" />
     <Content Include="styles\style.css" />
