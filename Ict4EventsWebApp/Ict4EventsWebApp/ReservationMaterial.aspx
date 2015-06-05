@@ -9,6 +9,17 @@
     <link href="styles/ReservationMaterial.css" rel="stylesheet" />
     <script src="scripts/jquery-1.11.2.min.js"></script>
     <script src="scripts/ui.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#showImage").click(function() {
+                $("#fullscreen").css("visibility","visible");
+            });
+            $("#fullscreen").click(function() {
+                $(this).css("visibility", "hidden");
+                //todo find out xy location on image
+            });
+        });
+    </script>
     <title></title>
 </head>
 <body>
@@ -24,6 +35,7 @@
     </div>
     <div id="content">
         <form id="form1" runat="server">
+            <div class="frm">
             <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Reservering materiaal</asp:Label>
             </div>
@@ -60,8 +72,8 @@
                 <asp:Button ID="btRMaterialTerug" runat="server" Text="Terug" />
                 <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder" />
             </div>
-            <br />
-            <br />
+            </div>
+            <div class="frm">
             <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Totaaloverzicht</asp:Label>
             </div>
@@ -83,11 +95,16 @@
                 <asp:Button ID="btCMaterialTerug" runat="server" Text="Terug" />
                 <asp:Button ID="btCMaterialVerder" runat="server" Text="Verder" />
             </div>
-
+            </div>
+            <div class="frm">
+                <div class="top">
+                <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
+                    <img id="showImage" alt="Camping" src="images/Camping.png" width="200px"/>
+                </div>
+            </div>
         </form>
         <div id="fullscreen">
-            <a href="#">
-                <img class="displayed" src="images/Camping.png" alt="Alternate Text" ismap /></a>
+           <img class="displayed" src="images/Camping.png" alt="Camping" />
         </div>
     </div>
 </body>
