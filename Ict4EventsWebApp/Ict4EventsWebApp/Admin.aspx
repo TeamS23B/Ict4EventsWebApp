@@ -23,7 +23,7 @@
     </div>
     <div id="content">
         <form id="form1" runat="server">
-            <div class="makeEvent">
+            <div id="makeEvent" class="subFrm">
                 <h1>Event aanmaken</h1>
                 <div class="leftSettings">
                     <asp:Label ID="lblNaam" runat="server" Text="Naam"></asp:Label>
@@ -40,8 +40,9 @@
                     <asp:Label ID="lblEndDate" runat="server" Text="Einddatum"></asp:Label>
                     <asp:Calendar ID="clEndDate" runat="server"></asp:Calendar>
                 </div>
+                <div class="debug"></div>
             </div>
-            <div class="mngUsers">
+            <div id="mngUsers" class="subFrm">
                 <h1>Beheer gebruikers</h1>
                 <div class="Users">
                     <asp:Label ID="lblUsers" runat="server" Text="Gebruikers"></asp:Label>
@@ -53,14 +54,15 @@
                     <asp:Label ID="lblGroupMng" runat="server" Text="De groepsleider is:"></asp:Label>
                     <asp:Label ID="lblPaid" runat="server" Text="De groepsleider heeft betaald"></asp:Label>
                 </div>
-                <div class="rentedMat">
+                <div id="rentedMat">
                     <asp:CheckBox ID="cbBlock" runat="server" />
                     <asp:Label ID="lblBlock" runat="server" Text="Gebruiker blokkeren?" AssociatedControlID="cbBlock"></asp:Label>
                     <asp:Label ID="lblRentedMat" runat="server" Text="Gehuurde materialen"></asp:Label>
                     <asp:ListBox ID="lbRentedMat" runat="server"></asp:ListBox>
                 </div>
+                <div class="debug"></div>
             </div>
-            <div class="matMng">
+            <div id="matMng" class="subFrm">
                 <div class="matList">
                     <asp:Label ID="lblMats" runat="server" Text="Materialen"></asp:Label>
                     <asp:ListBox ID="lbMaterials" runat="server"></asp:ListBox>
@@ -81,8 +83,9 @@
                     <asp:Button ID="btnUpdate" runat="server" Text="Product bijwerken" />
                     <asp:Button ID="btnDelete" runat="server" Text="Item verwijderen" />
                 </div>
+                <div class="debug"></div>
             </div>
-            <div class="debug"></div>
+
         </form>
     </div>
 </body>

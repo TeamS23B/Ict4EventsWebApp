@@ -1,19 +1,24 @@
-﻿#form1 {
+﻿.subFrm {
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 62px;
     background: #fff;
+    -webkit-box-shadow: 0px 5px 10px 2px #000000;
+    -webkit-box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.3);
+    -ms-box-shadow: 0px 5px 10px 2px #000000;
+    -ms-box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 5px 10px 2px #000000;
     box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.3);
     padding: 6px;
 }
 
-#form1 select{
+.subFrm select{
     width:100px;
     display:block;
 }
 
-#form1 h1{
+.subFrm h1{
     font-size: 20px;
     text-align:center;
 }
