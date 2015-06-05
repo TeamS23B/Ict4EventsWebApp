@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Ict4EventsWebApp
 {
@@ -18,11 +21,29 @@ namespace Ict4EventsWebApp
         {
             if (Authentication.Instance.IsAuthenticated(tbUsername.Text, tbPassword.Text))
             {
-                lblUsername.Text = "Success!";
+                Session["LoggedIn"] = true;
+                Session["Username"] = tbUsername.Text;
+                Session["Permissions"] = 0;
+                using (var dbcon = OracleClientFactory.Instance.CreateConnection())
+                {
+                    dbcon.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    dbcon.Open();
+                    var com = OracleClientFactory.Instance.CreateCommand();
+                    com.Connection = dbcon;
+                    com.CommandText = "SELECT Permissie FROM account WHERE gebruikersnaam = :1";
+                    var param = com.CreateParameter();
+                    param.DbType = DbType.AnsiString;
+                    param.Direction= ParameterDirection.Input;
+                    param.ParameterName = "Gebruikersnaam";
+                    param.Value = tbUsername.Text;
+                    com.Parameters.Add(param);
+                    Session["Permissions"] = (int)com.ExecuteScalar();
+                    com.Dispose();
+                }
             }
             else
             {
-                lblUsername.Text = "False!";
+                lblUsername.Text = "Kon niet inloggen!";
             }
         }
     }
