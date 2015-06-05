@@ -30,7 +30,6 @@
             <asp:TextBox ID="tbPassword" runat="server" CssClass ="tbPassword" Height="20px" Width="200px" placeholder="Vul wachtwoord in"></asp:TextBox>
             <div id="ButtonMiddle">
             <asp:Button ID="BtnLogin" runat="server" Text="Login" CssClass="BtnLog" OnClick="BtnLogin_Click"/>
-            <asp:Button ID="BtnLogout" runat="server" Text="Logout" CssClass="BtnLog"/>
             </div>
         <div id="clearDiv"></div>
         </form>
