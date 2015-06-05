@@ -23,6 +23,7 @@
 	</div>
     <div id="content">
         <form id="form1" runat="server">
+            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
             <asp:Label ID="lblBarcodeText" runat="server" Text="Barcode:" CssClass="BarcodeText" Font-Size="X-Large"></asp:Label>
             <asp:Label ID="lblBarcodeObject" runat="server" Text="Test 1233443" Font-Bold="True" Font-Size="XX-Large" Width="300px" CssClass="BarcodeObject"></asp:Label>
             <asp:Label ID="lblBetaalstatusText" runat="server" Text="Betaalstatus" CssClass="BetaalstatusText" Font-Size="X-Large"></asp:Label>
