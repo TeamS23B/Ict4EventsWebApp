@@ -1,6 +1,5 @@
-
 /*post*/
-
+/*
 #postSpacerTop{
 	height: 68px;
 }
@@ -52,7 +51,7 @@
 	width: 100%;
 }
 
-/*Comments*/
+/*Comments*\/
 .comments{
 	width: 450px;
 	background-color: #DDD;
@@ -82,4 +81,4 @@
 .commentInput{
 	width: 100%;
 	border: none;
-}
+}*/
