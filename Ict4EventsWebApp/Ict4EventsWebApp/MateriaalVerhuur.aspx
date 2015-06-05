@@ -9,11 +9,6 @@
     <link href="styles/MateriaalVerhuur.css" rel="stylesheet" />
     <script src="scripts/jquery-1.11.2.min.js"></script>
     <script src="scripts/ui.js"></script>
-    <script type="text/javascript">
-        function onDateChange(sender, selectedDate) {
-            alert("You've selected \n" + selectedDate.toString());
-        }
-    </script>
     <title></title>
 </head>
 <body>

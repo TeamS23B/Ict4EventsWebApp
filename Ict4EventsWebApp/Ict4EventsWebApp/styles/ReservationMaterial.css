@@ -1,4 +1,4 @@
-﻿#form1 {
+﻿.frm {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -109,4 +109,16 @@ IMG.displayed {
 .margenperfect{
     margin-bottom: 6px;
     margin-top: 6px;
+}
+
+#fullscreen {
+    visibility: hidden;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: #000000;
+    background: rgba(0, 0, 0, 0.3);
 }

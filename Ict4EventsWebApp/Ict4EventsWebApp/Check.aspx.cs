@@ -13,5 +13,17 @@ namespace Ict4EventsWebApp
         {
 
         }
+
+        protected void BtnLogin_Click(object sender, EventArgs e)
+        {
+            if (Authentication.Instance.IsAuthenticated(tbUsername.Text, tbPassword.Text))
+            {
+                lblUsername.Text = "Success!";
+            }
+            else
+            {
+                lblUsername.Text = "False!";
+            }
+        }
     }
 }

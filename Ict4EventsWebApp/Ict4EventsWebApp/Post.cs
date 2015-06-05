@@ -22,11 +22,11 @@ namespace Ict4EventsWebApp
         public int Likes { get; set; }
         public int Flags { get; set; }
         public String Content { get; set; }
-        public Dictionary<String, String> Comments { get; set; }
+        public List<KeyValuePair<String,String>> Comments { get; set; }
 
         public Post()
         {
-            Comments=new Dictionary<string, string>();
+            Comments=new List<KeyValuePair<string, string>>();
         }
     }
 }
