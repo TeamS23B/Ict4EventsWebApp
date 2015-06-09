@@ -1,64 +1,137 @@
 <!doctype html>
 <html>
 <head>
-	<link rel="stylesheet" href="styles/reset.css"/>
-	<link rel="stylesheet" href="styles/style.css"/>
-	<link rel="stylesheet" href="styles/SMSStyle.css">
-	<script type="text/javascript" src="scripts/jquery-1.11.2.min.js"></script>
-	<script type="text/javascript" src="scripts/ui.js"></script>
-	<script type="text/javascript" src="scripts/index.js"></script>
+    <title>Social Media Sharing | Ict4Events</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/SMSStyle.css">
+    <script type="text/javascript" src="scripts/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="scripts/ui.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
+    <script>
+        
+
+    </script>
 </head>
 <body>
-	<div id="topBar">
-		<div id="menuButton">
-			<img src="images/Menu.png" alt="Menu">
-		</div>
-	</div>
-	<div id="leftBar">
-		<input type="text" id="search" placeholder="Search..."/><input type="button" id="searchButton" value=" "/>
-		<div class="leftBarButton" id="btAddPost">Add A Post</div>
-	</div>
-	<div id="content">
-		<div id="postSpacerTop"></div>
-		<div class="post">
-			<div class="title">Title</div>
-			<div class="username">Username</div>
-			<div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
-			<div class="likeFlag">Likes:0 Flags: 0</div>
-		</div>
-		<div class="comments">
-			<div class="comment">
-				<div class="commentUsername">aapje</div>
-				<div class="commentText">Ik vind dit echt niet leuk!</div>
-				<div style="clear: both;"></div>
-			</div>
-			<div class="addComment">Add a Comment</div>
-		</div>
-		<div class="post">
-			<div class="title">Title</div>
-			<div class="username">Username</div>
-			<div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
-			<div class="video">
-				<video height="240" controls preload="metadata">
-  				<source src="videos/Deez Nuts.mp4" type="video/mp4">
-				Your browser does not support the video tag.
-				</video>
-			</div>
-			<div class="likeFlag">Likes:0 Flags: 0</div>
-		</div>
-		<div class="post">
-			<div class="title">Title</div>
-			<div class="username">Username</div>
-			<div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
-			<div class="video">
-				<video height="240" controls preload="metadata">
-  				<source src="videos/Flute.mp4" type="video/mp4">
-				Your browser does not support the video tag.
-				</video>
-			</div>
-			<div class="likeFlag">Likes:0 Flags: 0</div>
-		</div>
-		
-	</div>
+    <div id="topBar">
+        <div id="menuButton">
+            <img src="images/Menu.png" alt="Menu">
+        </div>
+    </div>
+    <div id="leftBar">
+        <input type="text" id="search" placeholder="Search..." /><input type="button" id="searchButton" value=" " />
+        <div class="leftBarButton" id="btAddPost">Add A Post</div>
+    </div>
+    <div id="content">
+        <!--Old Posts-->
+        <!--
+            <div class="post">
+                <div class="title">Title</div>
+                <div class="username">Username</div>
+                <div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
+                <div class="likeFlag">Likes:0 Flags: 0</div>
+            </div>
+            <div class="comments">
+                <div class="comment">
+                    <div class="commentUsername">aapje</div>
+                    <div class="commentText">Ik vind dit echt niet leuk!</div>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="addComment">Add a Comment</div>
+            </div>
+            <div class="post">
+                <div class="title">Title</div>
+                <div class="username">Username</div>
+                <div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
+                <div class="video">
+                    <video height="240" controls preload="metadata">
+                        <source src="videos/Deez Nuts.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="likeFlag">Likes:0 Flags: 0</div>
+            </div>
+            <div class="post">
+                <div class="title">Title</div>
+                <div class="username">Username</div>
+                <div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
+                <div class="video">
+                    <video height="240" controls preload="metadata">
+                        <source src="videos/Flute.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="likeFlag">Likes:0 Flags: 0</div>
+            </div>-->
+        <div id="postSpacerTop"></div>
+        <div id="categories">
+            <div class="categorie" id="cat1">Categorie1</div>
+            <div class="categorie" id="cat1">Categorie1</div>
+            <div class="categorie" id="cat1">Categorie1</div>
+            <div class="categorie" id="cat1">Categorie1</div>
+            <div class="categorie" id="cat1">Categorie1</div>
+            <div class="categorie" id="cat1">Categorie1</div>
+            <div class="categorie" id="cat1">Categorie1</div>
+            <div class="categorie" id="cat1">Categorie1</div>
+        </div>
+        <div id="posts">
+            <div class="post" id="post1">
+                <div class="title">Aapje</div>
+                <div class="username">Rick</div>
+                <div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
+                <div class="stats">Likes: 1 Flags: 1 Comments: 2</div>
+            </div>
+            <div class="post" id="post1">
+                <div class="title">Aapje</div>
+                <div class="username">Rick</div>
+                <div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
+                <div class="stats">Likes: 1 Flags: 1 Comments: 2</div>
+            </div>
+            <div class="post" id="post1">
+                <div class="title">Aapje</div>
+                <div class="username">Rick</div>
+                <div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
+                <div class="stats">Likes: 1 Flags: 1 Comments: 2</div>
+            </div>
+            <div class="post" id="post1">
+                <div class="title">Aapje</div>
+                <div class="username">Rick</div>
+                <div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
+                <div class="stats">Likes: 1 Flags: 1 Comments: 2</div>
+            </div>
+            <div class="post" id="post1">
+                <div class="title">Aapje</div>
+                <div class="username">Rick</div>
+                <div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
+                <div class="stats">Likes: 1 Flags: 1 Comments: 2</div>
+            </div>
+            <div class="post" id="post1">
+                <div class="title">Aapje</div>
+                <div class="username">Rick</div>
+                <div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
+                <div class="stats">Likes: 1 Flags: 1 Comments: 2</div>
+            </div>
+            <div class="post" id="post1">
+                <div class="title">Aapje</div>
+                <div class="username">Rick</div>
+                <div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
+                <div class="stats">Likes: 1 Flags: 1 Comments: 2</div>
+            </div>
+            <div class="post" id="post1">
+                <div class="title">Aapje</div>
+                <div class="username">Rick</div>
+                <div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
+                <div class="stats">Likes: 1 Flags: 1 Comments: 2</div>
+            </div>
+            <div class="post" id="post1">
+                <div class="title">Aapje</div>
+                <div class="username">Rick</div>
+                <div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
+                <div class="stats">Likes: 1 Flags: 1 Comments: 2</div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
 </body>
-<html>
+</html>

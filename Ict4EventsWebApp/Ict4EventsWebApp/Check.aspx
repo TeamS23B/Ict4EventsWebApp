@@ -9,7 +9,7 @@
     <link href="styles/CheckBetaling.css" rel="stylesheet" />
     <script src="scripts/jquery-1.11.2.min.js"></script>
     <script src="scripts/ui.js"></script>
-    <title></title>
+    <title>Toegangscontrole | ICT4Events</title>
 </head>
 <body>
     <div id="topBar">
@@ -23,7 +23,8 @@
 	</div>
     <div id="content">
         <form id="form1" runat="server">
-            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+            <asp:TextBox ID="tbBarcode" runat="server"></asp:TextBox>
+            <asp:Button ID="btnCheck" runat="server" Text="Controleer" OnClick="btnCheck_Click" />
             <asp:Label ID="lblBarcodeText" runat="server" Text="Barcode:" CssClass="BarcodeText" Font-Size="X-Large"></asp:Label>
             <asp:Label ID="lblBarcodeObject" runat="server" Text="Test 1233443" Font-Bold="True" Font-Size="XX-Large" Width="300px" CssClass="BarcodeObject"></asp:Label>
             <asp:Label ID="lblBetaalstatusText" runat="server" Text="Betaalstatus" CssClass="BetaalstatusText" Font-Size="X-Large"></asp:Label>

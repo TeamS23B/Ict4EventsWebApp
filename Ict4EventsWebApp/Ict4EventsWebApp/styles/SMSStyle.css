@@ -1,9 +1,6 @@
-
 /*post*/
+/*
 
-#postSpacerTop{
-	height: 68px;
-}
 
 #content > .post ~ .post{
 	margin-top: 32px;
@@ -52,7 +49,7 @@
 	width: 100%;
 }
 
-/*Comments*/
+/*Comments*\/
 .comments{
 	width: 450px;
 	background-color: #DDD;
@@ -82,4 +79,104 @@
 .commentInput{
 	width: 100%;
 	border: none;
+}*/
+
+#postSpacerTop{
+	height: 68px;
+}
+
+#leftBar {
+    margin-left: -250px;
+}
+
+#categories, #posts {
+    clear: both;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#posts {
+    padding-top: 24px;
+}
+
+.categorie, .post {
+    position: relative;
+    background-color: #fff;
+    float: left;
+    margin: 8px;
+    -webkit-box-shadow: 0px 5px 10px 2px rgba(0,0,0,0.3);
+    -ms-box-shadow: 0px 5px 10px 2px rgba(0,0,0,0.3);
+    box-shadow: 0px 5px 10px 2px rgba(0,0,0,0.3);
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.categorie {
+    height: 24px;
+    line-height: 24px;
+    padding: 4px;
+}
+/*Posts*/
+.post {
+    height: 250px;
+}
+
+.post .title, .post .username {
+    font-size: large;
+    font-weight: bold;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+}
+
+.post .title {
+    float: left;
+}
+
+.post .username {
+    float: right;
+}
+
+.post .content {
+    clear: both;
+    padding-left: 4px;
+    padding-right: 4px;
+    overflow: hidden;
+    height: calc(250px - 24px - 22px);
+}
+
+.post .stats {
+    padding-left: 4px;
+    padding-right: 4px;
+    height: 24px;
+    line-height: 24px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px; 
+    color: #ffffff;
+    background-color: #1C8566;;
+}
+
+.clear {
+    clear: both;
+}
+
+@media screen and (max-width: 400px) {
+    .categorie,.post {
+        width: calc(100% - 24px);
+    }
+}
+
+@media screen and (max-width: 700px) and (min-width: 400px) {
+    .categorie, .post {
+        width: calc(100%/2 - 24px);/*20%=100%/5*/
+    }
+}
+
+@media screen and (min-width: 700px) {
+    .categorie, .post {
+        width: calc(100%/3 - 24px);/*25%=100%/4*/
+    }
 }
