@@ -10,14 +10,12 @@ using System.Configuration;
 
 namespace Ict4EventsWebApp
 {
-    public partial class Check : System.Web.UI.Page
+    public partial class Check1 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
-
-
         private void AddParameterWithValue(DbCommand command, string parameterName, object parameterValue)
         {
             var parameter = command.CreateParameter();
@@ -45,26 +43,65 @@ namespace Ict4EventsWebApp
                     //return "Error! No Command";
                 }
                 com.Connection = con;
-                com.CommandText = "SELECT reservering.betaald FROM polsbandje INNER JOIN reservering_polsbandje ON polsbandje.id = reservering_polsbandje.polsbandje_id INNER JOIN reservering ON reservering_polsbandje.reservering_id = reservering.id WHERE polsbandje.barcode = :1";
+                com.CommandText = "SELECT reservering.betaald, reservering_polsbandje.aanwezig, reservering_polsbandje.id FROM polsbandje INNER JOIN reservering_polsbandje ON polsbandje.id = reservering_polsbandje.polsbandje_id INNER JOIN reservering ON reservering_polsbandje.reservering_id = reservering.id WHERE polsbandje.barcode = :1 AND rownum = 1";
                 AddParameterWithValue(com, "barc", (string)tbBarcode.Text);
-
+                DbDataReader reader = com.ExecuteReader();
                 lblBarcodeObject.Text = tbBarcode.Text;
                 try
                 {
-                    if ((short)com.ExecuteScalar() == 0)
+                    lblBetaaldobject.Text = "Barcode bestaat niet";
+                    while (reader.Read())
                     {
-                        lblBetaaldobject.Text = "Niet betaald";
+                        if ((short)reader[0] == 0)
+                        {
+                            lblBetaaldobject.Text = "Niet betaald";
 
-                    }
-                    else
-                    {
-                        lblBetaaldobject.Text = "Betaald";
+                        }
+                        else
+                        {
+                            lblBetaaldobject.Text = "Betaald";
+                            if ((short)reader[1] == 0)
+                            {
+                                updateAanwezigheid(1, (long)reader[2]);
+                                lblAanwezigObject.Text = "U bent nu aanwezig";
+                            }
+                            else
+                            {
+                                updateAanwezigheid(0, (long)reader[2]);
+                                lblAanwezigObject.Text = "U bent niet meer aanwezig";
+                            }
+                        }
                     }
                 }
                 catch (NullReferenceException)
                 {
                     lblBarcodeObject.Text = "Barcode is niet gevonden";
                 }
+            }
+            tbBarcode.Text = string.Empty;
+            tbBarcode.Focus();
+        }
+
+        private int updateAanwezigheid(short aanwezig, long resId)
+        {
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                if (con == null)
+                {
+                    return 0;
+                }
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                if (com == null)
+                {
+                    return 0;
+                }
+                com.Connection = con;
+                com.CommandText = "UPDATE reservering_polsbandje SET aanwezig = :1 WHERE id = :2";
+                AddParameterWithValue(com, "aanwezig", aanwezig);
+                AddParameterWithValue(com, "resId", resId);
+                return com.ExecuteNonQuery();
             }
         }
     }
