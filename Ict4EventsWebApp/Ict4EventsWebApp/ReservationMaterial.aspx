@@ -100,6 +100,9 @@
                 <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
                     <img id="showImage" alt="Camping" src="images/Camping.png" width="200px"/>
+                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                 </div>
             </div>
         </form>
