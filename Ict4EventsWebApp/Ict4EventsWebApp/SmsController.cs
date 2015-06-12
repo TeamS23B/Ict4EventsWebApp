@@ -33,5 +33,21 @@ namespace Ict4EventsWebApp
             o.posts.Add(p);
             return Json(o);
         }
+
+        public IHttpActionResult GetPostOfCategorie(int id)
+        {
+            var o = new
+            {
+                categorieTrace = new List<object>(),
+                categories = new List<object>(),
+                posts = new List<object>()
+            };
+
+            o.categorieTrace.Add(new {id = 0, title = "aapje", username = "aapje", date = DateTime.Now, likes = 0, flags = 0, comments = 0});
+            o.categorieTrace.Add(new { id = 0, title = "aapje", username = "aapje", date = DateTime.Now, likes = 0, flags = 0, comments = 0 });
+            
+            //o.categories
+            return Json(o);
+        }
     }
 }
