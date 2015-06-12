@@ -10,7 +10,7 @@
 namespace Ict4EventsWebApp {
     
     
-    public partial class Check {
+    public partial class Check1 {
         
         /// <summary>
         /// form1 control.

@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Check.aspx.cs" Inherits="Ict4EventsWebApp.Check" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Check.aspx.cs" Inherits="Ict4EventsWebApp.Check1" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link href="styles/reset.css" rel="stylesheet" />
+   <link href="styles/reset.css" rel="stylesheet" />
     <link href="styles/style.css" rel="stylesheet" />
     <link href="styles/CheckBetaling.css" rel="stylesheet" />
     <script src="scripts/jquery-1.11.2.min.js"></script>
@@ -26,9 +26,10 @@
             <asp:TextBox ID="tbBarcode" runat="server"></asp:TextBox>
             <asp:Button ID="btnCheck" runat="server" Text="Controleer" OnClick="btnCheck_Click" />
             <asp:Label ID="lblBarcodeText" runat="server" Text="Barcode:" CssClass="BarcodeText" Font-Size="X-Large"></asp:Label>
-            <asp:Label ID="lblBarcodeObject" runat="server" Text="Test 1233443" Font-Bold="True" Font-Size="XX-Large" Width="300px" CssClass="BarcodeObject"></asp:Label>
+            <asp:Label ID="lblBarcodeObject" runat="server" Text="Nog niet gescand" Font-Bold="True" Font-Size="XX-Large" Width="300px" CssClass="BarcodeObject"></asp:Label>
             <asp:Label ID="lblBetaalstatusText" runat="server" Text="Betaalstatus" CssClass="BetaalstatusText" Font-Size="X-Large"></asp:Label>
-            <asp:Label ID="lblBetaaldobject" runat="server" Text="Betaald" Font-Bold="True" ForeColor="Lime" CssClass="BetaalstatusObject" Font-Size="50px"></asp:Label>
+            <asp:Label ID="lblBetaaldobject" runat="server" Text="Nog niet gescand" Font-Bold="True" ForeColor="Lime" CssClass="BetaalstatusObject" Font-Size="50px"></asp:Label>
+            <asp:Label ID="lblAanwezigObject" runat="server" Text="Nog niet gescand"></asp:Label>
         <div id="clearDiv"></div>
         </form>
     </div>

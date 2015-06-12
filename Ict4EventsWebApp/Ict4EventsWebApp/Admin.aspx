@@ -32,7 +32,7 @@
                     <asp:DropDownList ID="ddlLocation" runat="server"></asp:DropDownList>
                     <asp:Label ID="lblMaxVis" runat="server" Text="Maximaal aantal bezoekers"></asp:Label>
                     <asp:TextBox ID="tbMaxVis" runat="server" type="number" min="0"></asp:TextBox>
-                    <asp:Button ID="btnAddEvent" runat="server" Text="Maak event" />
+                    <asp:Button ID="btnAddEvent" runat="server" Text="Maak event" OnClick="btnAddEvent_Click" />
                 </div>
                 <div class="rightSettings">
                     <asp:Label ID="lblStartDate" runat="server" Text="Startdatum"></asp:Label>
@@ -46,11 +46,11 @@
                 <h1>Beheer gebruikers</h1>
                 <div class="Users">
                     <asp:Label ID="lblUsers" runat="server" Text="Gebruikers"></asp:Label>
-                    <asp:ListBox ID="lbUsers" runat="server"></asp:ListBox>
+                    <asp:ListBox ID="lbUsers" runat="server" AutoPostBack="True" OnSelectedIndexChanged="lbUsers_SelectedIndexChanged"></asp:ListBox>
                 </div>
                 <div class="Messages">
                     <asp:Label ID="lblMsgUsers" runat="server" Text="Berichten van gebruiker:"></asp:Label>
-                    <asp:ListBox ID="lbMessages" runat="server"></asp:ListBox>
+                    <asp:ListBox ID="lbMessages" runat="server" AutoPostBack="True"></asp:ListBox>
                     <asp:Label ID="lblGroupMng" runat="server" Text="De groepsleider is:"></asp:Label>
                     <asp:Label ID="lblPaid" runat="server" Text="De groepsleider heeft betaald"></asp:Label>
                 </div>
