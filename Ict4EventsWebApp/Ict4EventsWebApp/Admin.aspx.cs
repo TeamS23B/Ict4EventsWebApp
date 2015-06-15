@@ -23,37 +23,75 @@ namespace Ict4EventsWebApp
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            //GET LOCATIONS FROM EVENT
-            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            if (!Page.IsPostBack)
             {
-                if (con == null)
+                //GET LOCATIONS FROM EVENT
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
                 {
-                    //return "Error! No Connection";
-                }
-                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-                con.Open();
-                DbCommand com = OracleClientFactory.Instance.CreateCommand();
-                if (com == null)
-                {
-                    //return "Error! No Command";
-                }
-                com.Connection = con;
-                com.CommandText = "SELECT * FROM LOCATIE";
-                DbDataReader reader = com.ExecuteReader();
-                try
-                {
-                    ddlLocation.Items.Clear();
-                    while (reader.Read())
+                    if (con == null)
                     {
-                        ddlLocation.Items.Add(reader[0].ToString() + ". " + reader[1].ToString());
+                        //return "Error! No Connection";
+                    }
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+                        //return "Error! No Command";
+                    }
+                    com.Connection = con;
+                    com.CommandText = "SELECT * FROM LOCATIE";
+                    DbDataReader reader = com.ExecuteReader();
+                    try
+                    {
+                        ddlLocation.Items.Clear();
+                        while (reader.Read())
+                        {
+                            ddlLocation.Items.Add(reader[0].ToString() + ". " + reader[1].ToString());
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+
                     }
                 }
-                catch (NullReferenceException)
+                //GET ALL USERS
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
                 {
-                    
+                    if (con == null)
+                    {
+                        //return "Error! No Connection";
+                    }
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+                        //return "Error! No Command";
+                    }
+                    com.Connection = con;
+                    com.CommandText = "SELECT gebruikersnaam FROM account";
+                    DbDataReader reader = com.ExecuteReader();
+                    try
+                    {
+                        lbUsers.Items.Clear();
+                        while (reader.Read())
+                        {
+                            lbUsers.Items.Add(reader[0].ToString());
+                        }
+                    }
+                    catch (NullReferenceException)
+                    {
+
+                    }
+
                 }
+                GenerateMaterials();
             }
-            //GET ALL USERS
+        }
+
+        private void GenerateMaterials()
+        {
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
                 if (con == null)
@@ -62,21 +100,22 @@ namespace Ict4EventsWebApp
                 }
                 con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
                 con.Open();
-                DbCommand com = OracleClientFactory.Instance.CreateCommand();
-                if (com == null)
+                DbCommand com2 = OracleClientFactory.Instance.CreateCommand();
+                if (com2 == null)
                 {
                     //return "Error! No Command";
                 }
-                com.Connection = con;
-                com.CommandText = "SELECT gebruikersnaam FROM account";
-                DbDataReader reader = com.ExecuteReader();
+                com2.Connection = con;
+                com2.CommandText = "SELECT product.id,product.merk, product.serie, COUNT(Productexemplaar.id) FROM product, Productexemplaar WHERE product.id = Productexemplaar.product_id GROUP BY product.id, product.merk,product.serie ORDER BY product.id";
+                DbDataReader reader2 = com2.ExecuteReader();
                 try
                 {
-                    lbUsers.Items.Clear();
-                    while (reader.Read())
+                    lbMaterials.Items.Clear();
+                    while (reader2.Read())
                     {
-                        lbUsers.Items.Add(reader[0].ToString());
+                        lbMaterials.Items.Add(string.Format("{0}. {1} {2} aantal: {3}", reader2[0].ToString(), reader2[1].ToString(), reader2[2].ToString(), reader2[3].ToString()));
                     }
+                    lbMaterials.Items.Add("Nieuw product");
                 }
                 catch (NullReferenceException)
                 {
@@ -91,14 +130,14 @@ namespace Ict4EventsWebApp
             {
                 if (con == null)
                 {
-                    
+
                 }
                 con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
                 con.Open();
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
                 if (com == null)
                 {
-                    
+
                 }
                 com.Connection = con;
                 com.CommandText = "INSERT INTO EVENT(locatie_id, naam, datumStart, datumEinde, maxBezoekers) VALUES(:1, :2, to_date(:3, 'DD-MM-YYYY HH24:MI:SS'), to_date(:4, 'DD-MM-YYYY HH24:MI:SS'), :5)";
@@ -130,15 +169,45 @@ namespace Ict4EventsWebApp
                     //return "Error! No Command";
                 }
                 com.Connection = con;
-                com.CommandText = "SELECT titel, inhoud FROM bericht INNER JOIN bijdrage ON bijdrage.id = bericht.bijdrage_id INNER JOIN account ON account.id = bijdrage.account_id WHERE account.gebruikersnaam = :1";
+                com.CommandText = "SELECT titel, inhoud, geactiveerd FROM bericht INNER JOIN bijdrage ON bijdrage.id = bericht.bijdrage_id RIGHT OUTER JOIN account ON account.id = bijdrage.account_id WHERE account.gebruikersnaam = :1";
                 AddParameterWithValue(com, "gebruiker", user);
                 DbDataReader reader = com.ExecuteReader();
                 try
                 {
-                    lbUsers.Items.Clear();
+                    lbMessages.Items.Clear();
                     while (reader.Read())
                     {
-                        lbUsers.Items.Add(reader[0].ToString());
+                        lbMessages.Items.Add(reader[0].ToString() + reader[1].ToString());
+                        if ((short)reader[2] == 0)
+                        {
+                            cbBlock.Checked = true;
+                        }
+                        else
+                        {
+                            cbBlock.Checked = false;
+                        }
+                    }
+                }
+                catch (NullReferenceException)
+                {
+
+                }
+                DbCommand com2 = OracleClientFactory.Instance.CreateCommand();
+                if (com2 == null)
+                {
+                    //return "Error! No Command";
+                }
+                com2.Connection = con;
+                com2.CommandText = "SELECT product.merk, product.serie, productexemplaar.id FROM product INNER JOIN productexemplaar ON product.id = productexemplaar.product_id INNER JOIN verhuur ON productexemplaar.id = verhuur.productexemplaar_id INNER JOIN reservering_polsbandje ON verhuur.res_pb_id = reservering_polsbandje.id INNER JOIN account ON reservering_polsbandje.account_id = account.id WHERE gebruikersnaam = :1";
+                AddParameterWithValue(com2, "gebrnm", lbUsers.SelectedValue.ToString());
+                DbDataReader reader2 = com2.ExecuteReader();
+                try
+                {
+                    lbRentedMat.Items.Clear();
+                    lbMessages.Items.Clear();
+                    while (reader2.Read())
+                    {
+                        lbRentedMat.Items.Add(string.Format("{0} {1} {2}", reader2[0].ToString(), reader2[1].ToString(), reader2[2].ToString()));
                     }
                 }
                 catch (NullReferenceException)
@@ -146,6 +215,80 @@ namespace Ict4EventsWebApp
 
                 }
             }
+            cbBlock.Enabled = true;
+        }
+
+        protected void cbBlock_CheckedChanged(object sender, EventArgs e)
+        {
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                if (con == null)
+                {
+                    //return "Error! No Connection";
+                }
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                if (com == null)
+                {
+                    //return "Error! No Command";
+                }
+                com.Connection = con;
+                com.CommandText = "UPDATE account SET geactiveerd = :1 WHERE gebruikersnaam = :2";
+                if (cbBlock.Checked)
+                {
+                    AddParameterWithValue(com, "check", 0);
+                }
+                else
+                {
+                    AddParameterWithValue(com, "check", 1);
+                }
+                AddParameterWithValue(com, "gebrNaam", lbUsers.SelectedValue.ToString());
+                com.ExecuteNonQuery();
+            }
+        }
+
+        protected void btnAddCopy_Click(object sender, EventArgs e)
+        {
+            if (lbMaterials.SelectedValue.ToString() != "Nieuw product")
+            {
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    if (con == null)
+                    {
+                        //return "Error! No Connection";
+                    }
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+                        //return "Error! No Command";
+                    }
+                    com.Connection = con;
+                    com.CommandText = "INSERT INTO productexemplaar (product_id, volgnummer, barcode) SELECT product_id, max(volgnummer)+1, max(volgnummer)+1 || :1 FROM productexemplaar WHERE product_id = :1 GROUP BY product_id";
+
+                    string selValue = lbMaterials.SelectedValue.ToString();
+                    int prodId = Convert.ToInt32(selValue.Substring(0, selValue.IndexOf(".")));
+                    AddParameterWithValue(com, "prodNr", prodId);
+
+                    com.ExecuteNonQuery();
+                    GenerateMaterials();
+                }
+            }
+        }
+
+        protected void lbMaterials_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnAddCopy.Enabled = true;
+            btnRmvCopy.Enabled = true;
+            tbBrand.Enabled = true;
+            tbSeries.Enabled = true;
+            tbTypeNr.Enabled = true;
+            tbPrice.Enabled = true;
+            ddlCat.Enabled = true;
+            btnUpdate.Enabled = true;
+            btnDelete.Enabled = true;
         }
     }
 }

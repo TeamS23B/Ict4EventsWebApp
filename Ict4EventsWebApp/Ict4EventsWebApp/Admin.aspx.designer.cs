@@ -157,24 +157,6 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.ListBox lbMessages;
         
         /// <summary>
-        /// lblGroupMng control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblGroupMng;
-        
-        /// <summary>
-        /// lblPaid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPaid;
-        
-        /// <summary>
         /// cbBlock control.
         /// </summary>
         /// <remarks>
