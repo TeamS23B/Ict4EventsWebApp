@@ -288,18 +288,18 @@ namespace Ict4EventsWebApp
 
         protected void lbMaterials_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(lbMaterials.SelectedValue.ToString() != "Nieuw product")
+            tbBrand.Enabled = true;
+            tbSeries.Enabled = true;
+            tbTypeNr.Enabled = true;
+            tbPrice.Enabled = true;
+            ddlCat.Enabled = true;
+            if (lbMaterials.SelectedValue.ToString() != "Nieuw product")
             {
                 string ProductId = lbMaterials.SelectedValue.Substring(0, lbMaterials.SelectedValue.IndexOf("."));
                 btnAddCopy.Enabled = true;
                 btnRmvCopy.Enabled = true;
-                tbBrand.Enabled = true;
-                tbSeries.Enabled = true;
-                tbTypeNr.Enabled = true;
-                tbPrice.Enabled = true;
-                ddlCat.Enabled = true;
+                btnNew.Enabled = false;
                 btnUpdate.Enabled = true;
-                btnDelete.Enabled = true;
                 using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
                 {
 
@@ -332,16 +332,25 @@ namespace Ict4EventsWebApp
                     {
 
                     }
-                    
+
                 }
             }
-            
-            
+            else
+            {
+                btnAddCopy.Enabled = false;
+                btnRmvCopy.Enabled = false;
+                btnNew.Enabled = true;
+                btnUpdate.Enabled = false;
+                tbBrand.Text = string.Empty;
+                tbPrice.Text = string.Empty;
+                tbSeries.Text = string.Empty;
+                tbTypeNr.Text = string.Empty;
+            }
         }
 
         protected void btnRmvCopy_Click(object sender, EventArgs e)
         {
-            if(lbMaterials.SelectedValue != null)
+            if (lbMaterials.SelectedValue != null)
             {
                 string ProductId = lbMaterials.SelectedValue.Substring(0, lbMaterials.SelectedValue.IndexOf("."));
                 using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
@@ -364,8 +373,8 @@ namespace Ict4EventsWebApp
                     GenerateMaterials();
                 }
             }
-            
-            
+
+
         }
 
         protected void btnUpdate_Click(object sender, EventArgs e)
@@ -385,27 +394,46 @@ namespace Ict4EventsWebApp
                     //return "Error! No Command";
                 }
                 com.Connection = con;
-                com.CommandText = "UPDATE Product Set merk = :1,serie = :2,typenummer = :3,prijs = :4 Where product.id = :5";
-                AddParameterWithValue(com, "prodName", tbBrand.Text);
-                AddParameterWithValue(com, "prodPrice", tbPrice.Text);
+                com.CommandText = "UPDATE Product Set merk = :1, serie = :2, typenummer = :3, prijs = :4, productCAT_ID = (SELECT productcat.Id FROM productcat WHERE productcat.naam = :5 AND ROWNUM = 1) Where product.id = :6";
+                AddParameterWithValue(com, "prodBrand", tbBrand.Text);
                 AddParameterWithValue(com, "prodSerie", tbSeries.Text);
                 AddParameterWithValue(com, "prodTypeNr", tbTypeNr.Text);
+                AddParameterWithValue(com, "prodPrice", tbPrice.Text);
+                AddParameterWithValue(com, "prodCat", ddlCat.SelectedValue.ToString());
                 AddParameterWithValue(com, "prodCat", ProductId);
                 com.ExecuteNonQuery();
+            }
+        }
+
+        protected void btnNew_Click(object sender, EventArgs e)
+        {
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                if (con == null)
+                {
+                    //return "Error! No Connection";
+                }
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
                 if (com == null)
                 {
                     //return "Error! No Command";
                 }
                 com.Connection = con;
-                com.CommandText = "UPDATE Product Set naam  = :1 WHERE productcat.id = product";
+                /*
+                com.CommandText = "INSERT INTO PRODUCT(productcat_id, merk, serie, typenummer, prijs) SELECT productcat.Id, :2, :3, :4, :5 FROM productcat WHERE productcat.naam = :1 AND ROWNUM = 1";
+                com.ExecuteNonQuery();
+                 */
+                com.CommandText = "INSERT INTO PRODUCT(productcat_id, merk, serie, typenummer, prijs) SELECT productcat.Id, :1, :2, :3, :4 FROM productcat WHERE productcat.naam = :5 AND ROWNUM = 1";
+                AddParameterWithValue(com, "prodBrand", tbBrand.Text);
+                AddParameterWithValue(com, "prodSerie", tbSeries.Text);
+                AddParameterWithValue(com, "prodTypeNr", tbTypeNr.Text);
+                AddParameterWithValue(com, "prodPrice", tbPrice.Text);
                 AddParameterWithValue(com, "prodCat", ddlCat.SelectedValue.ToString());
+                com.ExecuteNonQuery();
             }
         }
 
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
