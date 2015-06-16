@@ -93,7 +93,6 @@ namespace Ict4EventsWebApp
         {
 
             pnlMap.Visible = true;
-            }
         }
         protected void btRMAterialVerder_Click(object sender, EventArgs e)
         {
