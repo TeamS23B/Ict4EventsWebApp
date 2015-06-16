@@ -192,9 +192,18 @@ namespace Ict4EventsWebApp
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
                 com.CommandType = System.Data.CommandType.StoredProcedure;
                 com.CommandText = "INSERT_PERSOONLEIDER";
+                string infix;
+                if (tbInfix.Text == "")
+                {
+                    infix = " ";
+                }
+                else
+                {
+                    infix = tbInfix.Text;
+                }
 
                 AddParameterWithValue(com, "voornaam", tbFirstName.Text);
-                AddParameterWithValue(com, "tussenvoegsel", tbInfix.Text);
+                AddParameterWithValue(com, "tussenvoegsel", infix);
                 AddParameterWithValue(com, "achternaam", tbSurname.Text);
                 AddParameterWithValue(com, "straat", tbStreet.Text);
                 AddParameterWithValue(com, "huisnr", tbHouseNr.Text);
