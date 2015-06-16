@@ -35,6 +35,10 @@
                 <div class="ScanInfo">
                     <asp:Label runat="server">Gescande Barcode: </asp:Label>
                     <asp:TextBox ID="tbBarcode" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
+                    ControlToValidate="tbBarcode"
+                    ErrorMessage="Barcode is verplicht"
+                    ForeColor="green"></asp:RequiredFieldValidator>
                     <asp:Button ID="BtnConfirm" runat="server" Text="Bevestig" OnClick="BtnConfirm_Click" />
                     <asp:Label ID="lblNaam" runat="server" Text="Naam: "></asp:Label>
                     <asp:Label ID="lbNameAfterBarcode" runat="server" Text=""></asp:Label>
