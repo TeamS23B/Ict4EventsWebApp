@@ -111,8 +111,9 @@
             <asp:HiddenField ID="YValue" runat="server" ClientIDMode="Static" />
 
 
-
-
+            
+            <asp:Panel ID="pnlMaterial" runat="server">
+            
             <div class="frm">
             <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Reservering materiaal</asp:Label>
@@ -150,8 +151,7 @@
                 <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder" />
             </div>
             </div>
-
-
+            </asp:Panel>
 
             <div class="frm">
             <div class="top">
