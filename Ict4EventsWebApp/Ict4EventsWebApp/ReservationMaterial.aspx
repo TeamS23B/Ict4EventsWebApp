@@ -111,7 +111,7 @@
                         <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" OnClick="btnAdd_Click" />
                         <asp:Button ID="btnRemove" CssClass="buttonMargin" runat="server" Text="Verwijderen" OnClick="btnRemove_Click" />
 
-                        <asp:Button ID="btnNextStep" runat="server" Text="Volgende stap" OnClick="btnNextStep_Click" />
+                        <asp:Button ID="btnNextStep" runat="server" Text="Verder" OnClick="btnNextStep_Click" />
                     </div>
                     <div class="clearDiv"></div>
                 </div>
@@ -123,8 +123,7 @@
                     <div class="top">
                         <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
                         <img id="showImage" alt="Camping" src="images/Camping.png" />
-                        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
-                        <asp:Label ID="leel" runat="server" Text="Label"></asp:Label>
+                        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Verder" />
                     </div>
                 </div>
                 <asp:HiddenField ID="XValue" runat="server" ClientIDMode="Static" />
