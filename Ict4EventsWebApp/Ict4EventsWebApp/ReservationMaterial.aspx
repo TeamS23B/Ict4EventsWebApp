@@ -146,17 +146,19 @@
                         </div>
                         <asp:ListBox ID="lbMaterialToReserve" runat="server"></asp:ListBox>
                         <div class="ScanInfo">
-                            <asp:Label ID="Details" runat="server">Totale bedrag: &#8364;0,-<br/></asp:Label>
+                            <asp:Label ID="lbReserveringDetails" class="ScanInfo" runat="server" Text="Prijs :"></asp:Label>
+                            <asp:Label ID="lbPrice" runat="server" Text="0"></asp:Label>
+
                         </div>
 
                     </div>
                     <div class="middle">
                         <div>
                             <div class="btmiddle">
-                                <asp:Button ID="btMaterialAdd" runat="server" Text="<<Toevoegen" />
+                                <asp:Button ID="btMaterialAdd" runat="server" Text="<<Toevoegen" OnClick="btMaterialAdd_Click" />
                             </div>
                             <div class="btmiddle">
-                                <asp:Button ID="btMaterialDelete" runat="server" Text="Verwijderen>>" />
+                                <asp:Button ID="btMaterialDelete" runat="server" Text="Verwijderen>>" OnClick="btMaterialDelete_Click" />
                             </div>
                         </div>
                     </div>
@@ -190,7 +192,7 @@
                             <asp:ListBox ID="ConfrimMaterial" runat="server"></asp:ListBox>
                         </div>
                         <div class="margenperfect">
-                            <asp:Label ID="ReserveringDetails" class="ScanInfo" runat="server">Totale bedrag: &#8364;0,-<br/></asp:Label>
+                            <asp:Label ID="Details" runat="server">Totale bedrag: &#8364;0,-<br/></asp:Label>
                         </div>
                     </div>
 
@@ -200,11 +202,6 @@
                     </div>
                 </div>
             </asp:Panel>
-
-
-
-
-
         </form>
         <div id="fullscreen">
             <img class="displayed" src="images/Camping.png" alt="Camping" />
