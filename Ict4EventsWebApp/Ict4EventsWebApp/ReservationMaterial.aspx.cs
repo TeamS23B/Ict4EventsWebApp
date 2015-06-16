@@ -19,6 +19,7 @@ namespace Ict4EventsWebApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (!IsPostBack)
             {
                 pnlMaterial.Visible = false;
@@ -29,6 +30,15 @@ namespace Ict4EventsWebApp
             {
                 party = new Party();
         }
+            else
+            {
+                party = (Party)Session["party"];
+                lbGroupMembers.Items.Clear();
+                foreach (Person person in party.Members)
+                {
+                    lbGroupMembers.Items.Add(person.ToString());
+        }
+            }
         }
 
         
@@ -81,19 +91,31 @@ namespace Ict4EventsWebApp
 
         protected void btnNextStep_Click(object sender, EventArgs e)
         {
-            string a = XValue.Value;
-            string b = YValue.Value;
 
-            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
-            {
-                DbCommand com = OracleClientFactory.Instance.CreateCommand();
-                com.CommandType = System.Data.CommandType.StoredProcedure;
-                pnlMap.Visible = true;
+            pnlMap.Visible = true;
             }
         }
         protected void btRMAterialVerder_Click(object sender, EventArgs e)
         {
             pnlOverview.Visible = true;
+        }
+
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            Person person = new Person(TextBox2.Text, TextBox3.Text, TextBox4.Text, TextBox5.Text);
+            party.AddMember(person);
+            lbGroupMembers.Items.Add(person.ToString());
+            Session["party"] = party;
+            TextBox2.Text = "";
+            TextBox3.Text = "";
+            TextBox4.Text = "";
+            TextBox5.Text = "";
+
+        }
+
+        protected void btnRemove_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

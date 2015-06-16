@@ -20,5 +20,10 @@ namespace Ict4EventsWebApp
             this.Surname = surname;
             this.Email = email;
         }
+
+        public override string ToString()
+        {
+            return Name + " " + Surname;
+        }
     }
 }

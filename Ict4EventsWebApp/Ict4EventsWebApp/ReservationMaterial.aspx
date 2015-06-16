@@ -1,5 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ReservationMaterial.aspx.cs" Inherits="Ict4EventsWebApp.ReservationMaterial" %>
-
+﻿<%@ Page Language="C#" MaintainScrollPositionOnPostback="true" AutoEventWireup="true" CodeBehind="ReservationMaterial.aspx.cs" Inherits="Ict4EventsWebApp.ReservationMaterial"%>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -7,7 +6,6 @@
     <link href="styles/reset.css" rel="stylesheet" />
     <link href="styles/style.css" rel="stylesheet" />
     <link href="styles/ReservationMaterial.css" rel="stylesheet" />
-   <%-- <link href="styles/RegistrationCustomerInfo.css" rel="stylesheet" />--%>
     <script src="scripts/jquery-1.11.2.min.js"></script>
     <script src="scripts/ui.js"></script>
     <script>
@@ -28,6 +26,7 @@
             });
         });
     </script>
+
     <title></title>
 </head>
 <body>
@@ -52,6 +51,7 @@
             <asp:Label ID="lblStreetHouseNr" CssClass="labelMargin" runat="server" Text="Straat + huisnummer:" ClientIDMode="Static"></asp:Label>
             <asp:Label ID="lblPostalCodeCity" CssClass="labelMargin" runat="server" Text="Postcode + woonplaats:" ClientIDMode="Static"></asp:Label>
             <asp:Label ID="lblIban" CssClass="labelMargin" runat="server" Text="Iban:" ClientIDMode="Static"></asp:Label>
+            <asp:Label ID="lblPhone" CssClass="labelMargin" runat="server" Text="Telefoon:" ClientIDMode="Static"></asp:Label>
             
         </div>
         
@@ -72,6 +72,7 @@
             
 
             <asp:TextBox ID="tbIban" CssClass="textBoxMargin" runat="server"></asp:TextBox>
+            <asp:TextBox ID="tbPhone" CssClass="textBoxMargin" runat="server"></asp:TextBox>
         </div>
         <div class="selectGroupMembers">
             <asp:Label ID="lblGroupMembers" runat="server" Text="Andere deelnemers"></asp:Label>
@@ -90,8 +91,8 @@
             <asp:Label ID="lblEmailGM" CssClass="labelMargin" runat="server" Text="Email"></asp:Label>
             <asp:TextBox ID="TextBox5" CssClass="textBoxMargin" runat="server"></asp:TextBox>
 
-            <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" />
-            <asp:Button ID="btnRemove" CssClass="buttonMargin" runat="server" Text="Verwijderen" />
+            <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" OnClick="btnAdd_Click" />
+            <asp:Button ID="btnRemove" CssClass="buttonMargin" runat="server" Text="Verwijderen" OnClick="btnRemove_Click"/>
 
             <asp:Button ID="btnNextStep" runat="server" Text="Volgende stap" OnClick="btnNextStep_Click" />
         </div>
