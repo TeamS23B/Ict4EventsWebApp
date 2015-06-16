@@ -369,37 +369,38 @@ namespace Ict4EventsWebApp
         }
 
         protected void btnUpdate_Click(object sender, EventArgs e)
-        {   
+        {
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                string ProductId = lbMaterials.SelectedValue.Substring(0, lbMaterials.SelectedValue.IndexOf("."));
+                if (con == null)
                 {
-                    string ProductId = lbMaterials.SelectedValue.Substring(0, lbMaterials.SelectedValue.IndexOf("."));
-                    if (con == null)
-                    {
-                        //return "Error! No Connection";
-                    }
-                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-                    con.Open();
-                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
-                    if (com == null)
-                    {
-                        //return "Error! No Command";
-                    }
-                    com.Connection = con;
-                    com.CommandText = "UPDATE Product Set merk = :1,serie = :2,typenummer = :3,prijs = :4 Where product.id = :5";
-                    AddParameterWithValue(com, "prodName", tbBrand.Text);
-                    AddParameterWithValue(com, "prodPrice", tbPrice.Text);
-                    AddParameterWithValue(com, "prodSerie", tbSeries.Text);
-                    AddParameterWithValue(com, "prodTypeNr", tbTypeNr.Text);
-                    AddParameterWithValue(com, "prodCat", ProductId);
-                    com.ExecuteNonQuery();
-                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
-                    if (com == null)
-                    {
-                        //return "Error! No Command";
-                    }
-                    com.Connection = con;
-                    com.CommandText = "UPDATE Product Set naam  = :1 WHERE productcat.id = product";
-                    AddParameterWithValue(com, "prodCat", ddlCat.SelectedValue.ToString());
+                    //return "Error! No Connection";
+                }
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                if (com == null)
+                {
+                    //return "Error! No Command";
+                }
+                com.Connection = con;
+                com.CommandText = "UPDATE Product Set merk = :1,serie = :2,typenummer = :3,prijs = :4 Where product.id = :5";
+                AddParameterWithValue(com, "prodName", tbBrand.Text);
+                AddParameterWithValue(com, "prodPrice", tbPrice.Text);
+                AddParameterWithValue(com, "prodSerie", tbSeries.Text);
+                AddParameterWithValue(com, "prodTypeNr", tbTypeNr.Text);
+                AddParameterWithValue(com, "prodCat", ProductId);
+                com.ExecuteNonQuery();
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                if (com == null)
+                {
+                    //return "Error! No Command";
+                }
+                com.Connection = con;
+                com.CommandText = "UPDATE Product Set naam  = :1 WHERE productcat.id = product";
+                AddParameterWithValue(com, "prodCat", ddlCat.SelectedValue.ToString());
+            }
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
