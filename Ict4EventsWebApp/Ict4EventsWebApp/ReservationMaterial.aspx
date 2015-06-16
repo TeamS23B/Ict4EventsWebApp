@@ -111,8 +111,7 @@
                         <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
                         <img id="showImage" alt="Camping" src="images/Camping.png" />
                         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
-                        <asp:Label ID="leel" runat="server" Text="Label"></asp:Label>
-                        <asp:TextBox ID="voorbeeld" runat="server"></asp:TextBox>
+                    <asp:Label ID="leel" runat="server" Text="Label"></asp:Label>
                     </div>
                 </div>
                 <asp:HiddenField ID="XValue" runat="server" ClientIDMode="Static" />
@@ -184,7 +183,7 @@
 
                     <div>
                         <asp:Button ID="btCMaterialTerug" runat="server" Text="Terug" />
-                        <asp:Button ID="btCMaterialVerder" runat="server" Text="Voltooien" OnClick="btCMaterialVerder_Click" />
+                <asp:Button ID="btCMaterialVerder" runat="server" Text="Voltooien" OnClick="btCMaterialVerder_Click" />
                     </div>
                 </div>
             </asp:Panel>
