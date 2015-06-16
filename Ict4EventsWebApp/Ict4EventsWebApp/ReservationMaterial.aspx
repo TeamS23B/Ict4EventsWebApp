@@ -15,8 +15,15 @@
             $("#showImage").click(function() {
                 $("#fullscreen").css("visibility","visible");
             });
-            $("#fullscreen").click(function() {
+            $("#fullscreen").click(function(e) {
                 $(this).css("visibility", "hidden");
+                var offset = $(".displayed").offset();
+                var x = e.pageX - offset.left;
+                var y = e.pageY - offset.top;
+                $("#XValue").attr("value", x);
+                $("#YValue").attr("value", y);
+                alert("x = " + x + "y = " + y);
+                
                 //todo find out xy location on image
             });
         });
@@ -100,8 +107,12 @@
                     <asp:TextBox ID="voorbeeld" runat="server"></asp:TextBox>
                 </div>
             </div>
-            
-            
+            <asp:HiddenField ID="XValue" runat="server" ClientIDMode="Static" />
+            <asp:HiddenField ID="YValue" runat="server" ClientIDMode="Static" />
+
+
+
+
             <div class="frm">
             <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Reservering materiaal</asp:Label>

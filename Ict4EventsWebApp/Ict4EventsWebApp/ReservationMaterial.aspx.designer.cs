@@ -310,6 +310,24 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.TextBox voorbeeld;
         
         /// <summary>
+        /// XValue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField XValue;
+        
+        /// <summary>
+        /// YValue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField YValue;
+        
+        /// <summary>
         /// lbMaterialToReserve control.
         /// </summary>
         /// <remarks>

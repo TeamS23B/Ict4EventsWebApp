@@ -66,6 +66,9 @@ namespace Ict4EventsWebApp
 
         protected void btnNextStep_Click(object sender, EventArgs e)
         {
+            string a = XValue.Value;
+            string b = YValue.Value;
+
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
