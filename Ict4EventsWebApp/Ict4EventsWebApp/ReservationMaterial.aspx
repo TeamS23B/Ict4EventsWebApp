@@ -36,7 +36,8 @@
     </div>
     <div id="content">
         <form id="form1" runat="server">
-            <div class="labelleft">
+            <div class="frm">
+        <div class="labelleft">
             <asp:Label ID="lblFirstName" CssClass="labelMargin" runat="server" Text="Voornaam:"></asp:Label>
             <asp:Label ID="lblInfix" CssClass="labelMargin" runat="server" Text="Tussenvoegsel:"></asp:Label>
             <asp:Label ID="lblSurname" CssClass="labelMargin" runat="server" Text="Achternaam:"></asp:Label>
@@ -87,7 +88,7 @@
 
             <asp:Button ID="btnNextStep" runat="server" Text="Volgende stap" />
         </div>
-        
+        </div>
         
 
             <div class="frm">
