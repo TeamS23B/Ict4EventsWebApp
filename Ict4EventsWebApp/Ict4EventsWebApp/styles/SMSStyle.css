@@ -85,6 +85,7 @@
     color: #fff;
     font-size: xx-large;
     font-weight: bold;
+    display: inline-block;
 }
 
 #categorieTrace a,
@@ -184,7 +185,7 @@
     left: 0px;
     right: 0px; 
     color: #ffffff;
-    background-color: #1C8566;;
+    background-color: #1C8566;
 }
 
 .clear {
