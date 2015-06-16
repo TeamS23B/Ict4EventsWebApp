@@ -40,6 +40,15 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.TextBox tbName;
         
         /// <summary>
+        /// FVEventname control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator FVEventname;
+        
+        /// <summary>
         /// lblLocatie control.
         /// </summary>
         /// <remarks>
@@ -74,6 +83,15 @@ namespace Ict4EventsWebApp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMaxVis;
+        
+        /// <summary>
+        /// FVMaxVisitors control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator FVMaxVisitors;
         
         /// <summary>
         /// btnAddEvent control.
@@ -247,6 +265,15 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.TextBox tbBrand;
         
         /// <summary>
+        /// FVBrand control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator FVBrand;
+        
+        /// <summary>
         /// lblSeries control.
         /// </summary>
         /// <remarks>
@@ -263,6 +290,15 @@ namespace Ict4EventsWebApp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSeries;
+        
+        /// <summary>
+        /// FVSerie control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator FVSerie;
         
         /// <summary>
         /// lblTypeNr control.
@@ -283,6 +319,15 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.TextBox tbTypeNr;
         
         /// <summary>
+        /// FVTypeNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator FVTypeNumber;
+        
+        /// <summary>
         /// lblPrice control.
         /// </summary>
         /// <remarks>
@@ -299,6 +344,15 @@ namespace Ict4EventsWebApp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbPrice;
+        
+        /// <summary>
+        /// FVPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator FVPrice;
         
         /// <summary>
         /// lblCat control.

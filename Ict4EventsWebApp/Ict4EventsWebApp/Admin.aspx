@@ -28,11 +28,18 @@
                 <div class="leftSettings">
                     <asp:Label ID="lblNaam" runat="server" Text="Naam"></asp:Label>
                     <asp:TextBox ID="tbName" runat="server"></asp:TextBox>
-                    
+                    <asp:RequiredFieldValidator ID="FVEventname" runat="server"
+                    ControlToValidate="tbName"
+                    ErrorMessage="naam is verplicht"
+                    ForeColor="Green"></asp:RequiredFieldValidator>
                     <asp:Label ID="lblLocatie" runat="server" Text="Locatie:"></asp:Label>
                     <asp:DropDownList ID="ddlLocation" runat="server"></asp:DropDownList>
                     <asp:Label ID="lblMaxVis" runat="server" Text="Maximaal aantal bezoekers"></asp:Label>
                     <asp:TextBox ID="tbMaxVis" runat="server" type="number" min="0"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="FVMaxVisitors" runat="server"
+                    ControlToValidate="tbMaxVis"
+                    ErrorMessage="Er moet een maximum aantal worden ingevoerd"
+                    ForeColor="Green"></asp:RequiredFieldValidator>
                     <asp:Button ID="btnAddEvent" runat="server" Text="Maak event" OnClick="btnAddEvent_Click" />
                 </div>
                 <div class="rightSettings">
@@ -71,12 +78,28 @@
                 <div class="addMat">
                     <asp:Label ID="lblBrand" runat="server" Text="Merk"></asp:Label>
                     <asp:TextBox ID="tbBrand" runat="server" Enabled="False"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="FVBrand" runat="server"
+                    ControlToValidate="tbBrand"
+                    ErrorMessage="Merk is verplicht"
+                    ForeColor="Green"></asp:RequiredFieldValidator>
                     <asp:Label ID="lblSeries" runat="server" Text="Serie"></asp:Label>
                     <asp:TextBox ID="tbSeries" runat="server" Enabled="False"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="FVSerie" runat="server"
+                    ControlToValidate="tbSeries"
+                    ErrorMessage="Serie is verplicht"
+                    ForeColor="Green"></asp:RequiredFieldValidator>
                     <asp:Label ID="lblTypeNr" runat="server" Text="Typenummer"></asp:Label>
                     <asp:TextBox ID="tbTypeNr" runat="server" Enabled="False"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="FVTypeNumber" runat="server"
+                    ControlToValidate="tbTypeNr"
+                    ErrorMessage="Typenummer is verplicht"
+                    ForeColor="Green"></asp:RequiredFieldValidator>
                     <asp:Label ID="lblPrice" runat="server" Text="Prijs"></asp:Label>
                     <asp:TextBox ID="tbPrice" runat="server" Enabled="False"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="FVPrice" runat="server"
+                    ControlToValidate="tbPrice"
+                    ErrorMessage="prijs is verplicht"
+                    ForeColor="Green"></asp:RequiredFieldValidator>
                     <asp:Label ID="lblCat" runat="server" Text="Categorie"></asp:Label>
                     <asp:DropDownList ID="ddlCat" runat="server" Enabled="False"></asp:DropDownList>
                     <asp:Button ID="btnUpdate" runat="server" Text="Product bijwerken" Enabled="False" OnClick="btnUpdate_Click" />
