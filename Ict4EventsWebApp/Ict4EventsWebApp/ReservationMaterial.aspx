@@ -7,7 +7,7 @@
     <link href="styles/reset.css" rel="stylesheet" />
     <link href="styles/style.css" rel="stylesheet" />
     <link href="styles/ReservationMaterial.css" rel="stylesheet" />
-    <link href="styles/RegistrationCustomerInfo.css" rel="stylesheet" />
+   <%-- <link href="styles/RegistrationCustomerInfo.css" rel="stylesheet" />--%>
     <script src="scripts/jquery-1.11.2.min.js"></script>
     <script src="scripts/ui.js"></script>
     <script>
