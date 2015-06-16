@@ -114,7 +114,6 @@
                     <img id="showImage" alt="Camping" src="images/Camping.png" />
                     <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
                     <asp:Label ID="leel" runat="server" Text="Label"></asp:Label>
-                    <asp:TextBox ID="voorbeeld" runat="server"></asp:TextBox>
                 </div>
             </div>
             <asp:HiddenField ID="XValue" runat="server" ClientIDMode="Static" />

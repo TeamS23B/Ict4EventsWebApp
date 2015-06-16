@@ -158,8 +158,8 @@ namespace Ict4EventsWebApp
                 com.Connection = con;
                 com.ExecuteNonQuery();
 
-                leel.Text = "plek: " + com.Parameters["PlekId"].Value;
-        }
+                string plekid = "plek: " + com.Parameters["PlekId"].Value;
+            }
             
         }
 
