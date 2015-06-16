@@ -12,7 +12,7 @@ namespace Ict4EventsWebApp
 
         public Party()
         {
-
+            Members = new List<Person>();
         }
 
 
