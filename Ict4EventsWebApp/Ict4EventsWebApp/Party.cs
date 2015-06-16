@@ -7,13 +7,14 @@ namespace Ict4EventsWebApp
 {
     public class Party
     {
-        public Person Leader { get; set; }
+
         public List<Person> Members { get; set; }
 
-        public Party(Person leader)
+        public Party()
         {
-            this.Leader = leader;
+
         }
+
 
         public void AddMember(Person member)
         {
