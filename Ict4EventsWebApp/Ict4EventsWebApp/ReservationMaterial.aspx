@@ -61,7 +61,7 @@
         
 
         <div class="textboxleft">
-
+                        <asp:RequiredFieldValidator ID="rfvFirstName" ControlToValidate="tbFirstName" Display="Dynamic" runat="server" ErrorMessage="RequiredFieldValidator"></asp:RequiredFieldValidator>
             <asp:TextBox ID="tbFirstName" CssClass="textBoxMargin" runat="server"></asp:TextBox>
             <asp:TextBox ID="tbInfix" CssClass="textBoxMargin" runat="server"></asp:TextBox>
             <asp:TextBox ID="tbSurname" CssClass="textBoxMargin" runat="server"></asp:TextBox>
