@@ -22,6 +22,15 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// pnlRegistration control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlRegistration;
+        
+        /// <summary>
         /// lblFirstName control.
         /// </summary>
         /// <remarks>
@@ -184,6 +193,105 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.ListBox lbGroupMembers;
         
         /// <summary>
+        /// rfvFirstName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFirstName;
+        
+        /// <summary>
+        /// rfcLastName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcLastName;
+        
+        /// <summary>
+        /// rfcEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcEmail;
+        
+        /// <summary>
+        /// rfcPostalCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcPostalCode;
+        
+        /// <summary>
+        /// rfcCity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcCity;
+        
+        /// <summary>
+        /// rfcIban control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcIban;
+        
+        /// <summary>
+        /// rfcStreet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcStreet;
+        
+        /// <summary>
+        /// rfcHouseNr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcHouseNr;
+        
+        /// <summary>
+        /// regexEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator regexEmail;
+        
+        /// <summary>
+        /// regexIban control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator regexIban;
+        
+        /// <summary>
+        /// regexPostalCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator regexPostalCode;
+        
+        /// <summary>
         /// lblFirstNameGM control.
         /// </summary>
         /// <remarks>
@@ -301,31 +409,13 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
-        /// Label1 control.
+        /// leel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
-        /// voorbeeld control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox voorbeeld;
-        
-        /// <summary>
-        /// pnlMaterial control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlMaterial;
+        protected global::System.Web.UI.WebControls.Label leel;
         
         /// <summary>
         /// XValue control.
@@ -346,6 +436,15 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.HiddenField YValue;
         
         /// <summary>
+        /// pnlMaterial control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlMaterial;
+        
+        /// <summary>
         /// lbMaterialToReserve control.
         /// </summary>
         /// <remarks>
@@ -355,13 +454,22 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.ListBox lbMaterialToReserve;
         
         /// <summary>
-        /// Details control.
+        /// lbReserveringDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Details;
+        protected global::System.Web.UI.WebControls.Label lbReserveringDetails;
+        
+        /// <summary>
+        /// lbPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbPrice;
         
         /// <summary>
         /// btMaterialAdd control.
@@ -436,13 +544,13 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.ListBox ConfrimMaterial;
         
         /// <summary>
-        /// ReserveringDetails control.
+        /// Details control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ReserveringDetails;
+        protected global::System.Web.UI.WebControls.Label Details;
         
         /// <summary>
         /// btCMaterialTerug control.

@@ -9,7 +9,7 @@
     <link href="styles/MateriaalVerhuur.css" rel="stylesheet" />
     <script src="scripts/jquery-1.11.2.min.js"></script>
     <script src="scripts/ui.js"></script>
-    <title></title>
+    <title>Materiaalverhuur | ICT4Events</title>
 </head>
 <body>
     <div id="topBar">
@@ -35,6 +35,10 @@
                 <div class="ScanInfo">
                     <asp:Label runat="server">Gescande Barcode: </asp:Label>
                     <asp:TextBox ID="tbBarcode" runat="server"></asp:TextBox>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
+                    ControlToValidate="tbBarcode"
+                    ErrorMessage="Barcode is verplicht"
+                    ForeColor="green"></asp:RequiredFieldValidator>
                     <asp:Button ID="BtnConfirm" runat="server" Text="Bevestig" OnClick="BtnConfirm_Click" />
                     <asp:Label ID="lblNaam" runat="server" Text="Naam: "></asp:Label>
                     <asp:Label ID="lbNameAfterBarcode" runat="server" Text=""></asp:Label>

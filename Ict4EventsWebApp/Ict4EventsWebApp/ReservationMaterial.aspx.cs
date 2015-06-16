@@ -10,6 +10,7 @@ using System.Configuration;
 using Oracle.ManagedDataAccess;
 using Oracle.ManagedDataAccess.Types;
 using System.Data;
+using System.Collections.Generic;
 
 namespace Ict4EventsWebApp
 {
@@ -28,18 +29,27 @@ namespace Ict4EventsWebApp
             if (Session["party"] == null)
             {
                 party = new Party();
+            }
+            else
+            {
+                party = (Party)Session["party"];
+                lbGroupMembers.Items.Clear();
+                foreach (Person person in party.Members)
+                {
+                    lbGroupMembers.Items.Add(person.ToString());
+                }
+            }
+            
         }
-        }
-
-        
 
         protected void Button1_Click(object sender, EventArgs e)
         {
             pnlMaterial.Visible = true;
+            pnlMap.Visible = false;
 
             //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             //{
-                
+
 
             //    DbCommand com = OracleClientFactory.Instance.CreateCommand();
             //    com.CommandType = System.Data.CommandType.StoredProcedure;
@@ -77,23 +87,420 @@ namespace Ict4EventsWebApp
             //    //Verbinding sluiten (waarschijnlijk doe je dit in je applicatie niet per database commando)
             //    con.Close();
             //}
+            try
+            {
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    if (con == null)
+                    {
+                        //return "Error! No Connection";
+                    }
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+                        //return "Error! No Command";
+                    }
+                    com.Connection = con;
+                    com.CommandText = "SELECT DISTINCT product.id, Merk, serie, prijs FROM PRODUCT INNER JOIN productexemplaar ON product.id = productexemplaar.product_id WHERE productexemplaar.id NOT IN (select productexemplaar_id FROM verhuur)";
+                    DbDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        lbavailableMaterial.Items.Add(reader[0].ToString() + ". " + reader[1].ToString() + " " + reader[2].ToString());
+                    }
+                }
+            }
+            catch (DbException ex)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('" + ex.Message + "')</script>");
+                return;
+            }
+            catch (NullReferenceException ex)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('" + ex.Message + "')</script>");
+                return;
+            }
         }
 
         protected void btnNextStep_Click(object sender, EventArgs e)
         {
+
+            pnlMap.Visible = true;
+            pnlRegistration.Visible = false;
+
+        }
+        protected void btRMAterialVerder_Click(object sender, EventArgs e)
+        {
+            pnlOverview.Visible = true;
+            pnlMaterial.Visible = false;
+        }
+
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            Person person = new Person(TextBox2.Text, TextBox3.Text, TextBox4.Text, TextBox5.Text);
+            party.AddMember(person);
+            lbGroupMembers.Items.Add(person.ToString());
+            Session["party"] = party;
+            TextBox2.Text = "";
+            TextBox3.Text = "";
+            TextBox4.Text = "";
+            TextBox5.Text = "";
+
+        }
+
+        protected void btCMaterialVerder_Click(object sender, EventArgs e)
+        {
             string a = XValue.Value;
             string b = YValue.Value;
+            string persoonId;
+            string accountId;
+            string reserveringId;
 
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
                 com.CommandType = System.Data.CommandType.StoredProcedure;
-            pnlMap.Visible = true;
+                com.CommandText = "GET_PLEKID";
+
+                var p1 = com.CreateParameter();
+                p1.DbType = DbType.Decimal;
+                p1.ParameterName = "X";
+                p1.Value = Convert.ToInt32(a);
+                com.Parameters.Add(p1);
+
+                var p2 = com.CreateParameter();
+                p2.DbType = DbType.Decimal;
+                p2.ParameterName = "Y";
+                p2.Value = Convert.ToInt32(b);
+                com.Parameters.Add(p2);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "PlekId";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                string plekid = com.Parameters["PlekId"].Value.ToString();
+            }
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "INSERT_PERSOONLEIDER";
+                string infix;
+                if (tbInfix.Text == "")
+                {
+                    infix = " ";
+                }
+                else
+                {
+                    infix = tbInfix.Text;
+                }
+
+                AddParameterWithValue(com, "voornaam", tbFirstName.Text);
+                AddParameterWithValue(com, "tussenvoegsel", infix);
+                AddParameterWithValue(com, "achternaam", tbSurname.Text);
+                AddParameterWithValue(com, "straat", tbStreet.Text);
+                AddParameterWithValue(com, "huisnr", tbHouseNr.Text);
+                AddParameterWithValue(com, "postcode", tbPostalCode.Text);
+                AddParameterWithValue(com, "banknr", tbIban.Text);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "insertGelukt";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                string result = com.Parameters["insertGelukt"].Value.ToString();
+
+                if (result == "0")
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                }
             }
 
-        protected void btRMAterialVerder_Click(object sender, EventArgs e)
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandText = "SELECT MAX(ID) FROM PERSOON";
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+
+                string c = com.ExecuteScalar().ToString();
+                int d = Convert.ToInt32(c);
+                persoonId = d.ToString();
+            }
+
+            //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            //{
+            //    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+            //    com.CommandType = System.Data.CommandType.StoredProcedure;
+            //    com.CommandText = "INSERT_ACCOUNT";
+            //    string gebruikersnaam = tbFirstName.Text.ToString() + " " + tbSurname.Text.ToString();
+            //    AddParameterWithValue(com, "gebruikersnaam", tbFirstName.Text.ToString() + " " + tbSurname.Text.ToString());
+            //    AddParameterWithValue(com, "email", tbEmail.Text);
+
+            //    var q = com.CreateParameter();
+            //    q.DbType = DbType.Decimal;
+            //    q.ParameterName = "insertGelukt";
+            //    q.Direction = ParameterDirection.Output;
+            //    com.Parameters.Add(q);
+
+            //    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+            //    con.Open();
+            //    com.Connection = con;
+            //    com.ExecuteNonQuery();
+
+            //    string result = com.Parameters["insertGelukt"].Value.ToString();
+            //    //if (result == "0")
+            //    //    {
+            //    //        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+            //    //    }
+            //}
+
+            //    if (result == "0")
+            //    {
+            //        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+            //    }
+            //}
+
+            ////PERSOONID
+            //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            //{
+            //    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+            //    com.CommandText = "SELECT MAX(ID) FROM PERSOON";
+
+            //    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+            //    con.Open();
+            //    com.Connection = con;
+
+            //    string c = com.ExecuteScalar().ToString();
+            //    int d = Convert.ToInt32(c);
+            //    persoonId = d.ToString();
+            //}
+
+            ////ACCOUNT
+            //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            //{
+            //    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+            //    com.CommandType = System.Data.CommandType.StoredProcedure;
+            //    com.CommandText = "INSERT_ACCOUNT";
+
+            //    AddParameterWithValue(com, "gebruikersnaam", tbFirstName.Text.ToString() + " " + tbSurname.Text.ToString());
+            //    AddParameterWithValue(com, "email", tbEmail.Text);
+
+            //    var q = com.CreateParameter();
+            //    q.DbType = DbType.Decimal;
+            //    q.ParameterName = "insertGelukt";
+            //    q.Direction = ParameterDirection.Output;
+            //    com.Parameters.Add(q);
+
+            //    var qacc = com.CreateParameter();
+            //    qacc.DbType = DbType.Decimal;
+            //    qacc.ParameterName = "accountId";
+            //    qacc.Direction = ParameterDirection.Output;
+            //    com.Parameters.Add(qacc);
+
+            //    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+            //    con.Open();
+            //    com.Connection = con;
+            //    com.ExecuteNonQuery();
+
+            //    string result = com.Parameters["insertGelukt"].Value.ToString();
+            //    if (result == "0")
+            //    {
+            //        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+            //    }
+            //    accountId = com.Parameters["accountId"].Value.ToString();
+            //}
+
+            
+
+            ////RESERVERING
+            //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            //{
+            //    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+            //    com.CommandType = System.Data.CommandType.StoredProcedure;
+            //    com.CommandText = "INSERT_RESERVERING";
+
+            //    AddParameterWithValue(com, "persoonId", persoonId);
+
+            //    var q = com.CreateParameter();
+            //    q.DbType = DbType.Decimal;
+            //    q.ParameterName = "insertGelukt";
+            //    q.Direction = ParameterDirection.Output;
+            //    com.Parameters.Add(q);
+
+            //    var qacc = com.CreateParameter();
+            //    qacc.DbType = DbType.Decimal;
+            //    qacc.ParameterName = "reserveringIdOUT";
+            //    qacc.Direction = ParameterDirection.Output;
+            //    com.Parameters.Add(qacc);
+
+            //    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+            //    con.Open();
+            //    com.Connection = con;
+            //    com.ExecuteNonQuery();
+
+            //    string result = com.Parameters["insertGelukt"].Value.ToString();
+            //    if (result == "0")
+            //    {
+            //        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+            //    }
+            //    reserveringId = com.Parameters["reserveringIdOUT"].Value.ToString();
+            //}
+            ////reservering polsbandje
+            //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            //{
+            //    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+            //    com.CommandType = System.Data.CommandType.StoredProcedure;
+            //    com.CommandText = "INSERT_RESERVERING_POLSBANDJE";
+
+            //    AddParameterWithValue(com, "reservering_Id", reserveringId);
+            //    AddParameterWithValue(com, "account_Id", accountId);
+
+            //    var q = com.CreateParameter();
+            //    q.DbType = DbType.Decimal;
+            //    q.ParameterName = "insertGelukt";
+            //    q.Direction = ParameterDirection.Output;
+            //    com.Parameters.Add(q);
+
+            //    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+            //    con.Open();
+            //    com.Connection = con;
+            //    com.ExecuteNonQuery();
+
+            //    string result = com.Parameters["insertGelukt"].Value.ToString();
+            //    if (result == "0")
+            //    {
+            //        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+            //    }
+            //}
+
+            List<string> removals = new List<string>();
+            foreach (string s in lbMaterialToReserve.Items)
+                {
+                //MessageBox.Show(s);
+                //do stuff with (s);
+                //removals.Add(s);
+            }
+
+        }
+
+        private void AddParameterWithValue(DbCommand command, string parameterName, object parameterValue)
         {
-            pnlOverview.Visible = true;
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = parameterName;
+            parameter.Value = parameterValue;
+            parameter.DbType = System.Data.DbType.AnsiString;
+            parameter.Direction = System.Data.ParameterDirection.Input;
+            command.Parameters.Add(parameter);
+        }
+
+        protected void btnRemove_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btMaterialAdd_Click(object sender, EventArgs e)
+        {
+            int Bedrag = Convert.ToInt32(lbPrice.Text); 
+            string ToAddMaterial = lbavailableMaterial.SelectedValue.ToString();
+            lbMaterialToReserve.Items.Add(ToAddMaterial);
+            lbavailableMaterial.Items.Remove(ToAddMaterial);
+            try
+            {
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    if (con == null)
+                    {
+
+                    }
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+
+                    }
+                    com.Connection = con;
+                    com.CommandText = "Select prijs FROM product WHERE product.id = :1 AND rownum = 1";
+                    AddParameterWithValue(com, "prodId", ToAddMaterial.Substring(0, ToAddMaterial.IndexOf(".")));
+                    DbDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Bedrag = Bedrag + Convert.ToInt32(reader[0]);
+                        lbPrice.Text = Bedrag.ToString();
+                    }
+                }
+            }
+            catch (DbException ex)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('" + ex.Message + "')</script>");
+                return;
+            }
+            catch (NullReferenceException ex)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('" + ex.Message + "')</script>");
+                return;
+            }
+        }
+
+        protected void btMaterialDelete_Click(object sender, EventArgs e)
+        {
+            string ToAddMaterial = lbMaterialToReserve.SelectedValue.ToString();
+            lbavailableMaterial.Items.Add(ToAddMaterial);
+            lbMaterialToReserve.Items.Remove(ToAddMaterial);
+            int Bedrag = Convert.ToInt32(lbPrice.Text);
+            try
+            {
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    if (con == null)
+                    {
+
+                    }
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+
+                    }
+                    com.Connection = con;
+                    com.CommandText = "Select prijs FROM product WHERE product.id = :1 AND rownum = 1";
+                    AddParameterWithValue(com, "prodId", ToAddMaterial.Substring(0, ToAddMaterial.IndexOf(".")));
+                    DbDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Bedrag = Bedrag - Convert.ToInt32(reader[0]);
+                        lbPrice.Text = Bedrag.ToString();
+                    }
+                }
+            }
+            catch (DbException ex)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('" + ex.Message + "')</script>");
+                return;
+            }
+            catch (NullReferenceException ex)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('" + ex.Message + "')</script>");
+                return;
+            }
         }
     }
 }
