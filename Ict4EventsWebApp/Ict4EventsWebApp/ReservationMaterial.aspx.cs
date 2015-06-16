@@ -25,8 +25,7 @@ namespace Ict4EventsWebApp
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
 
-                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-                con.Open();
+                
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
                 com.CommandType = System.Data.CommandType.StoredProcedure;
                 com.CommandText = "Verdubbel";
@@ -40,12 +39,15 @@ namespace Ict4EventsWebApp
                 q.DbType = DbType.Decimal;
                 q.ParameterName = "resultaat";
                 q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
 
                 //com.Parameters.Add("teVerdubbelen", OracleDbType.Decimal).value = Convert.ToInt32(TextBox1.Text);
                 //com.Parameters.Add("resultaat", OracleDbType.Decimal).Direction = ParameterDirection.Output;
                 try
                 {
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
                     con.Open();
+                    com.Connection = con;
                     com.ExecuteNonQuery(); //Voert de stored procedure uit
 
                     Label1.Text = "De verdubbelde waarde is: " + com.Parameters["resultaat"].Value;
