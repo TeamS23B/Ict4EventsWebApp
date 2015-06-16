@@ -197,9 +197,18 @@ namespace Ict4EventsWebApp
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
                 com.CommandType = System.Data.CommandType.StoredProcedure;
                 com.CommandText = "INSERT_PERSOONLEIDER";
+                string infix;
+                if (tbInfix.Text == "")
+                {
+                    infix = " ";
+                }
+                else
+                {
+                    infix = tbInfix.Text;
+                }
 
                 AddParameterWithValue(com, "voornaam", tbFirstName.Text);
-                AddParameterWithValue(com, "tussenvoegsel", tbInfix.Text);
+                AddParameterWithValue(com, "tussenvoegsel", infix);
                 AddParameterWithValue(com, "achternaam", tbSurname.Text);
                 AddParameterWithValue(com, "straat", tbStreet.Text);
                 AddParameterWithValue(com, "huisnr", tbHouseNr.Text);
@@ -441,6 +450,51 @@ namespace Ict4EventsWebApp
             //    //do stuff with (s);
             //    //removals.Add(s);
             //}
+
+            // Insert groepsleden
+            foreach (Person member in party.Members)
+            {
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    com.CommandType = System.Data.CommandType.StoredProcedure;
+                    com.CommandText = "INSERT_PERSOONLID";
+                    string infix;
+                    if (member.Infix == null)
+                    {
+                        infix = " ";
+                    }
+                    else
+                    {
+                        infix = member.Infix;
+                    }
+
+                    AddParameterWithValue(com, "voornaam", member.Name);
+                    AddParameterWithValue(com, "tussenvoegsel", infix);
+                    AddParameterWithValue(com, "achternaam", member.Surname);
+                    
+
+
+                    var q = com.CreateParameter();
+                    q.DbType = DbType.Decimal;
+                    q.ParameterName = "insertGelukt";
+                    q.Direction = ParameterDirection.Output;
+                    com.Parameters.Add(q);
+
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    com.Connection = con;
+                    com.ExecuteNonQuery();
+
+                    string result = com.Parameters["insertGelukt"].Value.ToString();
+
+                    if (result == "0")
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                    }
+                }
+            }
+            
 
         }
 
