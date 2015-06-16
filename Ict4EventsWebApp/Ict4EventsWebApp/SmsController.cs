@@ -45,8 +45,20 @@ namespace Ict4EventsWebApp
 
             o.categorieTrace.Add(new {id = 0, title = "aapje", username = "aapje", date = DateTime.Now, likes = 0, flags = 0, comments = 0});
             o.categorieTrace.Add(new { id = 0, title = "aapje", username = "aapje", date = DateTime.Now, likes = 0, flags = 0, comments = 0 });
-            
-            //o.categories
+
+            o.categories.Add(new {id = 0, title = "aapje", username = "aapje", date = DateTime.Now, likes = 0, flags = 0, comments = 0});
+            o.categories.Add(new { id = 0, title = "aapje", username = "aapje", date = DateTime.Now, likes = 0, flags = 0, comments = 0 });
+
+            o.posts.Add(new {id = 0, type = "file/file|image|video", url = "aapje",size = 0, likes = 0, flags = 0, comments = 0});
+            o.posts.Add(new {id = 0, type = "text", title = "aapje", text = "ik wil meer aapjes", likes = 0, flags = 0, comments = 0});
+
+            return Json(o);
+        }
+
+        public IHttpActionResult GetPostComments(int id)
+        {
+            var o = new {};
+
             return Json(o);
         }
     }
