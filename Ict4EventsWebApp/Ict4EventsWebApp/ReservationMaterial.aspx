@@ -38,13 +38,13 @@
         <form id="form1" runat="server">
             <div class="frm">
         <div class="labelleft">
-            <asp:Label ID="lblFirstName" CssClass="labelMargin" runat="server" Text="Voornaam:"></asp:Label>
-            <asp:Label ID="lblInfix" CssClass="labelMargin" runat="server" Text="Tussenvoegsel:"></asp:Label>
-            <asp:Label ID="lblSurname" CssClass="labelMargin" runat="server" Text="Achternaam:"></asp:Label>
-            <asp:Label ID="lblEmail" CssClass="labelMargin" runat="server" Text="Email:"></asp:Label>
-            <asp:Label ID="lblStreetHouseNr" CssClass="labelMargin" runat="server" Text="Straat + huisnummer:"></asp:Label>
-            <asp:Label ID="lblPostalCodeCity" CssClass="labelMargin" runat="server" Text="Postcode + woonplaats:"></asp:Label>
-            <asp:Label ID="lblIban" CssClass="labelMargin" runat="server" Text="Iban:"></asp:Label>
+            <asp:Label ID="lblFirstName" CssClass="labelMargin" runat="server" Text="Voornaam:" ClientIDMode="Static"></asp:Label>
+            <asp:Label ID="lblInfix" CssClass="labelMargin" runat="server" Text="Tussenvoegsel:" ClientIDMode="Static"></asp:Label>
+            <asp:Label ID="lblSurname" CssClass="labelMargin" runat="server" Text="Achternaam:" ClientIDMode="Static"></asp:Label>
+            <asp:Label ID="lblEmail" CssClass="labelMargin" runat="server" Text="Email:" ClientIDMode="Static"></asp:Label>
+            <asp:Label ID="lblStreetHouseNr" CssClass="labelMargin" runat="server" Text="Straat + huisnummer:" ClientIDMode="Static"></asp:Label>
+            <asp:Label ID="lblPostalCodeCity" CssClass="labelMargin" runat="server" Text="Postcode + woonplaats:" ClientIDMode="Static"></asp:Label>
+            <asp:Label ID="lblIban" CssClass="labelMargin" runat="server" Text="Iban:" ClientIDMode="Static"></asp:Label>
             
         </div>
         
@@ -88,6 +88,7 @@
 
             <asp:Button ID="btnNextStep" runat="server" Text="Volgende stap" />
         </div>
+                <div class="clearDiv"></div>
         </div>
         
 
@@ -122,7 +123,7 @@
                 <asp:ListBox ID="lbavailableMaterial" runat="server"></asp:ListBox>
 
             </div>
-            <div id="clearDiv"></div>
+            <div class="clearDiv"></div>
 
             <div>
                 <asp:Button ID="btRMaterialTerug" runat="server" Text="Terug" />
@@ -155,7 +156,7 @@
             <div class="frm">
                 <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
-                    <img id="showImage" alt="Camping" src="images/Camping.png" width="200px"/>
+                    <img id="showImage" alt="Camping" src="images/Camping.png" />
                     <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
                     <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
                     <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>

@@ -8,6 +8,7 @@
     padding: 6px;
 }
 
+
 IMG.displayed {
     display: block;
     margin-left: auto;
@@ -162,7 +163,7 @@ IMG.displayed {
     
 }
 
-#clearDiv {
+.clearDiv {
     clear: both;
 }
 
