@@ -28,7 +28,7 @@ namespace Ict4EventsWebApp
             if (Session["party"] == null)
             {
                 party = new Party();
-            }
+        }
         }
 
         
@@ -39,8 +39,8 @@ namespace Ict4EventsWebApp
 
             //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             //{
-
                 
+
             //    DbCommand com = OracleClientFactory.Instance.CreateCommand();
             //    com.CommandType = System.Data.CommandType.StoredProcedure;
             //    com.CommandText = "Verdubbel";
@@ -81,8 +81,15 @@ namespace Ict4EventsWebApp
 
         protected void btnNextStep_Click(object sender, EventArgs e)
         {
+            string a = XValue.Value;
+            string b = YValue.Value;
+
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
             pnlMap.Visible = true;
-        }
+            }
 
         protected void btRMAterialVerder_Click(object sender, EventArgs e)
         {
