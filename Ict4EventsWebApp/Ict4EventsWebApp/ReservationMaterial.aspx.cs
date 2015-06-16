@@ -40,16 +40,6 @@ namespace Ict4EventsWebApp
         }
             }
         }
-
-        private void AddParameterWithValue(DbCommand command, string parameterName, object parameterValue)
-        {
-            var parameter = command.CreateParameter();
-            parameter.ParameterName = parameterName;
-            parameter.Value = parameterValue;
-            parameter.DbType = System.Data.DbType.AnsiString;
-            parameter.Direction = System.Data.ParameterDirection.Input;
-            command.Parameters.Add(parameter);
-        }
         
         protected void Button1_Click(object sender, EventArgs e)
         {
@@ -158,9 +148,50 @@ namespace Ict4EventsWebApp
                 com.Connection = con;
                 com.ExecuteNonQuery();
 
-                string plekid = "plek: " + com.Parameters["PlekId"].Value;
+                string plekid = com.Parameters["PlekId"].Value.ToString();
             }
-            
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "INSERT_PERSOONLEIDER";
+
+                AddParameterWithValue(com, "voornaam", tbFirstName.Text);
+                AddParameterWithValue(com, "tussenvoegsel", tbInfix.Text);
+                AddParameterWithValue(com, "achternaam", tbSurname.Text);
+                AddParameterWithValue(com, "straat", tbStreet.Text);
+                AddParameterWithValue(com, "huisnr", tbHouseNr.Text);
+                AddParameterWithValue(com, "postcode", tbPostalCode.Text);
+                AddParameterWithValue(com, "banknr", tbIban.Text);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "insertGelukt";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                string result = com.Parameters["insertGelukt"].Value.ToString();
+
+                if (result == "0")
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                }
+            }
+        }
+
+        private void AddParameterWithValue(DbCommand command, string parameterName, object parameterValue)
+        {
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = parameterName;
+            parameter.Value = parameterValue;
+            parameter.DbType = System.Data.DbType.AnsiString;
+            parameter.Direction = System.Data.ParameterDirection.Input;
+            command.Parameters.Add(parameter);
         }
 
         protected void btnRemove_Click(object sender, EventArgs e)
