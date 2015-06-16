@@ -90,6 +90,7 @@
     <Content Include="RegistrationCustomerInfo.aspx" />
     <Content Include="packages.config" />
     <Content Include="Notities.docx" />
+    <Content Include="App_Browsers\chrome.browser" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

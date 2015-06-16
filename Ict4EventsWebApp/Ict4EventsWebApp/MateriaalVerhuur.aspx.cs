@@ -12,12 +12,16 @@ namespace Ict4EventsWebApp
 {
     public partial class MateriaalVerhuur : System.Web.UI.Page
     {
+        /// <summary>
+        /// If page first loads: fill list with available products
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
                 btSubmit.Enabled = false;
-                //todo add everything to rent
                 lbProducten.Items.Clear();
                 using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
                 {
@@ -40,12 +44,15 @@ namespace Ict4EventsWebApp
                     {
                         lbProducten.Items.Add(reader[0].ToString() + ". " + reader[1].ToString() + " " + reader[2].ToString());
                     }
-
                 }
             }
-            
         }
 
+        /// <summary>
+        /// Rent selected product until selected date for scanned person
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btSubmit_Click(object sender, EventArgs e)
         {
             if (clEndDate.SelectedDate >= DateTime.Today)
@@ -80,6 +87,13 @@ namespace Ict4EventsWebApp
                 Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Datum klopt niet')</script>");
             }
         }
+
+        /// <summary>
+        /// Inserting SQL Parameters
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="parameterValue"></param>
         private void AddParameterWithValue(DbCommand command, string parameterName, object parameterValue)
         {
             var parameter = command.CreateParameter();
@@ -90,6 +104,11 @@ namespace Ict4EventsWebApp
             command.Parameters.Add(parameter);
         }
 
+        /// <summary>
+        /// Lookup name for scanned barcode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void BtnConfirm_Click(object sender, EventArgs e)
         {
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
@@ -118,6 +137,11 @@ namespace Ict4EventsWebApp
             }
         }
 
+        /// <summary>
+        /// If product selected: lookup information.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void lbProducten_SelectedIndexChanged(object sender, EventArgs e)
         {
             btSubmit.Enabled = true;

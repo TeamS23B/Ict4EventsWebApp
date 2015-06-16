@@ -16,6 +16,12 @@ namespace Ict4EventsWebApp
         {
 
         }
+        /// <summary>
+        /// Inserting parameters
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="parameterName"></param>
+        /// <param name="parameterValue"></param>
         private void AddParameterWithValue(DbCommand command, string parameterName, object parameterValue)
         {
             var parameter = command.CreateParameter();
@@ -26,6 +32,11 @@ namespace Ict4EventsWebApp
             command.Parameters.Add(parameter);
         }
 
+        /// <summary>
+        /// Check existence of barcode, check payed and change available at event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnCheck_Click(object sender, EventArgs e)
         {
 
@@ -82,6 +93,12 @@ namespace Ict4EventsWebApp
             tbBarcode.Focus();
         }
 
+        /// <summary>
+        /// Change availability in the database
+        /// </summary>
+        /// <param name="aanwezig"></param>
+        /// <param name="resId"></param>
+        /// <returns></returns>
         private int updateAanwezigheid(short aanwezig, long resId)
         {
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())

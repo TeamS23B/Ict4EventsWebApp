@@ -99,6 +99,17 @@ namespace Ict4EventsWebApp
                 GenerateMaterials();
             }
         }
+        private void DatabaseError()
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Dit staat niet in de database')</script>");
+            return;
+        }
+
+        private void ConnectieError()
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Er is geen connectie')</script>");
+            return;
+        }
         /// <summary>
         /// Gets all Materials from the database and counts how many you have of each product
         /// </summary>
@@ -245,8 +256,6 @@ namespace Ict4EventsWebApp
                     }
                     cbBlock.Enabled = true;
                 }
-
-
                 catch (NullReferenceException)
                 {
                     DatabaseError();
@@ -271,27 +280,42 @@ namespace Ict4EventsWebApp
             {
                 if (con == null)
                 {
-                    //return "Error! No Connection";
+                    ConnectieError();
+                    return;
                 }
                 con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-                con.Open();
-                DbCommand com = OracleClientFactory.Instance.CreateCommand();
-                if (com == null)
+                try
                 {
-                    //return "Error! No Command";
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+                        //return "Error! No Command";
+                    }
+                    com.Connection = con;
+                    com.CommandText = "UPDATE account SET geactiveerd = :1 WHERE gebruikersnaam = :2";
+                    if (cbBlock.Checked)
+                    {
+                        AddParameterWithValue(com, "check", 0);
+                    }
+                    else
+                    {
+                        AddParameterWithValue(com, "check", 1);
+                    }
+                    AddParameterWithValue(com, "gebrNaam", lbUsers.SelectedValue.ToString());
+                    com.ExecuteNonQuery();
                 }
-                com.Connection = con;
-                com.CommandText = "UPDATE account SET geactiveerd = :1 WHERE gebruikersnaam = :2";
-                if (cbBlock.Checked)
+                catch (NullReferenceException)
                 {
-                    AddParameterWithValue(com, "check", 0);
+                    DatabaseError();
+                    return;
                 }
-                else
+                catch (DbException)
                 {
-                    AddParameterWithValue(com, "check", 1);
+                    ConnectieError();
+                    return;
                 }
-                AddParameterWithValue(com, "gebrNaam", lbUsers.SelectedValue.ToString());
-                com.ExecuteNonQuery();
+
             }
         }
         /// <summary>
@@ -307,31 +331,46 @@ namespace Ict4EventsWebApp
                 {
                     if (con == null)
                     {
-                        //return "Error! No Connection";
+                        ConnectieError();
+                        return;
                     }
                     con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-                    con.Open();
-                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
-                    if (com == null)
+                    try
                     {
-                        //return "Error! No Command";
-                    }
-                    com.Connection = con;
+                        con.Open();
+                        DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                        if (com == null)
+                        {
+                            //return "Error! No Command";
+                        }
+                        com.Connection = con;
 
-                    string selValue = lbMaterials.SelectedValue.ToString();
-                    int prodId = Convert.ToInt32(selValue.Substring(0, selValue.IndexOf(".")));
+                        string selValue = lbMaterials.SelectedValue.ToString();
+                        int prodId = Convert.ToInt32(selValue.Substring(0, selValue.IndexOf(".")));
 
-                    if (selValue.Substring(selValue.IndexOf(":") + 1) == "0")
-                    {
-                        com.CommandText = "INSERT INTO productexemplaar (product_id, volgnummer, barcode) VALUES (:1, 1, 1||:1)";
+                        if (selValue.Substring(selValue.IndexOf(":") + 1) == "0")
+                        {
+                            com.CommandText = "INSERT INTO productexemplaar (product_id, volgnummer, barcode) VALUES (:1, 1, 1||:1)";
+                        }
+                        else
+                        {
+                            com.CommandText = "INSERT INTO productexemplaar (product_id, volgnummer, barcode) SELECT product_id, max(volgnummer)+1, max(volgnummer)+1 || :1 FROM productexemplaar WHERE product_id = :1 GROUP BY product_id";
+                        }
+                        AddParameterWithValue(com, "prodNr", prodId);
+                        com.ExecuteNonQuery();
+                        GenerateMaterials();
                     }
-                    else
+                    catch (NullReferenceException)
                     {
-                        com.CommandText = "INSERT INTO productexemplaar (product_id, volgnummer, barcode) SELECT product_id, max(volgnummer)+1, max(volgnummer)+1 || :1 FROM productexemplaar WHERE product_id = :1 GROUP BY product_id";
+                        DatabaseError();
+                        return;
                     }
-                    AddParameterWithValue(com, "prodNr", prodId);
-                    com.ExecuteNonQuery();
-                    GenerateMaterials();
+                    catch (DbException)
+                    {
+                        ConnectieError();
+                        return;
+                    }
+
                 }
             }
         }
@@ -360,21 +399,23 @@ namespace Ict4EventsWebApp
 
                     if (con == null)
                     {
-                        //return "Error! No Connection";
+                        ConnectieError();
+                        return;
                     }
                     con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-                    con.Open();
-                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
-                    if (com == null)
-                    {
-                        //return "Error! No Command";
-                    }
-                    com.Connection = con;
-                    com.CommandText = "SELECT merk,serie,typenummer,prijs FROM product WHERE product.id = :1";
-                    AddParameterWithValue(com, "gebruiker", ProductId);
-                    DbDataReader reader = com.ExecuteReader();
                     try
                     {
+                        con.Open();
+                        DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                        if (com == null)
+                        {
+                            //return "Error! No Command";
+                        }
+                        com.Connection = con;
+                        com.CommandText = "SELECT merk,serie,typenummer,prijs FROM product WHERE product.id = :1";
+                        AddParameterWithValue(com, "gebruiker", ProductId);
+                        DbDataReader reader = com.ExecuteReader();
+
                         while (reader.Read())
                         {
                             tbBrand.Text = reader[0].ToString();
@@ -382,13 +423,21 @@ namespace Ict4EventsWebApp
                             tbTypeNr.Text = reader[2].ToString();
                             tbPrice.Text = Convert.ToString(reader[3]);
                         }
+
                     }
                     catch (NullReferenceException)
                     {
-
+                        DatabaseError();
+                        return;
                     }
-
+                    catch (DbException)
+                    {
+                        ConnectieError();
+                        return;
+                    }
                 }
+
+
             }
             //If it's a new product all textboxes become empty
             else
@@ -418,21 +467,35 @@ namespace Ict4EventsWebApp
                 {
                     if (con == null)
                     {
-                        //return "Error! No Connection";
+                        ConnectieError();
+                        return;
                     }
                     con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-                    con.Open();
-                    //Deletes an copy of a product which isn't rent
-                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
-                    if (com == null)
+                    try
                     {
-                        //return "Error! No Command";
+                        con.Open();
+                        //Deletes an copy of a product which isn't rent
+                        DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                        if (com == null)
+                        {
+                            //return "Error! No Command";
+                        }
+                        com.Connection = con;
+                        com.CommandText = "DELETE FROM productexemplaar WHERE id NOT IN (select productexemplaar_id FROM verhuur) AND product_id = :1 and rownum = 1";
+                        AddParameterWithValue(com, "prodNr", ProductId);
+                        com.ExecuteNonQuery();
+                        GenerateMaterials();
                     }
-                    com.Connection = con;
-                    com.CommandText = "DELETE FROM productexemplaar WHERE id NOT IN (select productexemplaar_id FROM verhuur) AND product_id = :1 and rownum = 1";
-                    AddParameterWithValue(com, "prodNr", ProductId);
-                    com.ExecuteNonQuery();
-                    GenerateMaterials();
+                    catch (NullReferenceException)
+                    {
+                        DatabaseError();
+                        return;
+                    }
+                    catch (DbException)
+                    {
+                        ConnectieError();
+                        return;
+                    }
                 }
             }
 
@@ -450,25 +513,39 @@ namespace Ict4EventsWebApp
                 string ProductId = lbMaterials.SelectedValue.Substring(0, lbMaterials.SelectedValue.IndexOf("."));
                 if (con == null)
                 {
-                    //return "Error! No Connection";
+                    ConnectieError();
+                    return;
                 }
                 con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-                con.Open();
-                //Updates the product which is selected
-                DbCommand com = OracleClientFactory.Instance.CreateCommand();
-                if (com == null)
+                try
                 {
-                    //return "Error! No Command";
+                    con.Open();
+                    //Updates the product which is selected
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+                        //return "Error! No Command";
+                    }
+                    com.Connection = con;
+                    com.CommandText = "UPDATE Product Set merk = :1, serie = :2, typenummer = :3, prijs = :4, productCAT_ID = (SELECT productcat.Id FROM productcat WHERE productcat.naam = :5 AND ROWNUM = 1) Where product.id = :6";
+                    AddParameterWithValue(com, "prodBrand", tbBrand.Text);
+                    AddParameterWithValue(com, "prodSerie", tbSeries.Text);
+                    AddParameterWithValue(com, "prodTypeNr", tbTypeNr.Text);
+                    AddParameterWithValue(com, "prodPrice", tbPrice.Text);
+                    AddParameterWithValue(com, "prodCat", ddlCat.SelectedValue.ToString());
+                    AddParameterWithValue(com, "prodCat", ProductId);
+                    com.ExecuteNonQuery();
                 }
-                com.Connection = con;
-                com.CommandText = "UPDATE Product Set merk = :1, serie = :2, typenummer = :3, prijs = :4, productCAT_ID = (SELECT productcat.Id FROM productcat WHERE productcat.naam = :5 AND ROWNUM = 1) Where product.id = :6";
-                AddParameterWithValue(com, "prodBrand", tbBrand.Text);
-                AddParameterWithValue(com, "prodSerie", tbSeries.Text);
-                AddParameterWithValue(com, "prodTypeNr", tbTypeNr.Text);
-                AddParameterWithValue(com, "prodPrice", tbPrice.Text);
-                AddParameterWithValue(com, "prodCat", ddlCat.SelectedValue.ToString());
-                AddParameterWithValue(com, "prodCat", ProductId);
-                com.ExecuteNonQuery();
+                catch (NullReferenceException)
+                {
+                    DatabaseError();
+                    return;
+                }
+                catch (DbException)
+                {
+                    ConnectieError();
+                    return;
+                }
             }
         }
         /// <summary>
@@ -482,36 +559,40 @@ namespace Ict4EventsWebApp
             {
                 if (con == null)
                 {
-                    //return "Error! No Connection";
+                    ConnectieError();
+                    return;
                 }
                 con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-                con.Open();
-                DbCommand com = OracleClientFactory.Instance.CreateCommand();
-                if (com == null)
+                try
                 {
-                    //return "Error! No Command";
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+                        //return "Error! No Command";
+                    }
+                    com.Connection = con;
+                    com.CommandText = "INSERT INTO PRODUCT(productcat_id, merk, serie, typenummer, prijs) SELECT productcat.Id, :1, :2, :3, :4 FROM productcat WHERE productcat.naam = :5 AND ROWNUM = 1";
+                    AddParameterWithValue(com, "prodBrand", tbBrand.Text);
+                    AddParameterWithValue(com, "prodSerie", tbSeries.Text);
+                    AddParameterWithValue(com, "prodTypeNr", tbTypeNr.Text);
+                    AddParameterWithValue(com, "prodPrice", tbPrice.Text);
+                    AddParameterWithValue(com, "prodCat", ddlCat.SelectedValue.ToString());
+                    com.ExecuteNonQuery();
                 }
-                com.Connection = con;
-                com.CommandText = "INSERT INTO PRODUCT(productcat_id, merk, serie, typenummer, prijs) SELECT productcat.Id, :1, :2, :3, :4 FROM productcat WHERE productcat.naam = :5 AND ROWNUM = 1";
-                AddParameterWithValue(com, "prodBrand", tbBrand.Text);
-                AddParameterWithValue(com, "prodSerie", tbSeries.Text);
-                AddParameterWithValue(com, "prodTypeNr", tbTypeNr.Text);
-                AddParameterWithValue(com, "prodPrice", tbPrice.Text);
-                AddParameterWithValue(com, "prodCat", ddlCat.SelectedValue.ToString());
-                com.ExecuteNonQuery();
+                catch (NullReferenceException)
+                {
+                    DatabaseError();
+                    return;
+                }
+                catch (DbException)
+                {
+                    ConnectieError();
+                    return;
+                }
             }
         }
-        private void DatabaseError()
-        {
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Dit staat niet in de database')</script>");
-            return;
-        }
 
-        private void ConnectieError()
-        {
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Er is geen connectie')</script>");
-            return;
-        }
 
     }
 }
