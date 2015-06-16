@@ -27,6 +27,7 @@
                 var catTrace = $("#categorieTrace");
                 catTrace.empty();
 
+                //load categorie trace
                 $.each(data.categorieTrace, function (id, value) {
                     catTrace.append(">");
                     catTrace.append($('<a href="?id=' + value.id + '">' + value.title + '</a>')).one("click", onCatClick);
@@ -35,14 +36,15 @@
 
                 var cats = $("#categories");
                 cats.empty();
-
+                
+                //load categories
                 $.each(data.categories, function (id, value) {
                     cats.append($('<div class="categorie" id="cat' + value.id + '">' + value.title + '</div>')).one("click", onCatClick);
                 });
 
                 var posts = $("#posts");
                 posts.empty();
-
+                //load posts
                 $.each(data.posts, function (id, value) {
                     //add an item based off the type it is
                     switch (value.type.substr(0, 4)) {
@@ -151,17 +153,17 @@
     <div id="content">
         <div id="postSpacerTop"></div>
         <div id="categories">
+            <!--<div class="categorie" id="cat1">Categorie1</div>
             <div class="categorie" id="cat1">Categorie1</div>
             <div class="categorie" id="cat1">Categorie1</div>
             <div class="categorie" id="cat1">Categorie1</div>
             <div class="categorie" id="cat1">Categorie1</div>
             <div class="categorie" id="cat1">Categorie1</div>
             <div class="categorie" id="cat1">Categorie1</div>
-            <div class="categorie" id="cat1">Categorie1</div>
-            <div class="categorie" id="cat1">Categorie1</div>
+            <div class="categorie" id="cat1">Categorie1</div>-->
         </div>
         <div id="posts">
-            <div class="post" id="post1">
+            <!--<div class="post" id="post1">
                 <div class="title">Aapje</div>
                 <div class="username">Rick</div>
                 <div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
@@ -214,7 +216,7 @@
                 <div class="username">Rick</div>
                 <div class="content">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.</div>
                 <div class="stats">Likes: 1 Flags: 1 Comments: 2</div>
-            </div>
+            </div>-->
         </div>
         <div class="clear"></div>
     </div>
