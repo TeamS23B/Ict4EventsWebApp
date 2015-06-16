@@ -46,6 +46,7 @@ namespace Ict4EventsWebApp
         protected void Button1_Click(object sender, EventArgs e)
         {
             pnlMaterial.Visible = true;
+            pnlMap.Visible = false;
 
             //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             //{
@@ -93,11 +94,13 @@ namespace Ict4EventsWebApp
         {
 
             pnlMap.Visible = true;
-            }
+            pnlRegistration.Visible = false;
+            
         }
         protected void btRMAterialVerder_Click(object sender, EventArgs e)
         {
             pnlOverview.Visible = true;
+            pnlMaterial.Visible = false;
         }
 
         protected void btnAdd_Click(object sender, EventArgs e)
