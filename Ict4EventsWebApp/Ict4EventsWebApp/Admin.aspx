@@ -28,6 +28,7 @@
                 <div class="leftSettings">
                     <asp:Label ID="lblNaam" runat="server" Text="Naam"></asp:Label>
                     <asp:TextBox ID="tbName" runat="server"></asp:TextBox>
+                    
                     <asp:Label ID="lblLocatie" runat="server" Text="Locatie:"></asp:Label>
                     <asp:DropDownList ID="ddlLocation" runat="server"></asp:DropDownList>
                     <asp:Label ID="lblMaxVis" runat="server" Text="Maximaal aantal bezoekers"></asp:Label>

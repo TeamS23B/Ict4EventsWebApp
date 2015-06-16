@@ -11,12 +11,19 @@
     <script src="scripts/jquery-1.11.2.min.js"></script>
     <script src="scripts/ui.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#showImage").click(function() {
-                $("#fullscreen").css("visibility","visible");
+        $(document).ready(function () {
+            $("#showImage").click(function () {
+                $("#fullscreen").css("visibility", "visible");
             });
-            $("#fullscreen").click(function() {
+            $("#fullscreen").click(function(e) {
                 $(this).css("visibility", "hidden");
+                var offset = $(".displayed").offset();
+                var x = e.pageX - offset.left;
+                var y = e.pageY - offset.top;
+                $("#XValue").attr("value", x);
+                $("#YValue").attr("value", y);
+                alert("x = " + x + "y = " + y);
+                
                 //todo find out xy location on image
             });
         });
@@ -54,7 +61,7 @@
             <asp:TextBox ID="tbSurname" CssClass="textBoxMargin" runat="server"></asp:TextBox>
             <asp:TextBox ID="tbEmail" CssClass="textBoxMargin" runat="server"></asp:TextBox>
             <div class="streetHouse">
-                <asp:TextBox ID="tbStreet"  runat="server"></asp:TextBox>
+                        <asp:TextBox ID="tbStreet" runat="server"></asp:TextBox>
                 <asp:TextBox ID="tbHouseNr" runat="server"></asp:TextBox>
             </div>
             
@@ -91,6 +98,7 @@
                 <div class="clearDiv"></div>
         </div>
         
+            <asp:Panel ID="pnlMap" runat="server">
             <div class="frm">
                 <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
@@ -100,7 +108,14 @@
                     <asp:TextBox ID="voorbeeld" runat="server"></asp:TextBox>
                 </div>
             </div>
+            <asp:HiddenField ID="XValue" runat="server" ClientIDMode="Static" />
+            <asp:HiddenField ID="YValue" runat="server" ClientIDMode="Static" />
+
+
+            </asp:Panel>
+
             
+            <asp:Panel ID="pnlMaterial" runat="server">
             
             <div class="frm">
             <div class="top">
@@ -136,12 +151,12 @@
             <div class="clearDiv"></div>
             <div>
                 <asp:Button ID="btRMaterialTerug" runat="server" Text="Terug" />
-                <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder" />
+                        <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder" OnClick="btRMAterialVerder_Click" />
             </div>
             </div>
-
-
-
+            </asp:Panel>
+            
+            <asp:Panel ID="pnlOverview" runat="server">
             <div class="frm">
             <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Totaaloverzicht</asp:Label>
@@ -165,6 +180,8 @@
                 <asp:Button ID="btCMaterialVerder" runat="server" Text="Verder" />
             </div>
             </div>
+            </asp:Panel>
+
 
 
 
