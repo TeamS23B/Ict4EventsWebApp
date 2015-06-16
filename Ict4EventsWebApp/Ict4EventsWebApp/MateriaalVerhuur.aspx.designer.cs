@@ -40,13 +40,49 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.Label Details;
         
         /// <summary>
-        /// lblBar control.
+        /// lbDetail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBar;
+        protected global::System.Web.UI.WebControls.Label lbDetail;
+        
+        /// <summary>
+        /// lblRentCostTitel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRentCostTitel;
+        
+        /// <summary>
+        /// lblRentCost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRentCost;
+        
+        /// <summary>
+        /// tbBarcode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbBarcode;
+        
+        /// <summary>
+        /// BtnConfirm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnConfirm;
         
         /// <summary>
         /// lblNaam control.
@@ -56,6 +92,15 @@ namespace Ict4EventsWebApp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblNaam;
+        
+        /// <summary>
+        /// lbNameAfterBarcode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbNameAfterBarcode;
         
         /// <summary>
         /// clEndDate control.

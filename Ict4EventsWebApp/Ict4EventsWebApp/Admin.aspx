@@ -65,7 +65,7 @@
                     <asp:Label ID="lblMats" runat="server" Text="Materialen"></asp:Label>
                     <asp:ListBox ID="lbMaterials" runat="server" Width="500px" AutoPostBack="true" OnSelectedIndexChanged="lbMaterials_SelectedIndexChanged"></asp:ListBox>
                     <asp:Button ID="btnAddCopy" runat="server" Text="Voeg een exemplaar toe" OnClick="btnAddCopy_Click" AutoPostBack="true" Enabled="False" />
-                    <asp:Button ID="btnRmvCopy" runat="server" Text="Haal een exemplaar weg" AutoPostBack="true" Enabled="False" />
+                    <asp:Button ID="btnRmvCopy" runat="server" Text="Haal een exemplaar weg" AutoPostBack="true" Enabled="False" OnClick="btnRmvCopy_Click" />
                 </div>
                 <div class="addMat">
                     <asp:Label ID="lblBrand" runat="server" Text="Merk"></asp:Label>
@@ -78,8 +78,8 @@
                     <asp:TextBox ID="tbPrice" runat="server" Enabled="False"></asp:TextBox>
                     <asp:Label ID="lblCat" runat="server" Text="Categorie"></asp:Label>
                     <asp:DropDownList ID="ddlCat" runat="server" Enabled="False"></asp:DropDownList>
-                    <asp:Button ID="btnUpdate" runat="server" Text="Product bijwerken" Enabled="False" />
-                    <asp:Button ID="btnDelete" runat="server" Text="Item verwijderen" Enabled="False" />
+                    <asp:Button ID="btnUpdate" runat="server" Text="Product bijwerken" Enabled="False" OnClick="btnUpdate_Click" />
+                    <asp:Button ID="btnNew" runat="server" Text="Product aanmaken" enabled="false" OnClick="btnNew_Click" />
                 </div>
                 <div class="debug"></div>
             </div>
