@@ -16,6 +16,7 @@ var loadRunning = false;
 function loadPosts(categorieId) {
     if (loadRunning) return;//fix for event spam :D
     loadRunning = true;
+    window.curId = categorieId;
     $.getJSON("api/sms/PostsOfCategorie?id=" + categorieId + "&username=" + username + "&token=" + token, function (data) {
 
         var topCategories = $("#leftBarButtons");
@@ -128,7 +129,7 @@ $("html").click(function () {
     $(".post.top").remove();//remove the top post if the event isn't stopped
 });
 
-function onCatClick(event) {//spam click, don't know why
+function onCatClick(event) {//FIXED: spam click, don't know why
     event.stopPropagation();
     var stateObj = { foo: "bar" };
     if ($(event.target).prop("tagName") == 'A') {
@@ -141,11 +142,3 @@ function onCatClick(event) {//spam click, don't know why
 
     return false;
 }
-
-$(document).ready(function () {
-    $(".post").click(function () {
-        var c = $(this).clone();
-        c.addClass('top');
-        $("#content").append(c);
-    });
-});

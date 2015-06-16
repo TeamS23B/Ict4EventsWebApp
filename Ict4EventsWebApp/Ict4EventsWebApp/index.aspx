@@ -14,9 +14,13 @@
     <script>
         var username = "<%=Session["username"]%>";
         var token = "<%=Session["token"]%>";
+        var curId = <%=string.IsNullOrEmpty(Request.QueryString["id"])?"1":Request.QueryString["id"]%>;
         
-        $(document).ready(function() {
-            loadPosts(<%=string.IsNullOrEmpty(Request.QueryString["id"])?"1":Request.QueryString["id"]%>);
+        $(document).ready(function () {
+            $("#btAddPost").click(function() {
+                window.location.href = "AddComment.aspx?id="+window.curId;
+            });
+            loadPosts(window.curId);
         });
 
     </script>
