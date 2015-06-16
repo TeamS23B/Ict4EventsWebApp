@@ -5,6 +5,11 @@ using System.Web;
 
 namespace Ict4EventsWebApp
 {
+    /// <summary>
+    /// People are vessels.
+    /// This is the ocean.
+    /// - J. Sanders 2015
+    /// </summary>
     public class Party
     {
 

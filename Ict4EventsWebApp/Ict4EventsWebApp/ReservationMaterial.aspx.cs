@@ -18,6 +18,12 @@ namespace Ict4EventsWebApp
     {
         private Party party { get; set; }
 
+        /// <summary>
+        /// When the page is first loaded, only make the visitor information section visible.
+        /// If there is no party session available, create an empty party.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -42,6 +48,11 @@ namespace Ict4EventsWebApp
             
         }
 
+        /// <summary>
+        /// Make only the material reservation visible and load the available materials.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void Button1_Click(object sender, EventArgs e)
         {
             pnlMaterial.Visible = true;
@@ -123,6 +134,11 @@ namespace Ict4EventsWebApp
             }
         }
 
+        /// <summary>
+        /// Make only the map visible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnNextStep_Click(object sender, EventArgs e)
         {
 
@@ -130,12 +146,24 @@ namespace Ict4EventsWebApp
             pnlRegistration.Visible = false;
 
         }
+
+        /// <summary>
+        /// Make only the overview visible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btRMAterialVerder_Click(object sender, EventArgs e)
         {
             pnlOverview.Visible = true;
             pnlMaterial.Visible = false;
         }
 
+        /// <summary>
+        /// Add a new member to the party.
+        /// Also update the party session with the latest party-version.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnAdd_Click(object sender, EventArgs e)
         {
             Person person = new Person(TextBox2.Text, TextBox3.Text, TextBox4.Text, TextBox5.Text);
@@ -149,6 +177,11 @@ namespace Ict4EventsWebApp
 
         }
 
+        /// <summary>
+        /// Insert all data from previous registration forms into the database, or show a pop-up if anything goes wrong.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btCMaterialVerder_Click(object sender, EventArgs e)
         {
             string a = XValue.Value;
@@ -159,7 +192,7 @@ namespace Ict4EventsWebApp
             string reserveringId;
             string resPolsId;
             
-
+            // Retrieve the to-be-reserved location coordinates
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
@@ -191,7 +224,8 @@ namespace Ict4EventsWebApp
 
                 plekid = com.Parameters["PlekId"].Value.ToString();
             }
-            //INSERT LEIDER
+
+            //Insert the group leader into the database.
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
@@ -234,7 +268,7 @@ namespace Ict4EventsWebApp
                 }
             }
 
-            //PERSOONID
+            // Get the highest ID from the person list and raise it by 1 (new highest ID).
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
@@ -249,7 +283,7 @@ namespace Ict4EventsWebApp
                 persoonId = d.ToString();
             }
 
-            //ACCOUNT
+            // Insert an account into the database.
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
@@ -286,7 +320,7 @@ namespace Ict4EventsWebApp
 
             
 
-            //RESERVERING
+            // Create a reservation for the event.
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
@@ -320,7 +354,7 @@ namespace Ict4EventsWebApp
                 reserveringId = com.Parameters["reserveringIdOUT"].Value.ToString();
             }
 
-            //plek reserveren
+            // Create a reservation for a location within an event.
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
@@ -348,7 +382,7 @@ namespace Ict4EventsWebApp
                 }
             }
 
-            //reservering polsbandje
+            // Bind a reservation to an account.
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
@@ -382,6 +416,8 @@ namespace Ict4EventsWebApp
                 }
                 resPolsId = com.Parameters["reserveringPID"].Value.ToString();
             }
+
+            // Insert all reserved materials into the database.
             while (lbMaterialToReserve.Items.Count > 0)
             {
                 string s = lbMaterialToReserve.Items[0].ToString();
@@ -389,6 +425,7 @@ namespace Ict4EventsWebApp
 
                 string bedrag1 = "0";
 
+                // Get the price of the product.
                 using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
                 {
                     if (con == null)
@@ -412,6 +449,7 @@ namespace Ict4EventsWebApp
                     }
                 }
 
+                // insert the rent of the product
                 using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
                     {
                         DbCommand com = OracleClientFactory.Instance.CreateCommand();
@@ -444,6 +482,7 @@ namespace Ict4EventsWebApp
                 lbMaterialToReserve.Items.RemoveAt(0);
             }
 
+            // If there are people in the party, insert each one of them into the database.
             foreach (Person member in party.Members)
             {
                 using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
@@ -465,8 +504,6 @@ namespace Ict4EventsWebApp
                     AddParameterWithValue(com, "tussenvoegsel", infix);
                     AddParameterWithValue(com, "achternaam", member.Surname);
                     
-
-
                     var q = com.CreateParameter();
                     q.DbType = DbType.Decimal;
                     q.ParameterName = "insertGelukt";
@@ -490,6 +527,7 @@ namespace Ict4EventsWebApp
 
         }
 
+        // 
         private void AddParameterWithValue(DbCommand command, string parameterName, object parameterValue)
         {
             var parameter = command.CreateParameter();
@@ -500,11 +538,21 @@ namespace Ict4EventsWebApp
             command.Parameters.Add(parameter);
         }
 
+        /// <summary>
+        /// To do: Remove member from party.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnRemove_Click(object sender, EventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// Add material to the 'to rent' list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btMaterialAdd_Click(object sender, EventArgs e)
         {
             int Bedrag = Convert.ToInt32(lbPrice.Text); 
@@ -549,6 +597,11 @@ namespace Ict4EventsWebApp
             }
         }
 
+        /// <summary>
+        /// Remove materials from the 'to rent' list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btMaterialDelete_Click(object sender, EventArgs e)
         {
             string ToAddMaterial = lbMaterialToReserve.SelectedValue.ToString();
