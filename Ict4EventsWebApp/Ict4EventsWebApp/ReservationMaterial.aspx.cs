@@ -23,7 +23,15 @@ namespace Ict4EventsWebApp
             }
         }
 
-        
+        private void AddParameterWithValue(DbCommand command, string parameterName, object parameterValue)
+        {
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = parameterName;
+            parameter.Value = parameterValue;
+            parameter.DbType = System.Data.DbType.AnsiString;
+            parameter.Direction = System.Data.ParameterDirection.Input;
+            command.Parameters.Add(parameter);
+        }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
@@ -55,7 +63,7 @@ namespace Ict4EventsWebApp
                     com.Connection = con;
                     com.ExecuteNonQuery(); //Voert de stored procedure uit
 
-                    Label1.Text = "De verdubbelde waarde is: " + com.Parameters["resultaat"].Value;
+                    //Label1.Text = "De verdubbelde waarde is: " + com.Parameters["resultaat"].Value;
                     //Tonen van de waarde in de resultaat parameter na uitvoeren van de stored procedure
                     //label1.   .Show("De verdubbelde waarde is: " + objCmd.Parameters["resultaat"].Value);
                 }
@@ -71,13 +79,48 @@ namespace Ict4EventsWebApp
 
         protected void btnNextStep_Click(object sender, EventArgs e)
         {
+            
+        }
+
+        protected void btCMaterialVerder_Click(object sender, EventArgs e)
+        {
             string a = XValue.Value;
             string b = YValue.Value;
+
+
+
+
 
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
                 com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "GET_PLEKID";
+
+                var p1 = com.CreateParameter();
+                p1.DbType = DbType.Decimal;
+                p1.ParameterName = "X";
+                p1.Value = Convert.ToInt32(a);
+                com.Parameters.Add(p1);
+
+                var p2 = com.CreateParameter();
+                p2.DbType = DbType.Decimal;
+                p2.ParameterName = "Y";
+                p2.Value = Convert.ToInt32(b);
+                com.Parameters.Add(p2);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "PlekId";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                leel.Text = "plek: " + com.Parameters["PlekId"].Value;
             }
         }
     }
