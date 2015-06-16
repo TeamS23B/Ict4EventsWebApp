@@ -40,12 +40,11 @@ namespace Ict4EventsWebApp
         }
             }
         }
-
         
-
         protected void Button1_Click(object sender, EventArgs e)
         {
             pnlMaterial.Visible = true;
+            pnlMap.Visible = false;
 
             //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             //{
@@ -90,13 +89,16 @@ namespace Ict4EventsWebApp
         }
 
         protected void btnNextStep_Click(object sender, EventArgs e)
-        {
+                {
 
             pnlMap.Visible = true;
-        }
+            pnlRegistration.Visible = false;
+
+                }
         protected void btRMAterialVerder_Click(object sender, EventArgs e)
-        {
+                {
             pnlOverview.Visible = true;
+            pnlMaterial.Visible = false;
         }
 
         protected void btnAdd_Click(object sender, EventArgs e)
@@ -110,6 +112,86 @@ namespace Ict4EventsWebApp
             TextBox4.Text = "";
             TextBox5.Text = "";
 
+        }
+
+        protected void btCMaterialVerder_Click(object sender, EventArgs e)
+        {
+            string a = XValue.Value;
+            string b = YValue.Value;
+
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "GET_PLEKID";
+
+                var p1 = com.CreateParameter();
+                p1.DbType = DbType.Decimal;
+                p1.ParameterName = "X";
+                p1.Value = Convert.ToInt32(a);
+                com.Parameters.Add(p1);
+
+                var p2 = com.CreateParameter();
+                p2.DbType = DbType.Decimal;
+                p2.ParameterName = "Y";
+                p2.Value = Convert.ToInt32(b);
+                com.Parameters.Add(p2);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "PlekId";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                string plekid = com.Parameters["PlekId"].Value.ToString();
+            }
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "INSERT_PERSOONLEIDER";
+
+                AddParameterWithValue(com, "voornaam", tbFirstName.Text);
+                AddParameterWithValue(com, "tussenvoegsel", tbInfix.Text);
+                AddParameterWithValue(com, "achternaam", tbSurname.Text);
+                AddParameterWithValue(com, "straat", tbStreet.Text);
+                AddParameterWithValue(com, "huisnr", tbHouseNr.Text);
+                AddParameterWithValue(com, "postcode", tbPostalCode.Text);
+                AddParameterWithValue(com, "banknr", tbIban.Text);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "insertGelukt";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                string result = com.Parameters["insertGelukt"].Value.ToString();
+
+                if (result == "0")
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                }
+            }
+        }
+
+        private void AddParameterWithValue(DbCommand command, string parameterName, object parameterValue)
+        {
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = parameterName;
+            parameter.Value = parameterValue;
+            parameter.DbType = System.Data.DbType.AnsiString;
+            parameter.Direction = System.Data.ParameterDirection.Input;
+            command.Parameters.Add(parameter);
         }
 
         protected void btnRemove_Click(object sender, EventArgs e)
