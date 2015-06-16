@@ -71,5 +71,14 @@ namespace Ict4EventsWebApp
                 con.Close();
             }
         }
+
+        protected void btnNextStep_Click(object sender, EventArgs e)
+        {
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+            }
+        }
     }
 }

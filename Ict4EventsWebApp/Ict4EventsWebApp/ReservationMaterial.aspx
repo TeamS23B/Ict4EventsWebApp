@@ -91,8 +91,19 @@
                 <div class="clearDiv"></div>
         </div>
         
+            <div class="frm">
+                <div class="top">
+                <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
+                    <img id="showImage" alt="Camping" src="images/Camping.png" />
+                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                    <asp:TextBox ID="voorbeeld" runat="server"></asp:TextBox>
+                </div>
+            </div>
+            
             <asp:Panel ID="pnlMaterial" runat="server">
-                <div class="frm">
+            
+            <div class="frm">
             <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Reservering materiaal</asp:Label>
             </div>
@@ -124,7 +135,6 @@
 
             </div>
             <div class="clearDiv"></div>
-
             <div>
                 <asp:Button ID="btRMaterialTerug" runat="server" Text="Terug" />
                 <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder" />
@@ -155,15 +165,10 @@
                 <asp:Button ID="btCMaterialVerder" runat="server" Text="Verder" />
             </div>
             </div>
-            <div class="frm">
-                <div class="top">
-                <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
-                    <img id="showImage" alt="Camping" src="images/Camping.png" />
-                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
-                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-                    <asp:TextBox ID="voorbeeld" runat="server"></asp:TextBox>
-                </div>
-            </div>
+
+
+
+            
         </form>
         <div id="fullscreen">
            <img class="displayed" src="images/Camping.png" alt="Camping" />
