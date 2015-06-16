@@ -245,7 +245,7 @@ namespace Ict4EventsWebApp
                 com.Connection = con;
 
                 string c = com.ExecuteScalar().ToString();
-                int d = Convert.ToInt32(c)+1;
+                int d = Convert.ToInt32(c);
                 persoonId = d.ToString();
             }
 
