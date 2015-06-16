@@ -82,6 +82,7 @@
     <Content Include="Admin.aspx" />
     <Content Include="Check.aspx" />
     <Content Include="images\Camping.png" />
+    <Content Include="index.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="ReservationMaterial.aspx" />
     <Content Include="Global.asax" />
@@ -141,6 +142,13 @@
     </Compile>
     <Compile Include="Check.aspx.designer.cs">
       <DependentUpon>Check.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="index.aspx.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="index.aspx.designer.cs">
+      <DependentUpon>index.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

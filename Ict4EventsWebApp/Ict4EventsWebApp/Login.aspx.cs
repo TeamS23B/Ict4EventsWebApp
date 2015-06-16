@@ -11,18 +11,34 @@ namespace Ict4EventsWebApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if ((bool) (Session["loggedIn"]??false))//logout if the user is already logged in
+            {
+                lblError.Text = "Uitgelogd";
+                Session.Clear();
+            }
         }
 
         protected void BtnLogin_Click(object sender, EventArgs e)
         {
             if (Authentication.Instance.IsAuthenticated(tbUsername.Text, tbPassword.Text))
             {
-                lblUsername.Text = "Success!";
+                Session["loggedIn"] = true;
+                Session["username"] = tbUsername.Text;
+                Session["token"] = SmsConnect.Instance.AddToken(tbUsername.Text);
+                if (!string.IsNullOrEmpty(Request.QueryString["returnUrl"]))
+                {
+
+// ReSharper disable once AssignNullToNotNullAttribute
+                    Response.Redirect(Server.UrlDecode(Request.QueryString["returnUrl"]));//return to returnUrl with server.UrlDecode
+                }
+                else
+                {
+                    Response.Redirect("/index.html");//return to index.html
+                }
             }
             else
             {
-                lblUsername.Text = "False!";
+                lblError.Text = "Could not log in user, username or password incorrect!";
             }
         }
     }

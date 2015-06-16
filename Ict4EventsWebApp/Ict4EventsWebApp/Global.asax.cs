@@ -13,5 +13,11 @@ namespace Ict4EventsWebApp
         {
 			GlobalConfiguration.Configure(WebApiConfig.Register);    
         }
+
+        protected void Session_OnEnd()
+        {
+            if (!(bool)(Session["loggedIn"] ?? false))
+                SmsConnect.Instance.RemoveToken((string)Session["username"]);//remove the token if the user is logged in
+        }
     }
 }
