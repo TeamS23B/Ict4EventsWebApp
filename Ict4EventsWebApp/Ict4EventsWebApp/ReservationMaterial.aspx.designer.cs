@@ -373,13 +373,22 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.ListBox lbMaterialToReserve;
         
         /// <summary>
-        /// Details control.
+        /// lbReserveringDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Details;
+        protected global::System.Web.UI.WebControls.Label lbReserveringDetails;
+        
+        /// <summary>
+        /// lbPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbPrice;
         
         /// <summary>
         /// btMaterialAdd control.
@@ -454,13 +463,13 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.ListBox ConfrimMaterial;
         
         /// <summary>
-        /// ReserveringDetails control.
+        /// Details control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ReserveringDetails;
+        protected global::System.Web.UI.WebControls.Label Details;
         
         /// <summary>
         /// btCMaterialTerug control.

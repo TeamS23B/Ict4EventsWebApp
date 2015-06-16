@@ -19,7 +19,6 @@ namespace Ict4EventsWebApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!IsPostBack)
             {
                 pnlMaterial.Visible = false;
@@ -29,7 +28,7 @@ namespace Ict4EventsWebApp
             if (Session["party"] == null)
             {
                 party = new Party();
-        }
+            }
             else
             {
                 party = (Party)Session["party"];
@@ -37,10 +36,11 @@ namespace Ict4EventsWebApp
                 foreach (Person person in party.Members)
                 {
                     lbGroupMembers.Items.Add(person.ToString());
-        }
+                }
             }
+            
         }
-        
+
         protected void Button1_Click(object sender, EventArgs e)
         {
             pnlMaterial.Visible = true;
@@ -48,7 +48,7 @@ namespace Ict4EventsWebApp
 
             //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             //{
-                
+
 
             //    DbCommand com = OracleClientFactory.Instance.CreateCommand();
             //    com.CommandType = System.Data.CommandType.StoredProcedure;
@@ -86,17 +86,51 @@ namespace Ict4EventsWebApp
             //    //Verbinding sluiten (waarschijnlijk doe je dit in je applicatie niet per database commando)
             //    con.Close();
             //}
+            try
+            {
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    if (con == null)
+                    {
+                        //return "Error! No Connection";
+                    }
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+                        //return "Error! No Command";
+                    }
+                    com.Connection = con;
+                    com.CommandText = "SELECT DISTINCT product.id, Merk, serie, prijs FROM PRODUCT INNER JOIN productexemplaar ON product.id = productexemplaar.product_id WHERE productexemplaar.id NOT IN (select productexemplaar_id FROM verhuur)";
+                    DbDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        lbavailableMaterial.Items.Add(reader[0].ToString() + ". " + reader[1].ToString() + " " + reader[2].ToString());
+                    }
+                }
+            }
+            catch (DbException ex)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('" + ex.Message + "')</script>");
+                return;
+            }
+            catch (NullReferenceException ex)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('" + ex.Message + "')</script>");
+                return;
+            }
         }
 
         protected void btnNextStep_Click(object sender, EventArgs e)
-                {
+        {
 
             pnlMap.Visible = true;
             pnlRegistration.Visible = false;
 
-                }
+        }
         protected void btRMAterialVerder_Click(object sender, EventArgs e)
-                {
+        {
             pnlOverview.Visible = true;
             pnlMaterial.Visible = false;
         }
@@ -197,6 +231,94 @@ namespace Ict4EventsWebApp
         protected void btnRemove_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected void btMaterialAdd_Click(object sender, EventArgs e)
+        {
+            int Bedrag = Convert.ToInt32(lbPrice.Text); 
+            string ToAddMaterial = lbavailableMaterial.SelectedValue.ToString();
+            lbMaterialToReserve.Items.Add(ToAddMaterial);
+            lbavailableMaterial.Items.Remove(ToAddMaterial);
+            try
+            {
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    if (con == null)
+                    {
+
+                    }
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+
+                    }
+                    com.Connection = con;
+                    com.CommandText = "Select prijs FROM product WHERE product.id = :1 AND rownum = 1";
+                    AddParameterWithValue(com, "prodId", ToAddMaterial.Substring(0, ToAddMaterial.IndexOf(".")));
+                    DbDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Bedrag = Bedrag + Convert.ToInt32(reader[0]);
+                        lbPrice.Text = Bedrag.ToString();
+                    }
+                }
+            }
+            catch (DbException ex)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('" + ex.Message + "')</script>");
+                return;
+            }
+            catch (NullReferenceException ex)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('" + ex.Message + "')</script>");
+                return;
+            }
+        }
+
+        protected void btMaterialDelete_Click(object sender, EventArgs e)
+        {
+            string ToAddMaterial = lbMaterialToReserve.SelectedValue.ToString();
+            lbavailableMaterial.Items.Add(ToAddMaterial);
+            lbMaterialToReserve.Items.Remove(ToAddMaterial);
+            int Bedrag = Convert.ToInt32(lbPrice.Text);
+            try
+            {
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    if (con == null)
+                    {
+
+                    }
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+
+                    }
+                    com.Connection = con;
+                    com.CommandText = "Select prijs FROM product WHERE product.id = :1 AND rownum = 1";
+                    AddParameterWithValue(com, "prodId", ToAddMaterial.Substring(0, ToAddMaterial.IndexOf(".")));
+                    DbDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Bedrag = Bedrag - Convert.ToInt32(reader[0]);
+                        lbPrice.Text = Bedrag.ToString();
+                    }
+                }
+            }
+            catch (DbException ex)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('" + ex.Message + "')</script>");
+                return;
+            }
+            catch (NullReferenceException ex)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('" + ex.Message + "')</script>");
+                return;
+            }
         }
     }
 }
