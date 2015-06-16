@@ -443,15 +443,7 @@ namespace Ict4EventsWebApp
 
                 lbMaterialToReserve.Items.RemoveAt(0);
             }
-            //List<string> removals = new List<string>();
-            //foreach (string s in lbMaterialToReserve.Items)
-            //    {
-            //    //MessageBox.Show(s);
-            //    //do stuff with (s);
-            //    //removals.Add(s);
-            //}
 
-            // Insert groepsleden
             foreach (Person member in party.Members)
             {
                 using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
