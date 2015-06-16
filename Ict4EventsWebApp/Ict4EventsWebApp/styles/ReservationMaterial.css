@@ -8,6 +8,101 @@
     padding: 6px;
 }
 
+/*costumer info*/
+
+.textboxleft {
+    display: block;
+    float: left;
+    margin-left: 4px;
+    
+}
+
+.labelleft {
+    display: block;
+    float: left;
+}
+
+.textBoxMargin {
+    display:block;
+    margin-bottom: 12px;
+    width: 175px;
+}
+
+.labelMargin {
+    display: block;
+    margin-bottom: 17px;
+}
+
+.selectGroupMembers {
+   display: block;
+   float: left;
+}
+
+#lbGroupMembers{
+    display: block;
+    margin-left: 12px;
+    margin-right: 12px;
+    width: 200px;
+    height: 175px;
+    
+}
+
+#clearDiv {
+    clear: both;
+}
+
+#lblGroupMembers {
+    display: block;
+    margin-left: 12px;
+    margin-bottom: 4px;
+}
+
+.groupMembersInfo {
+    display: block;
+    float: right;
+}
+
+.buttonMargin {
+    display: block;
+    margin-bottom: 12px;
+}
+
+
+#btnNextStep {
+    display: block;
+    float: right;
+    margin-top: 20px;
+}
+
+.streetHouse {
+    display: block;
+    
+    margin-bottom: 12px;
+}
+
+#tbStreet {
+    width: 131px;
+}
+
+#tbHouseNr {
+    width: 35px;
+}
+
+.postal {
+    display: block;
+    margin-bottom: 12px;
+}
+
+#tbPostalCode {
+    width: 46px;
+}
+
+#tbCity {
+    width: 120px;
+}
+
+/*end of customer info*/
+
 IMG.displayed {
     display: block;
     margin-left: auto;
@@ -123,95 +218,3 @@ IMG.displayed {
     background: rgba(0, 0, 0, 0.3);
 }
 
-/*costumer info*/
-
-.textboxleft {
-    display: block;
-    float: left;
-    margin-left: 4px;
-    
-}
-
-.labelleft {
-    display: block;
-    float: left;
-}
-
-.textBoxMargin {
-    display:block;
-    margin-bottom: 12px;
-    width: 175px;
-}
-
-.labelMargin {
-    display: block;
-    margin-bottom: 17px;
-}
-
-.selectGroupMembers {
-   display: block;
-   float: left;
-}
-
-#lbGroupMembers{
-    display: block;
-    margin-left: 12px;
-    margin-right: 12px;
-    width: 200px;
-    height: 175px;
-    
-}
-
-#clearDiv {
-    clear: both;
-}
-
-#lblGroupMembers {
-    display: block;
-    margin-left: 12px;
-    margin-bottom: 4px;
-}
-
-.groupMembersInfo {
-    display: block;
-    float: right;
-}
-
-.buttonMargin {
-    display: block;
-    margin-bottom: 12px;
-}
-
-
-#btnNextStep {
-    display: block;
-    float: right;
-    margin-top: 20px;
-}
-
-.streetHouse {
-    display: block;
-    
-    margin-bottom: 12px;
-}
-
-#tbStreet {
-    width: 131px;
-}
-
-#tbHouseNr {
-    width: 35px;
-}
-
-.postal {
-    display: block;
-    margin-bottom: 12px;
-}
-
-#tbPostalCode {
-    width: 46px;
-}
-
-#tbCity {
-    width: 120px;
-}
