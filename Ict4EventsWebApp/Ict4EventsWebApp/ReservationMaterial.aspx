@@ -86,9 +86,14 @@
                         <asp:RequiredFieldValidator ID="rfvFirstName" CssClass="validator" ControlToValidate="tbFirstName"  ForeColor="Red" runat="server" ErrorMessage="Vul een voornaam in."></asp:RequiredFieldValidator>
                         <asp:RequiredFieldValidator ID="rfcLastName" CssClass="validator" ControlToValidate="tbSurname"  ForeColor="Red" runat="server" ErrorMessage="Vul een achternaam in."></asp:RequiredFieldValidator>
                         <asp:RequiredFieldValidator ID="rfcEmail" CssClass="validator" ControlToValidate="tbEmail"  ForeColor="Red" runat="server" ErrorMessage="Vul een email adres in."></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="rfcPostalCode" CssClass="validator" ControlToValidate="tbPostalCode"  ForeColor="Red" runat="server" ErrorMessage="Vul een postcode in."></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="rfcCity" CssClass="validator" ControlToValidate="tbCity"  ForeColor="Red" runat="server" ErrorMessage="Vul een woonplaats in."></asp:RequiredFieldValidator>
                         <asp:RequiredFieldValidator ID="rfcIban" CssClass="validator" ControlToValidate="tbIban"  ForeColor="Red" runat="server" ErrorMessage="Vul een iban nummer in."></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="rfcStreet" CssClass="validator" ControlToValidate="tbStreet"  ForeColor="Red" runat="server" ErrorMessage="Vul een straatnaam in."></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="rfcHouseNr" CssClass="validator" ControlToValidate="tbHouseNr"  ForeColor="Red" runat="server" ErrorMessage="Vul een huisnummer in."></asp:RequiredFieldValidator>
                         <asp:RegularExpressionValidator ID="regexEmail" CssClass="validator" runat="server" ErrorMessage="Email adres ongeldig." ForeColor="Red" ControlToValidate="tbEmail" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"></asp:RegularExpressionValidator>
                         <asp:RegularExpressionValidator ID="regexIban" CssClass="validator" runat="server" ErrorMessage="Ongeldig NL Iban." ForeColor="Red" ControlToValidate="tbIban" ValidationExpression="^NL([0-9]{2})([A-Z]{4})([0-9]{10})$"></asp:RegularExpressionValidator>
+                        <asp:RegularExpressionValidator ID="regexPostalCode" CssClass="validator" runat="server" ErrorMessage="Postcode ongeldig." ForeColor="Red" ControlToValidate="tbPostalCode" ValidationExpression="^([0-9]{4})([A-z]{2})$"></asp:RegularExpressionValidator>
                     </div>
                     <div class="groupMembersInfo">
                         <asp:Label ID="lblFirstNameGM" CssClass="labelMargin" runat="server" Text="Voornaam"></asp:Label>
