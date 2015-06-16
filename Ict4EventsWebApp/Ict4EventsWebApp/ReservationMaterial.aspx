@@ -159,7 +159,7 @@
                     <img id="showImage" alt="Camping" src="images/Camping.png" />
                     <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
                     <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="voorbeeld" runat="server"></asp:TextBox>
                 </div>
             </div>
         </form>
