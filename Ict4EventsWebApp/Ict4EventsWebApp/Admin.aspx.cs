@@ -293,7 +293,7 @@ namespace Ict4EventsWebApp
             tbTypeNr.Enabled = true;
             tbPrice.Enabled = true;
             ddlCat.Enabled = true;
-            if(lbMaterials.SelectedValue.ToString() != "Nieuw product")
+            if (lbMaterials.SelectedValue.ToString() != "Nieuw product")
             {
                 string ProductId = lbMaterials.SelectedValue.Substring(0, lbMaterials.SelectedValue.IndexOf("."));
                 btnAddCopy.Enabled = true;
@@ -332,7 +332,7 @@ namespace Ict4EventsWebApp
                     {
 
                     }
-                    
+
                 }
             }
             else
@@ -350,7 +350,7 @@ namespace Ict4EventsWebApp
 
         protected void btnRmvCopy_Click(object sender, EventArgs e)
         {
-            if(lbMaterials.SelectedValue != null)
+            if (lbMaterials.SelectedValue != null)
             {
                 string ProductId = lbMaterials.SelectedValue.Substring(0, lbMaterials.SelectedValue.IndexOf("."));
                 using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
@@ -373,8 +373,8 @@ namespace Ict4EventsWebApp
                     GenerateMaterials();
                 }
             }
-            
-            
+
+
         }
 
         protected void btnUpdate_Click(object sender, EventArgs e)
