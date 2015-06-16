@@ -63,12 +63,12 @@ namespace Ict4EventsWebApp
                             if ((short)reader[1] == 0)
                             {
                                 updateAanwezigheid(1, (long)reader[2]);
-                                //lblAanwezigObject.Text = "U bent nu aanwezig";
+                                lblAanwezigObject.Text = "U bent nu aanwezig";
                             }
                             else
                             {
                                 updateAanwezigheid(0, (long)reader[2]);
-                                //lblAanwezigObject.Text = "U bent niet meer aanwezig";
+                                lblAanwezigObject.Text = "U bent niet meer aanwezig";
                             }
                         }
                     }
