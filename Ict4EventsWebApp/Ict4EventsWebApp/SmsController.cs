@@ -10,6 +10,7 @@ namespace Ict4EventsWebApp
 {
     public class SmsController : ApiController
     {
+        [HttpGet, Route("api/sms/newPosts")]
         public IHttpActionResult GetNewPosts()
         {
             var o = new {posts = new List<Post>()};
@@ -34,6 +35,7 @@ namespace Ict4EventsWebApp
             return Json(o);
         }
 
+        [HttpGet, Route("api/sms/postsOfCategorie")]
         public IHttpActionResult GetPostOfCategorie(int id)
         {
             var o = new
@@ -49,16 +51,53 @@ namespace Ict4EventsWebApp
             o.categories.Add(new {id = 0, title = "aapje", username = "aapje", date = DateTime.Now, likes = 0, flags = 0, comments = 0});
             o.categories.Add(new { id = 0, title = "aapje", username = "aapje", date = DateTime.Now, likes = 0, flags = 0, comments = 0 });
 
-            o.posts.Add(new {id = 0, type = "file/file|image|video", url = "aapje",size = 0, likes = 0, flags = 0, comments = 0});
+            o.posts.Add(new {id = 0, type = "file/file", url = "aapje",size = 0, likes = 0, flags = 0, comments = 0});
+            o.posts.Add(new { id = 0, type = "file/image", url = "aapje", size = 0, likes = 0, flags = 0, comments = 0 });
+            o.posts.Add(new { id = 0, type = "file/video", subType = "mp4", url = "aapje", size = 0, likes = 0, flags = 0, comments = 0 });
             o.posts.Add(new {id = 0, type = "text", title = "aapje", text = "ik wil meer aapjes", likes = 0, flags = 0, comments = 0});
 
             return Json(o);
         }
 
+        [HttpGet, Route("api/sms/postComments")]
         public IHttpActionResult GetPostComments(int id)
         {
-            var o = new {};
-
+            var o =
+                new
+                {
+                    id = 0,
+                    title = "aapje",
+                    username = "aapje",
+                    date = DateTime.Now,
+                    likes = 0,
+                    flags = 0,
+                    commentCnt = 2,
+                    comments = new List<object>()
+                };
+            o.comments.Add(
+                new
+                {
+                    id = 0,
+                    title = "aapje",
+                    username = "aapje",
+                    date = DateTime.Now,
+                    likes = 0,
+                    flags = 0,
+                    commentCnt = 0,
+                    comments = new List<object>()
+                });
+            o.comments.Add(
+                new
+                {
+                    id = 0,
+                    title = "aapje",
+                    username = "aapje",
+                    date = DateTime.Now,
+                    likes = 0,
+                    flags = 0,
+                    commentCnt = 0,
+                    comments = new List<object>()
+                });
             return Json(o);
         }
     }

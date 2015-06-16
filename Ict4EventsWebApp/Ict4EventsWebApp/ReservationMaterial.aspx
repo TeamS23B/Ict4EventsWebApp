@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ReservationMaterial.aspx.cs" Inherits="Ict4EventsWebApp.ReservationMaterial" %>
+﻿<%@ Page Language="C#" MaintainScrollPositionOnPostback="true" AutoEventWireup="true" CodeBehind="ReservationMaterial.aspx.cs" Inherits="Ict4EventsWebApp.ReservationMaterial" %>
 
 <!DOCTYPE html>
 
@@ -7,15 +7,14 @@
     <link href="styles/reset.css" rel="stylesheet" />
     <link href="styles/style.css" rel="stylesheet" />
     <link href="styles/ReservationMaterial.css" rel="stylesheet" />
-   <%-- <link href="styles/RegistrationCustomerInfo.css" rel="stylesheet" />--%>
     <script src="scripts/jquery-1.11.2.min.js"></script>
     <script src="scripts/ui.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#showImage").click(function() {
-                $("#fullscreen").css("visibility","visible");
+        $(document).ready(function () {
+            $("#showImage").click(function () {
+                $("#fullscreen").css("visibility", "visible");
             });
-            $("#fullscreen").click(function(e) {
+            $("#fullscreen").click(function (e) {
                 $(this).css("visibility", "hidden");
                 var offset = $(".displayed").offset();
                 var x = e.pageX - offset.left;
@@ -29,6 +28,7 @@
             });
         });
     </script>
+
     <title></title>
 </head>
 <body>
@@ -44,7 +44,9 @@
     </div>
     <div id="content">
         <form id="form1" runat="server">
+            <asp:Panel ID="pnlRegistration" runat="server">
             <div class="frm">
+
         <div class="labelleft">
             <asp:Label ID="lblFirstName" CssClass="labelMargin" runat="server" Text="Voornaam:" ClientIDMode="Static"></asp:Label>
             <asp:Label ID="lblInfix" CssClass="labelMargin" runat="server" Text="Tussenvoegsel:" ClientIDMode="Static"></asp:Label>
@@ -53,16 +55,19 @@
             <asp:Label ID="lblStreetHouseNr" CssClass="labelMargin" runat="server" Text="Straat + huisnummer:" ClientIDMode="Static"></asp:Label>
             <asp:Label ID="lblPostalCodeCity" CssClass="labelMargin" runat="server" Text="Postcode + woonplaats:" ClientIDMode="Static"></asp:Label>
             <asp:Label ID="lblIban" CssClass="labelMargin" runat="server" Text="Iban:" ClientIDMode="Static"></asp:Label>
+                        <asp:Label ID="lblPhone" CssClass="labelMargin" runat="server" Text="Telefoon:" ClientIDMode="Static"></asp:Label>
             
         </div>
         
+
         <div class="textboxleft">
+
             <asp:TextBox ID="tbFirstName" CssClass="textBoxMargin" runat="server"></asp:TextBox>
             <asp:TextBox ID="tbInfix" CssClass="textBoxMargin" runat="server"></asp:TextBox>
             <asp:TextBox ID="tbSurname" CssClass="textBoxMargin" runat="server"></asp:TextBox>
             <asp:TextBox ID="tbEmail" CssClass="textBoxMargin" runat="server"></asp:TextBox>
             <div class="streetHouse">
-                <asp:TextBox ID="tbStreet"  runat="server"></asp:TextBox>
+                            <asp:TextBox ID="tbStreet" runat="server"></asp:TextBox>
                 <asp:TextBox ID="tbHouseNr" runat="server"></asp:TextBox>
             </div>
             
@@ -73,6 +78,7 @@
             
 
             <asp:TextBox ID="tbIban" CssClass="textBoxMargin" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="tbPhone" CssClass="textBoxMargin" runat="server"></asp:TextBox>
         </div>
         <div class="selectGroupMembers">
             <asp:Label ID="lblGroupMembers" runat="server" Text="Andere deelnemers"></asp:Label>
@@ -91,14 +97,17 @@
             <asp:Label ID="lblEmailGM" CssClass="labelMargin" runat="server" Text="Email"></asp:Label>
             <asp:TextBox ID="TextBox5" CssClass="textBoxMargin" runat="server"></asp:TextBox>
 
-            <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" />
-            <asp:Button ID="btnRemove" CssClass="buttonMargin" runat="server" Text="Verwijderen" />
+                        <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" OnClick="btnAdd_Click" />
+                        <asp:Button ID="btnRemove" CssClass="buttonMargin" runat="server" Text="Verwijderen" OnClick="btnRemove_Click" />
 
             <asp:Button ID="btnNextStep" runat="server" Text="Volgende stap" OnClick="btnNextStep_Click" />
         </div>
                 <div class="clearDiv"></div>
         </div>
+            </asp:Panel>
+
         
+            <asp:Panel ID="pnlMap" runat="server">
             <div class="frm">
                 <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
@@ -111,6 +120,8 @@
             <asp:HiddenField ID="XValue" runat="server" ClientIDMode="Static" />
             <asp:HiddenField ID="YValue" runat="server" ClientIDMode="Static" />
 
+
+            </asp:Panel>
 
             
             <asp:Panel ID="pnlMaterial" runat="server">
@@ -149,11 +160,12 @@
             <div class="clearDiv"></div>
             <div>
                 <asp:Button ID="btRMaterialTerug" runat="server" Text="Terug" />
-                <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder" />
+                        <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder" OnClick="btRMAterialVerder_Click" />
             </div>
             </div>
             </asp:Panel>
 
+            <asp:Panel ID="pnlOverview" runat="server">
             <div class="frm">
             <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Totaaloverzicht</asp:Label>
@@ -177,6 +189,8 @@
                 <asp:Button ID="btCMaterialVerder" runat="server" Text="Voltooien" OnClick="btCMaterialVerder_Click" />
             </div>
             </div>
+            </asp:Panel>
+
 
 
 
