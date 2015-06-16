@@ -32,7 +32,7 @@ namespace Ict4EventsWebApp
                 var p = com.CreateParameter();
                 p.DbType = DbType.Decimal;
                 p.ParameterName = "teVerdubbelen";
-                p.Value = Convert.ToInt32(TextBox1.Text);
+                p.Value = Convert.ToInt32(voorbeeld.Text);
                 com.Parameters.Add(p);
 
                 var q = com.CreateParameter();
