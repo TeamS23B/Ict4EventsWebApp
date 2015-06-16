@@ -88,9 +88,9 @@ namespace Ict4EventsWebApp
             {
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
                 com.CommandType = System.Data.CommandType.StoredProcedure;
-            pnlMap.Visible = true;
+                pnlMap.Visible = true;
             }
-
+        }
         protected void btRMAterialVerder_Click(object sender, EventArgs e)
         {
             pnlOverview.Visible = true;
