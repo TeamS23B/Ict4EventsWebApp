@@ -341,6 +341,10 @@ namespace Ict4EventsWebApp
                 btnRmvCopy.Enabled = false;
                 btnNew.Enabled = true;
                 btnUpdate.Enabled = false;
+                tbBrand.Text = string.Empty;
+                tbPrice.Text = string.Empty;
+                tbSeries.Text = string.Empty;
+                tbTypeNr.Text = string.Empty;
             }
         }
 
