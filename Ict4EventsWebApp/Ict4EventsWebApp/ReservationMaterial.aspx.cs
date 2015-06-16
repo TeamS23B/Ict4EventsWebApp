@@ -23,10 +23,7 @@ namespace Ict4EventsWebApp
             }
         }
 
-        protected void btnNextStep_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         protected void Button1_Click(object sender, EventArgs e)
         {
