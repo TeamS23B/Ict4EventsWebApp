@@ -32,7 +32,7 @@ namespace Ict4EventsWebApp
                         //return "Error! No Command";
                     }
                     com.Connection = con;
-                    com.CommandText = "select Merk, serie, prijs FROM PRODUCT INNER JOIN productexemplaar ON product.id = productexemplaar.product_id WHERE productexemplaar.id NOT IN (select productexemplaar_id FROM verhuur)";
+                    com.CommandText = "SELECT DISTINCT Merk, serie, prijs FROM PRODUCT INNER JOIN productexemplaar ON product.id = productexemplaar.product_id WHERE productexemplaar.id NOT IN (select productexemplaar_id FROM verhuur)";
                     AddParameterWithValue(com, "prodBrand", tbBarcode.Text);
                     DbDataReader reader = com.ExecuteReader();
                     while (reader.Read())
@@ -109,7 +109,7 @@ namespace Ict4EventsWebApp
                 }
                 com.Connection = con;
                 com.CommandText = "Select typenummer, prijs FROM Product WHERE merk = :1 AND rownum = 1";
-                AddParameterWithValue(com, "prodBrand", lbProducten.SelectedValue.ToString().Substring(0,lbProducten.SelectedValue.ToString().IndexOf(" ")));
+                AddParameterWithValue(com, "prodBrand", lbProducten.SelectedValue.ToString().Substring(0,lbProducten.SelectedValue.ToString().IndexOf("  ")));
                 DbDataReader reader = com.ExecuteReader();
                 while (reader.Read())
                 {

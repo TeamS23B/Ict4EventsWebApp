@@ -114,14 +114,14 @@ namespace Ict4EventsWebApp
                     //return "Error! No Command";
                 }
                 com2.Connection = con;
-                com2.CommandText = "SELECT product.id,product.merk, product.serie, COUNT(Productexemplaar.id) FROM product, Productexemplaar WHERE product.id = Productexemplaar.product_id GROUP BY product.id, product.merk,product.serie ORDER BY product.id";
+                com2.CommandText = "SELECT product.id,product.merk, product.serie, COUNT(Productexemplaar.id) FROM product LEFT OUTER JOIN Productexemplaar ON product.id = Productexemplaar.product_id GROUP BY product.id, product.merk,product.serie ORDER BY product.id";
                 DbDataReader reader2 = com2.ExecuteReader();
                 try
                 {
                     lbMaterials.Items.Clear();
                     while (reader2.Read())
                     {
-                        lbMaterials.Items.Add(string.Format("{0}. {1} {2} aantal: {3}", reader2[0].ToString(), reader2[1].ToString(), reader2[2].ToString(), reader2[3].ToString()));
+                        lbMaterials.Items.Add(string.Format("{0}. {1} {2} aantal:{3}", reader2[0].ToString(), reader2[1].ToString(), reader2[2].ToString(), reader2[3].ToString()));
                     }
                     lbMaterials.Items.Add("Nieuw product");
                 }
@@ -274,12 +274,19 @@ namespace Ict4EventsWebApp
                         //return "Error! No Command";
                     }
                     com.Connection = con;
-                    com.CommandText = "INSERT INTO productexemplaar (product_id, volgnummer, barcode) SELECT product_id, max(volgnummer)+1, max(volgnummer)+1 || :1 FROM productexemplaar WHERE product_id = :1 GROUP BY product_id";
 
                     string selValue = lbMaterials.SelectedValue.ToString();
                     int prodId = Convert.ToInt32(selValue.Substring(0, selValue.IndexOf(".")));
-                    AddParameterWithValue(com, "prodNr", prodId);
 
+                    if (selValue.Substring(selValue.IndexOf(":")+1) == "0")
+                    {
+                        com.CommandText = "INSERT INTO productexemplaar (product_id, volgnummer, barcode) VALUES (:1, 1, 1||:1)";
+                    }
+                    else
+                    {
+                        com.CommandText = "INSERT INTO productexemplaar (product_id, volgnummer, barcode) SELECT product_id, max(volgnummer)+1, max(volgnummer)+1 || :1 FROM productexemplaar WHERE product_id = :1 GROUP BY product_id";
+                    }
+                    AddParameterWithValue(com, "prodNr", prodId);
                     com.ExecuteNonQuery();
                     GenerateMaterials();
                 }

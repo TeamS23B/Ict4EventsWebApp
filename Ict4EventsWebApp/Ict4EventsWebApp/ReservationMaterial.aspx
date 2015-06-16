@@ -11,12 +11,19 @@
     <script src="scripts/jquery-1.11.2.min.js"></script>
     <script src="scripts/ui.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#showImage").click(function() {
-                $("#fullscreen").css("visibility","visible");
+        $(document).ready(function () {
+            $("#showImage").click(function () {
+                $("#fullscreen").css("visibility", "visible");
             });
-            $("#fullscreen").click(function() {
+            $("#fullscreen").click(function(e) {
                 $(this).css("visibility", "hidden");
+                var offset = $(".displayed").offset();
+                var x = e.pageX - offset.left;
+                var y = e.pageY - offset.top;
+                $("#XValue").attr("value", x);
+                $("#YValue").attr("value", y);
+                alert("x = " + x + "y = " + y);
+                
                 //todo find out xy location on image
             });
         });
@@ -54,7 +61,7 @@
             <asp:TextBox ID="tbSurname" CssClass="textBoxMargin" runat="server"></asp:TextBox>
             <asp:TextBox ID="tbEmail" CssClass="textBoxMargin" runat="server"></asp:TextBox>
             <div class="streetHouse">
-                <asp:TextBox ID="tbStreet"  runat="server"></asp:TextBox>
+                        <asp:TextBox ID="tbStreet" runat="server"></asp:TextBox>
                 <asp:TextBox ID="tbHouseNr" runat="server"></asp:TextBox>
             </div>
             
@@ -86,12 +93,30 @@
             <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" />
             <asp:Button ID="btnRemove" CssClass="buttonMargin" runat="server" Text="Verwijderen" />
 
-            <asp:Button ID="btnNextStep" runat="server" Text="Volgende stap" />
+            <asp:Button ID="btnNextStep" runat="server" Text="Volgende stap" OnClick="btnNextStep_Click" />
         </div>
                 <div class="clearDiv"></div>
         </div>
         
+            <asp:Panel ID="pnlMap" runat="server">
+            <div class="frm">
+                <div class="top">
+                <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
+                    <img id="showImage" alt="Camping" src="images/Camping.png" />
+                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                    <asp:TextBox ID="voorbeeld" runat="server"></asp:TextBox>
+                </div>
+            </div>
+            <asp:HiddenField ID="XValue" runat="server" ClientIDMode="Static" />
+            <asp:HiddenField ID="YValue" runat="server" ClientIDMode="Static" />
 
+
+            </asp:Panel>
+
+            
+            <asp:Panel ID="pnlMaterial" runat="server">
+            
             <div class="frm">
             <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Reservering materiaal</asp:Label>
@@ -124,12 +149,14 @@
 
             </div>
             <div class="clearDiv"></div>
-
             <div>
                 <asp:Button ID="btRMaterialTerug" runat="server" Text="Terug" />
-                <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder" />
+                        <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder" OnClick="btRMAterialVerder_Click" />
             </div>
             </div>
+            </asp:Panel>
+            
+            <asp:Panel ID="pnlOverview" runat="server">
             <div class="frm">
             <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Totaaloverzicht</asp:Label>
@@ -153,15 +180,12 @@
                 <asp:Button ID="btCMaterialVerder" runat="server" Text="Verder" />
             </div>
             </div>
-            <div class="frm">
-                <div class="top">
-                <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
-                    <img id="showImage" alt="Camping" src="images/Camping.png" />
-                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
-                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-                    <asp:TextBox ID="voorbeeld" runat="server"></asp:TextBox>
-                </div>
-            </div>
+            </asp:Panel>
+
+
+
+
+            
         </form>
         <div id="fullscreen">
            <img class="displayed" src="images/Camping.png" alt="Camping" />
