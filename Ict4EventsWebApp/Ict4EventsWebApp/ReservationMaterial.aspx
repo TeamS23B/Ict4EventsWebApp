@@ -55,7 +55,7 @@
                         <asp:Label ID="lblStreetHouseNr" CssClass="labelMargin" runat="server" Text="Straat + huisnummer:" ClientIDMode="Static"></asp:Label>
                         <asp:Label ID="lblPostalCodeCity" CssClass="labelMargin" runat="server" Text="Postcode + woonplaats:" ClientIDMode="Static"></asp:Label>
                         <asp:Label ID="lblIban" CssClass="labelMargin" runat="server" Text="Iban:" ClientIDMode="Static"></asp:Label>
-                        <asp:Label ID="lblPhone" CssClass="labelMargin" runat="server" Text="Telefoon:" ClientIDMode="Static"></asp:Label>
+                        
 
                     </div>
 
@@ -76,11 +76,19 @@
 
 
                         <asp:TextBox ID="tbIban" CssClass="textBoxMargin" runat="server"></asp:TextBox>
-                        <asp:TextBox ID="tbPhone" CssClass="textBoxMargin" runat="server"></asp:TextBox>
+                        
                     </div>
+
                     <div class="selectGroupMembers">
                         <asp:Label ID="lblGroupMembers" runat="server" Text="Andere deelnemers"></asp:Label>
                         <asp:ListBox ID="lbGroupMembers" runat="server"></asp:ListBox>
+
+                        <asp:RequiredFieldValidator ID="rfvFirstName" CssClass="validator" ControlToValidate="tbFirstName"  ForeColor="Red" runat="server" ErrorMessage="Vul een voornaam in."></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="rfcLastName" CssClass="validator" ControlToValidate="tbSurname"  ForeColor="Red" runat="server" ErrorMessage="Vul een achternaam in."></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="rfcEmail" CssClass="validator" ControlToValidate="tbEmail"  ForeColor="Red" runat="server" ErrorMessage="Vul een email adres in."></asp:RequiredFieldValidator>
+                        <asp:RequiredFieldValidator ID="rfcIban" CssClass="validator" ControlToValidate="tbIban"  ForeColor="Red" runat="server" ErrorMessage="Vul een iban nummer in."></asp:RequiredFieldValidator>
+                        <asp:RegularExpressionValidator ID="regexEmail" CssClass="validator" runat="server" ErrorMessage="Email adres ongeldig." ForeColor="Red" ControlToValidate="tbEmail" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"></asp:RegularExpressionValidator>
+                        <asp:RegularExpressionValidator ID="regexIban" CssClass="validator" runat="server" ErrorMessage="Ongeldig NL Iban." ForeColor="Red" ControlToValidate="tbIban" ValidationExpression="^NL([0-9]{2})([A-Z]{4})([0-9]{10})$"></asp:RegularExpressionValidator>
                     </div>
                     <div class="groupMembersInfo">
                         <asp:Label ID="lblFirstNameGM" CssClass="labelMargin" runat="server" Text="Voornaam"></asp:Label>
@@ -111,7 +119,7 @@
                         <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
                         <img id="showImage" alt="Camping" src="images/Camping.png" />
                         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
-                    <asp:Label ID="leel" runat="server" Text="Label"></asp:Label>
+                        <asp:Label ID="leel" runat="server" Text="Label"></asp:Label>
                     </div>
                 </div>
                 <asp:HiddenField ID="XValue" runat="server" ClientIDMode="Static" />
@@ -183,7 +191,7 @@
 
                     <div>
                         <asp:Button ID="btCMaterialTerug" runat="server" Text="Terug" />
-                <asp:Button ID="btCMaterialVerder" runat="server" Text="Voltooien" OnClick="btCMaterialVerder_Click" />
+                        <asp:Button ID="btCMaterialVerder" runat="server" Text="Voltooien" OnClick="btCMaterialVerder_Click" />
                     </div>
                 </div>
             </asp:Panel>
