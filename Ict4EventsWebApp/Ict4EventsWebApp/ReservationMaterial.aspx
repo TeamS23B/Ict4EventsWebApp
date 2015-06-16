@@ -86,12 +86,22 @@
             <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" />
             <asp:Button ID="btnRemove" CssClass="buttonMargin" runat="server" Text="Verwijderen" />
 
-            <asp:Button ID="btnNextStep" runat="server" Text="Volgende stap" />
+            <asp:Button ID="btnNextStep" runat="server" Text="Volgende stap" OnClick="btnNextStep_Click" />
         </div>
                 <div class="clearDiv"></div>
         </div>
         
-
+            <div class="frm">
+                <div class="top">
+                <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
+                    <img id="showImage" alt="Camping" src="images/Camping.png" />
+                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+                    <asp:TextBox ID="voorbeeld" runat="server"></asp:TextBox>
+                </div>
+            </div>
+            
+            
             <div class="frm">
             <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Reservering materiaal</asp:Label>
@@ -124,12 +134,14 @@
 
             </div>
             <div class="clearDiv"></div>
-
             <div>
                 <asp:Button ID="btRMaterialTerug" runat="server" Text="Terug" />
                 <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder" />
             </div>
             </div>
+
+
+
             <div class="frm">
             <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Totaaloverzicht</asp:Label>
@@ -153,15 +165,10 @@
                 <asp:Button ID="btCMaterialVerder" runat="server" Text="Verder" />
             </div>
             </div>
-            <div class="frm">
-                <div class="top">
-                <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
-                    <img id="showImage" alt="Camping" src="images/Camping.png" />
-                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
-                    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-                    <asp:TextBox ID="voorbeeld" runat="server"></asp:TextBox>
-                </div>
-            </div>
+
+
+
+            
         </form>
         <div id="fullscreen">
            <img class="displayed" src="images/Camping.png" alt="Camping" />

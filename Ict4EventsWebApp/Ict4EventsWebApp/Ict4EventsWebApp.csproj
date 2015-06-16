@@ -160,9 +160,10 @@
     <Compile Include="MateriaalVerhuur.aspx.designer.cs">
       <DependentUpon>MateriaalVerhuur.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Party.cs" />
     <Compile Include="Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegistrationInfo.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="ReservationMaterial.aspx.cs">
       <DependentUpon>ReservationMaterial.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
