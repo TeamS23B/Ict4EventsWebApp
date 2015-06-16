@@ -220,6 +220,24 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcEmail;
         
         /// <summary>
+        /// rfcPostalCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcPostalCode;
+        
+        /// <summary>
+        /// rfcCity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcCity;
+        
+        /// <summary>
         /// rfcIban control.
         /// </summary>
         /// <remarks>
@@ -227,6 +245,24 @@ namespace Ict4EventsWebApp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcIban;
+        
+        /// <summary>
+        /// rfcStreet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcStreet;
+        
+        /// <summary>
+        /// rfcHouseNr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcHouseNr;
         
         /// <summary>
         /// regexEmail control.
@@ -245,6 +281,15 @@ namespace Ict4EventsWebApp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator regexIban;
+        
+        /// <summary>
+        /// regexPostalCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator regexPostalCode;
         
         /// <summary>
         /// lblFirstNameGM control.
