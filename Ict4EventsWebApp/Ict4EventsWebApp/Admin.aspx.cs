@@ -157,7 +157,7 @@ namespace Ict4EventsWebApp
                 AddParameterWithValue(com, "datumEinde", clEndDate.SelectedDate.ToString());
                 AddParameterWithValue(com, "maxBezoekers", Convert.ToInt32(tbMaxVis.Text));
                 com.ExecuteNonQuery();
-            }
+             }
         }
 
         protected void lbUsers_SelectedIndexChanged(object sender, EventArgs e)
