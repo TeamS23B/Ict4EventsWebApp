@@ -79,7 +79,7 @@
                     <asp:Label ID="lblCat" runat="server" Text="Categorie"></asp:Label>
                     <asp:DropDownList ID="ddlCat" runat="server" Enabled="False"></asp:DropDownList>
                     <asp:Button ID="btnUpdate" runat="server" Text="Product bijwerken" Enabled="False" OnClick="btnUpdate_Click" />
-                    <asp:Button ID="btnDelete" runat="server" Text="Item verwijderen" Enabled="False" OnClick="btnDelete_Click" />
+                    <asp:Button ID="btnNew" runat="server" Text="Product aanmaken" enabled="false" OnClick="btnNew_Click" />
                 </div>
                 <div class="debug"></div>
             </div>
