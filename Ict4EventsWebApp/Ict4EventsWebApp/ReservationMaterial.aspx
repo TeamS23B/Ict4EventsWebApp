@@ -86,13 +86,13 @@
             <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" />
             <asp:Button ID="btnRemove" CssClass="buttonMargin" runat="server" Text="Verwijderen" />
 
-            <asp:Button ID="btnNextStep" runat="server" Text="Volgende stap" />
+            <asp:Button ID="btnNextStep" runat="server" Text="Volgende stap" OnClick="btnNextStep_Click" />
         </div>
                 <div class="clearDiv"></div>
         </div>
         
-
-            <div class="frm">
+            <asp:Panel ID="pnlMaterial" runat="server">
+                <div class="frm">
             <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Reservering materiaal</asp:Label>
             </div>
@@ -130,6 +130,8 @@
                 <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder" />
             </div>
             </div>
+            </asp:Panel>
+            
             <div class="frm">
             <div class="top">
                 <asp:Label runat="server" Font-Bold="True">Totaaloverzicht</asp:Label>

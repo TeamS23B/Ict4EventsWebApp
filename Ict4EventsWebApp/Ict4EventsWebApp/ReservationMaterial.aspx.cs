@@ -17,6 +17,14 @@ namespace Ict4EventsWebApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                pnlMaterial.Visible = false;
+            }
+        }
+
+        protected void btnNextStep_Click(object sender, EventArgs e)
+        {
 
         }
 
