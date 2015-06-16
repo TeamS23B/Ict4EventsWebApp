@@ -153,9 +153,12 @@ namespace Ict4EventsWebApp
         {
             string a = XValue.Value;
             string b = YValue.Value;
+            string plekid;
             string persoonId;
             string accountId;
             string reserveringId;
+            string resPolsId;
+            
 
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
@@ -186,8 +189,9 @@ namespace Ict4EventsWebApp
                 com.Connection = con;
                 com.ExecuteNonQuery();
 
-                string plekid = com.Parameters["PlekId"].Value.ToString();
+                plekid = com.Parameters["PlekId"].Value.ToString();
             }
+            //INSERT LEIDER
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
@@ -221,6 +225,7 @@ namespace Ict4EventsWebApp
                 }
             }
 
+            //PERSOONID
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
                 DbCommand com = OracleClientFactory.Instance.CreateCommand();
@@ -231,163 +236,211 @@ namespace Ict4EventsWebApp
                 com.Connection = con;
 
                 string c = com.ExecuteScalar().ToString();
-                int d = Convert.ToInt32(c);
+                int d = Convert.ToInt32(c)+1;
                 persoonId = d.ToString();
             }
 
-            //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
-            //{
-            //    DbCommand com = OracleClientFactory.Instance.CreateCommand();
-            //    com.CommandType = System.Data.CommandType.StoredProcedure;
-            //    com.CommandText = "INSERT_ACCOUNT";
-            //    string gebruikersnaam = tbFirstName.Text.ToString() + " " + tbSurname.Text.ToString();
-            //    AddParameterWithValue(com, "gebruikersnaam", tbFirstName.Text.ToString() + " " + tbSurname.Text.ToString());
-            //    AddParameterWithValue(com, "email", tbEmail.Text);
+            //ACCOUNT
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "INSERT_ACCOUNT";
 
-            //    var q = com.CreateParameter();
-            //    q.DbType = DbType.Decimal;
-            //    q.ParameterName = "insertGelukt";
-            //    q.Direction = ParameterDirection.Output;
-            //    com.Parameters.Add(q);
+                AddParameterWithValue(com, "gebruikersnaam", tbFirstName.Text.ToString() + " " + tbSurname.Text.ToString());
+                AddParameterWithValue(com, "email", tbEmail.Text);
 
-            //    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-            //    con.Open();
-            //    com.Connection = con;
-            //    com.ExecuteNonQuery();
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "insertGelukt";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
 
-            //    string result = com.Parameters["insertGelukt"].Value.ToString();
-            //    //if (result == "0")
-            //    //    {
-            //    //        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
-            //    //    }
-            //}
+                var qacc = com.CreateParameter();
+                qacc.DbType = DbType.Decimal;
+                qacc.ParameterName = "accountId";
+                qacc.Direction = ParameterDirection.Output;
+                com.Parameters.Add(qacc);
 
-            //    if (result == "0")
-            //    {
-            //        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
-            //    }
-            //}
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
 
-            ////PERSOONID
-            //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
-            //{
-            //    DbCommand com = OracleClientFactory.Instance.CreateCommand();
-            //    com.CommandText = "SELECT MAX(ID) FROM PERSOON";
-
-            //    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-            //    con.Open();
-            //    com.Connection = con;
-
-            //    string c = com.ExecuteScalar().ToString();
-            //    int d = Convert.ToInt32(c);
-            //    persoonId = d.ToString();
-            //}
-
-            ////ACCOUNT
-            //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
-            //{
-            //    DbCommand com = OracleClientFactory.Instance.CreateCommand();
-            //    com.CommandType = System.Data.CommandType.StoredProcedure;
-            //    com.CommandText = "INSERT_ACCOUNT";
-
-            //    AddParameterWithValue(com, "gebruikersnaam", tbFirstName.Text.ToString() + " " + tbSurname.Text.ToString());
-            //    AddParameterWithValue(com, "email", tbEmail.Text);
-
-            //    var q = com.CreateParameter();
-            //    q.DbType = DbType.Decimal;
-            //    q.ParameterName = "insertGelukt";
-            //    q.Direction = ParameterDirection.Output;
-            //    com.Parameters.Add(q);
-
-            //    var qacc = com.CreateParameter();
-            //    qacc.DbType = DbType.Decimal;
-            //    qacc.ParameterName = "accountId";
-            //    qacc.Direction = ParameterDirection.Output;
-            //    com.Parameters.Add(qacc);
-
-            //    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-            //    con.Open();
-            //    com.Connection = con;
-            //    com.ExecuteNonQuery();
-
-            //    string result = com.Parameters["insertGelukt"].Value.ToString();
-            //    if (result == "0")
-            //    {
-            //        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
-            //    }
-            //    accountId = com.Parameters["accountId"].Value.ToString();
-            //}
+                string result = com.Parameters["insertGelukt"].Value.ToString();
+                if (result == "0")
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                }
+                accountId = com.Parameters["accountId"].Value.ToString();
+            }
 
             
 
-            ////RESERVERING
-            //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
-            //{
-            //    DbCommand com = OracleClientFactory.Instance.CreateCommand();
-            //    com.CommandType = System.Data.CommandType.StoredProcedure;
-            //    com.CommandText = "INSERT_RESERVERING";
+            //RESERVERING
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "INSERT_RESERVERING";
 
-            //    AddParameterWithValue(com, "persoonId", persoonId);
+                AddParameterWithValue(com, "persoonId", persoonId);
 
-            //    var q = com.CreateParameter();
-            //    q.DbType = DbType.Decimal;
-            //    q.ParameterName = "insertGelukt";
-            //    q.Direction = ParameterDirection.Output;
-            //    com.Parameters.Add(q);
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "insertGelukt";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
 
-            //    var qacc = com.CreateParameter();
-            //    qacc.DbType = DbType.Decimal;
-            //    qacc.ParameterName = "reserveringIdOUT";
-            //    qacc.Direction = ParameterDirection.Output;
-            //    com.Parameters.Add(qacc);
+                var qacc = com.CreateParameter();
+                qacc.DbType = DbType.Decimal;
+                qacc.ParameterName = "reserveringIdOUT";
+                qacc.Direction = ParameterDirection.Output;
+                com.Parameters.Add(qacc);
 
-            //    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-            //    con.Open();
-            //    com.Connection = con;
-            //    com.ExecuteNonQuery();
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
 
-            //    string result = com.Parameters["insertGelukt"].Value.ToString();
-            //    if (result == "0")
-            //    {
-            //        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
-            //    }
-            //    reserveringId = com.Parameters["reserveringIdOUT"].Value.ToString();
-            //}
-            ////reservering polsbandje
-            //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
-            //{
-            //    DbCommand com = OracleClientFactory.Instance.CreateCommand();
-            //    com.CommandType = System.Data.CommandType.StoredProcedure;
-            //    com.CommandText = "INSERT_RESERVERING_POLSBANDJE";
-
-            //    AddParameterWithValue(com, "reservering_Id", reserveringId);
-            //    AddParameterWithValue(com, "account_Id", accountId);
-
-            //    var q = com.CreateParameter();
-            //    q.DbType = DbType.Decimal;
-            //    q.ParameterName = "insertGelukt";
-            //    q.Direction = ParameterDirection.Output;
-            //    com.Parameters.Add(q);
-
-            //    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-            //    con.Open();
-            //    com.Connection = con;
-            //    com.ExecuteNonQuery();
-
-            //    string result = com.Parameters["insertGelukt"].Value.ToString();
-            //    if (result == "0")
-            //    {
-            //        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
-            //    }
-            //}
-
-            List<string> removals = new List<string>();
-            foreach (string s in lbMaterialToReserve.Items)
+                string result = com.Parameters["insertGelukt"].Value.ToString();
+                if (result == "0")
                 {
-                //MessageBox.Show(s);
-                //do stuff with (s);
-                //removals.Add(s);
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                }
+                reserveringId = com.Parameters["reserveringIdOUT"].Value.ToString();
             }
+
+            //plek reserveren
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "INSERT_RESERVERING_PLAATS";
+
+                AddParameterWithValue(com, "reserveringId", reserveringId);
+                AddParameterWithValue(com, "plaatsId", plekid);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "insertGelukt";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                string result = com.Parameters["insertGelukt"].Value.ToString();
+                if (result == "0")
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                }
+            }
+
+            //reservering polsbandje
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "INSERT_RESERVERING_POLSBANDJE";
+
+                AddParameterWithValue(com, "reservering_Id", reserveringId);
+                AddParameterWithValue(com, "account_Id", accountId);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "insertGelukt";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                var qacc = com.CreateParameter();
+                qacc.DbType = DbType.Decimal;
+                qacc.ParameterName = "reserveringPID";
+                qacc.Direction = ParameterDirection.Output;
+                com.Parameters.Add(qacc);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                string result = com.Parameters["insertGelukt"].Value.ToString();
+                if (result == "0")
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                }
+                resPolsId = com.Parameters["reserveringPID"].Value.ToString();
+            }
+            while (lbMaterialToReserve.Items.Count > 0)
+            {
+                string s = lbMaterialToReserve.Items[0].ToString();
+                s = s.Substring(0, s.IndexOf("."));
+
+                string bedrag1 = "0";
+
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    if (con == null)
+                    {
+
+                    }
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+
+                    }
+                    com.Connection = con;
+                    com.CommandText = "Select prijs FROM product WHERE product.id = :1 AND rownum = 1";
+                    AddParameterWithValue(com, "prodId", s);
+                    DbDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        bedrag1 = reader[0].ToString();
+                    }
+                }
+
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                    {
+                        DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                        com.CommandType = System.Data.CommandType.StoredProcedure;
+                        com.CommandText = "INSERT_VERHUUR";
+
+                        AddParameterWithValue(com, "PRODUCTEXEMPLAAR_ID", s);
+                        AddParameterWithValue(com, "RES_PB_ID", resPolsId);
+                        AddParameterWithValue(com, "PRIJS", bedrag1);
+                        AddParameterWithValue(com, "BETAALD", "1");
+                        
+                        var q = com.CreateParameter();
+                        q.DbType = DbType.Decimal;
+                        q.ParameterName = "insertGelukt";
+                        q.Direction = ParameterDirection.Output;
+                        com.Parameters.Add(q);
+
+                        con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                        con.Open();
+                        com.Connection = con;
+                        com.ExecuteNonQuery();
+                        
+                        string result = com.Parameters["insertGelukt"].Value.ToString();
+                        if (result == "0")
+                        {
+                            Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                        }
+                     }
+
+                lbMaterialToReserve.Items.RemoveAt(0);
+            }
+            //List<string> removals = new List<string>();
+            //foreach (string s in lbMaterialToReserve.Items)
+            //    {
+            //    //MessageBox.Show(s);
+            //    //do stuff with (s);
+            //    //removals.Add(s);
+            //}
 
         }
 
