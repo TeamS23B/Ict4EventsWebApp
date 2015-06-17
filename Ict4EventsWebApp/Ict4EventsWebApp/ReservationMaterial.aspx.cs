@@ -45,7 +45,7 @@ namespace Ict4EventsWebApp
                     lbGroupMembers.Items.Add(person.ToString());
                 }
             }
-            
+            lbGroupMembers.DataBind();
         }
 
         /// <summary>
@@ -178,6 +178,28 @@ namespace Ict4EventsWebApp
         }
 
         /// <summary>
+        /// To do: Remove member from party.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnRemove_Click(object sender, EventArgs e)
+        {
+
+
+            foreach (Person member in party.Members)
+            {
+                if (member.ToString() == lbGroupMembers.SelectedValue.ToString())
+                {
+                    party.Members.Remove(member);
+                    lbGroupMembers.Items.Remove(lbGroupMembers.SelectedValue);
+                    
+                }
+            }
+
+
+        }
+
+        /// <summary>
         /// Insert all data from previous registration forms into the database, or show a pop-up if anything goes wrong.
         /// </summary>
         /// <param name="sender"></param>
@@ -191,7 +213,7 @@ namespace Ict4EventsWebApp
             string accountId;
             string reserveringId;
             string resPolsId;
-            
+
             // Retrieve the to-be-reserved location coordinates
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
@@ -318,7 +340,7 @@ namespace Ict4EventsWebApp
                 accountId = com.Parameters["accountId"].Value.ToString();
             }
 
-            
+
 
             // Create a reservation for the event.
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
@@ -451,33 +473,33 @@ namespace Ict4EventsWebApp
 
                 // insert the rent of the product
                 using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    com.CommandType = System.Data.CommandType.StoredProcedure;
+                    com.CommandText = "INSERT_VERHUUR";
+
+                    AddParameterWithValue(com, "PRODUCTEXEMPLAAR_ID", s);
+                    AddParameterWithValue(com, "RES_PB_ID", resPolsId);
+                    AddParameterWithValue(com, "PRIJS", bedrag1);
+                    AddParameterWithValue(com, "BETAALD", "1");
+
+                    var q = com.CreateParameter();
+                    q.DbType = DbType.Decimal;
+                    q.ParameterName = "insertGelukt";
+                    q.Direction = ParameterDirection.Output;
+                    com.Parameters.Add(q);
+
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    com.Connection = con;
+                    com.ExecuteNonQuery();
+
+                    string result = com.Parameters["insertGelukt"].Value.ToString();
+                    if (result == "0")
                     {
-                        DbCommand com = OracleClientFactory.Instance.CreateCommand();
-                        com.CommandType = System.Data.CommandType.StoredProcedure;
-                        com.CommandText = "INSERT_VERHUUR";
-
-                        AddParameterWithValue(com, "PRODUCTEXEMPLAAR_ID", s);
-                        AddParameterWithValue(com, "RES_PB_ID", resPolsId);
-                        AddParameterWithValue(com, "PRIJS", bedrag1);
-                        AddParameterWithValue(com, "BETAALD", "1");
-                        
-                        var q = com.CreateParameter();
-                        q.DbType = DbType.Decimal;
-                        q.ParameterName = "insertGelukt";
-                        q.Direction = ParameterDirection.Output;
-                        com.Parameters.Add(q);
-
-                        con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-                        con.Open();
-                        com.Connection = con;
-                        com.ExecuteNonQuery();
-                        
-                        string result = com.Parameters["insertGelukt"].Value.ToString();
-                        if (result == "0")
-                        {
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
-                        }
-                     }
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                    }
+                }
 
                 lbMaterialToReserve.Items.RemoveAt(0);
             }
@@ -503,7 +525,7 @@ namespace Ict4EventsWebApp
                     AddParameterWithValue(com, "voornaam", member.Name);
                     AddParameterWithValue(com, "tussenvoegsel", infix);
                     AddParameterWithValue(com, "achternaam", member.Surname);
-                    
+
                     var q = com.CreateParameter();
                     q.DbType = DbType.Decimal;
                     q.ParameterName = "insertGelukt";
@@ -523,7 +545,7 @@ namespace Ict4EventsWebApp
                     }
                 }
             }
-            
+
 
         }
 
@@ -538,15 +560,7 @@ namespace Ict4EventsWebApp
             command.Parameters.Add(parameter);
         }
 
-        /// <summary>
-        /// To do: Remove member from party.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnRemove_Click(object sender, EventArgs e)
-        {
 
-        }
 
         /// <summary>
         /// Add material to the 'to rent' list.
@@ -555,7 +569,7 @@ namespace Ict4EventsWebApp
         /// <param name="e"></param>
         protected void btMaterialAdd_Click(object sender, EventArgs e)
         {
-            int Bedrag = Convert.ToInt32(lbPrice.Text); 
+            int Bedrag = Convert.ToInt32(lbPrice.Text);
             string ToAddMaterial = lbavailableMaterial.SelectedValue.ToString();
             lbMaterialToReserve.Items.Add(ToAddMaterial);
             lbavailableMaterial.Items.Remove(ToAddMaterial);
@@ -645,5 +659,12 @@ namespace Ict4EventsWebApp
                 return;
             }
         }
+
+        protected void tbFirstName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }
