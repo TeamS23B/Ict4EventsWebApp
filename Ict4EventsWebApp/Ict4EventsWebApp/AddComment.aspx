@@ -35,13 +35,19 @@
             <div>
                 <asp:Label Text="" runat="server" ID="lblCatName"/>
                 <asp:Label Text="" runat="server" ID="lblError"/>
+                <br />
                 <asp:RadioButton runat="server" ID="rbText" Text="Tekst" GroupName="rbInput"></asp:RadioButton>
                 <asp:RadioButton runat="server" ID="rbFile" Text="Bestand" GroupName="rbInput"></asp:RadioButton>
+                <asp:RadioButton runat="server" ID="rbCat" Text="Categorie" GroupName="rbInput"></asp:RadioButton>
+                <br />
                 <asp:FileUpload ID="uploadFl" runat="server" />
+                <br />
                 <asp:Label Text="Titel" runat="server" />
                 <asp:TextBox ID="tbTitle" runat="server"></asp:TextBox>
+                <br />
                 <asp:Label Text="Tekst" runat="server" />
                 <asp:TextBox ID="tbText" runat="server" TextMode="MultiLine"></asp:TextBox>
+                <br />
                 <asp:Button Text="Plaatsen" runat="server" ID="send" OnClick="send_Click"/>
             </div>
         </form>
