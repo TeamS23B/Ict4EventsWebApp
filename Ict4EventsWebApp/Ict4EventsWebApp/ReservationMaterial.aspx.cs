@@ -365,7 +365,7 @@ namespace Ict4EventsWebApp
 
                 if (result == "0")
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_PersoonLeider')</script>");
                     return;
                 }
             }
@@ -419,7 +419,7 @@ namespace Ict4EventsWebApp
                 string result = com.Parameters["insertGelukt"].Value.ToString();
                 if (result == "0")
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Account.')</script>");
                     return;
                 }
                 accountId = com.Parameters["accountId"].Value.ToString();
@@ -456,7 +456,7 @@ namespace Ict4EventsWebApp
                 string result = com.Parameters["insertGelukt"].Value.ToString();
                 if (result == "0")
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Reservering.')</script>");
                     return;
                 }
                 reserveringId = com.Parameters["reserveringIdOUT"].Value.ToString();
@@ -488,7 +488,7 @@ namespace Ict4EventsWebApp
                 string result = com.Parameters["insertGelukt"].Value.ToString();
                 if (result == "0")
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Reservering_Plaats.')</script>");
                     return;
                 }
             }
@@ -525,7 +525,7 @@ namespace Ict4EventsWebApp
                 string result = com.Parameters["insertGelukt"].Value.ToString();
                 if (result == "0")
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Reservering_Polsbandje.')</script>");
                     return;
                 }
                 resPolsId = com.Parameters["reserveringPID"].Value.ToString();
@@ -591,7 +591,7 @@ namespace Ict4EventsWebApp
                     string result = com.Parameters["insertGelukt"].Value.ToString();
                     if (result == "0")
                     {
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Verhuur.')</script>");
                         return;
                     }
                 }
@@ -638,9 +638,45 @@ namespace Ict4EventsWebApp
 
                     if (result == "0")
                     {
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Persoonlid Member')</script>");
                         return;
                     }
+                }
+
+                // Insert an account into the database.
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    com.CommandType = System.Data.CommandType.StoredProcedure;
+                    com.CommandText = "INSERT_ACCOUNT";
+
+                    AddParameterWithValue(com, "gebruikersnaam", member.Name + " " + member.Surname);
+                    AddParameterWithValue(com, "email", member.Email);
+
+                    var q = com.CreateParameter();
+                    q.DbType = DbType.Decimal;
+                    q.ParameterName = "insertGelukt";
+                    q.Direction = ParameterDirection.Output;
+                    com.Parameters.Add(q);
+
+                    var qacc = com.CreateParameter();
+                    qacc.DbType = DbType.Decimal;
+                    qacc.ParameterName = "accountId";
+                    qacc.Direction = ParameterDirection.Output;
+                    com.Parameters.Add(qacc);
+
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    com.Connection = con;
+                    com.ExecuteNonQuery();
+
+                    string result = com.Parameters["insertGelukt"].Value.ToString();
+                    if (result == "0")
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Account Member.')</script>");
+                        return;
+                    }
+                    accountId = com.Parameters["accountId"].Value.ToString();
                 }
             }
             #endregion
