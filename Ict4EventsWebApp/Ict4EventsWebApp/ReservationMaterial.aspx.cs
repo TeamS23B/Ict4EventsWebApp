@@ -184,14 +184,14 @@ namespace Ict4EventsWebApp
         /// <param name="e"></param>
         protected void btnRemove_Click(object sender, EventArgs e)
         {
-
+            string selectedgroupmember = (string)Session["SelectedMember"];
 
             foreach (Person member in party.Members)
             {
-                if (member.ToString() == lbGroupMembers.SelectedValue.ToString())
+                if (member.ToString() == selectedgroupmember)
                 {
                     party.Members.Remove(member);
-                    lbGroupMembers.Items.Remove(lbGroupMembers.SelectedValue);
+                    lbGroupMembers.Items.Remove(selectedgroupmember);
                     
                 }
             }
@@ -663,6 +663,10 @@ namespace Ict4EventsWebApp
         protected void tbFirstName_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void lbGroupMembers_SelectedIndexChanged(object sender, EventArgs e)
+        {
         }
 
 

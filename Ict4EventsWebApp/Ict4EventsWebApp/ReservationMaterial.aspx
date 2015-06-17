@@ -81,7 +81,7 @@
 
                     <div class="selectGroupMembers">
                         <asp:Label ID="lblGroupMembers" runat="server" Text="Andere deelnemers"></asp:Label>
-                        <asp:ListBox ID="lbGroupMembers"  runat="server" ></asp:ListBox>
+                        <asp:ListBox ID="lbGroupMembers"  runat="server" OnSelectedIndexChanged="lbGroupMembers_SelectedIndexChanged"></asp:ListBox>
 
                         <asp:RequiredFieldValidator ID="rfvFirstName" CssClass="validator" ControlToValidate="tbFirstName"  ForeColor="Red" runat="server" ErrorMessage="Vul een voornaam in."></asp:RequiredFieldValidator>
                         <asp:RequiredFieldValidator ID="rfcLastName" CssClass="validator" ControlToValidate="tbSurname"  ForeColor="Red" runat="server" ErrorMessage="Vul een achternaam in."></asp:RequiredFieldValidator>
@@ -110,7 +110,7 @@
                         <asp:TextBox ID="TextBox5" CssClass="textBoxMargin" runat="server">jeweet@zelluf.nl</asp:TextBox>
 
                         <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" OnClick="btnAdd_Click" />
-                        <asp:Button ID="btnRemove" CssClass="buttonMargin" runat="server" Text="Verwijderen" OnClick="btnRemove_Click" />
+                        <asp:Button ID="btnRemove" CssClass="buttonMargin" runat="server" Text="Verwijderen" OnClick="btnRemove_Click"/>
 
                         <asp:Button ID="btnNextStep" runat="server" Text="Verder" OnClick="btnNextStep_Click" />
                     </div>
