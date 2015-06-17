@@ -13,6 +13,7 @@ namespace Ict4EventsWebApp
         {
             if ((bool) (Session["loggedIn"]??false))//logout if the user is already logged in
             {
+                SmsConnect.Instance.RemoveToken((string)Session["username"]);
                 lblError.Text = "Uitgelogd";
                 Session.Clear();
             }
