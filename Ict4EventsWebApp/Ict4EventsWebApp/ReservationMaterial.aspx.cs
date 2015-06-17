@@ -39,13 +39,13 @@ namespace Ict4EventsWebApp
             else
             {
                 party = (Party)Session["party"];
-                lbGroupMembers.Items.Clear();
+                
                 foreach (Person person in party.Members)
                 {
                     lbGroupMembers.Items.Add(person.ToString());
                 }
             }
-            lbGroupMembers.DataBind();
+            
         }
 
         /// <summary>
