@@ -419,7 +419,7 @@ namespace Ict4EventsWebApp
                 string result = com.Parameters["insertGelukt"].Value.ToString();
                 if (result == "0")
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Account.')</script>");
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Account. Gebruikersnaam en / of email is al in gebruik.')</script>");
                     return;
                 }
                 accountId = com.Parameters["accountId"].Value.ToString();
