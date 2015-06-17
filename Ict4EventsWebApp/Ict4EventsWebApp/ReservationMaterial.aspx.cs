@@ -10,6 +10,7 @@ using System.Configuration;
 using Oracle.ManagedDataAccess;
 using Oracle.ManagedDataAccess.Types;
 using System.Data;
+using System.Net.Mail;
 
 namespace Ict4EventsWebApp
 {
@@ -38,13 +39,13 @@ namespace Ict4EventsWebApp
             else
             {
                 party = (Party)Session["party"];
-                
+
                 foreach (Person person in party.Members)
                 {
                     lbGroupMembers.Items.Add(person.ToString());
                 }
             }
-            
+
         }
 
         private void AddParameterWithValue(DbCommand command, string parameterName, object parameterValue)
@@ -269,7 +270,7 @@ namespace Ict4EventsWebApp
                 {
                     party.Members.Remove(member);
                     lbGroupMembers.Items.Remove(selectedgroupmember);
-                    
+
                 }
             }
 
@@ -424,6 +425,19 @@ namespace Ict4EventsWebApp
                 }
                 accountId = com.Parameters["accountId"].Value.ToString();
             }
+
+            //var smtpc = new SmtpClient();
+            //smtpc.Host = "172.20.112.3";
+            //smtpc.EnableSsl = false;
+            //smtpc.UseDefaultCredentials = true;
+
+            //var mm = new MailMessage();
+            //mm.From = new MailAddress("admin@");
+            //mm.To.Add(tbTarget.Text);
+            //mm.Subject = tbSubject.Text;
+            //mm.Body = tbText.Text;
+            //smtpc.Send(mm);
+
             #endregion
 
             #region Insert reservation
