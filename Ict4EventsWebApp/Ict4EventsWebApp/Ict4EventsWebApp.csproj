@@ -79,6 +79,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ActivateAccount.aspx" />
     <Content Include="AddComment.aspx" />
     <Content Include="Admin.aspx" />
     <Content Include="Check.aspx" />
@@ -113,6 +114,7 @@
     <Content Include="scripts\jquery-1.11.2.js" />
     <Content Include="scripts\jquery-1.11.2.min.js" />
     <Content Include="scripts\ui.js" />
+    <Content Include="styles\activate.css" />
     <Content Include="styles\addComment.css" />
     <Content Include="styles\Admin.css" />
     <Content Include="styles\CheckBetaling.css" />
@@ -131,6 +133,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivateAccount.aspx.cs">
+      <DependentUpon>ActivateAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ActivateAccount.aspx.designer.cs">
+      <DependentUpon>ActivateAccount.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AddComment.aspx.cs">
       <DependentUpon>AddComment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
