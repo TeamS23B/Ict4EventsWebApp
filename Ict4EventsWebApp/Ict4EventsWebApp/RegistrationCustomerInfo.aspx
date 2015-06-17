@@ -70,7 +70,7 @@
             <asp:TextBox ID="TextBox4" CssClass="textBoxMargin" runat="server">je@moeder.islief</asp:TextBox>
 
             <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" />
-            <asp:Button ID="btnRemove" CssClass="buttonMargin" runat="server" Text="Verwijderen" />
+            <asp:Button ID="btnRemove" CssClass="buttonMargin" runat="server" Text="Verwijderen" OnClick="btnRemove_Click" />
 
             <asp:Button ID="btnNextStep" runat="server" Text="Volgende stap" />
         </div>
