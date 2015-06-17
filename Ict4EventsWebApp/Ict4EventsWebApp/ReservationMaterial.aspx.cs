@@ -10,7 +10,6 @@ using System.Configuration;
 using Oracle.ManagedDataAccess;
 using Oracle.ManagedDataAccess.Types;
 using System.Data;
-using System.Collections.Generic;
 
 namespace Ict4EventsWebApp
 {
@@ -39,13 +38,23 @@ namespace Ict4EventsWebApp
             else
             {
                 party = (Party)Session["party"];
-                lbGroupMembers.Items.Clear();
+                
                 foreach (Person person in party.Members)
                 {
                     lbGroupMembers.Items.Add(person.ToString());
                 }
             }
             
+        }
+
+        private void AddParameterWithValue(DbCommand command, string parameterName, object parameterValue)
+        {
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = parameterName;
+            parameter.Value = parameterValue;
+            parameter.DbType = System.Data.DbType.AnsiString;
+            parameter.Direction = System.Data.ParameterDirection.Input;
+            command.Parameters.Add(parameter);
         }
 
         /// <summary>
@@ -55,8 +64,72 @@ namespace Ict4EventsWebApp
         /// <param name="e"></param>
         protected void Button1_Click(object sender, EventArgs e)
         {
+
+            string a = XValue.Value;
+            string b = YValue.Value;
+            string plekId;
+
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "GET_PLEKID";
+
+                var p1 = com.CreateParameter();
+                p1.DbType = DbType.Decimal;
+                p1.ParameterName = "X";
+                p1.Value = Convert.ToInt32(a);
+                com.Parameters.Add(p1);
+
+                var p2 = com.CreateParameter();
+                p2.DbType = DbType.Decimal;
+                p2.ParameterName = "Y";
+                p2.Value = Convert.ToInt32(b);
+                com.Parameters.Add(p2);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "PlekId";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                plekId = com.Parameters["PlekId"].Value.ToString();
+            }
+
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.Connection = con;
+                com.CommandText = "SELECT COUNT(*) FROM plek_reservering WHERE plek_id = :plekId";
+
+                var p1 = com.CreateParameter();
+                p1.DbType = DbType.Decimal;
+                p1.ParameterName = "plekId";
+                p1.Value = Convert.ToInt32(plekId);
+                com.Parameters.Add(p1);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+
+                decimal result = (decimal)com.ExecuteScalar();
+
+                if (result > 0)
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Plaats is al gekozen')</script>");
+                    return;
+                }
+
+
+            }
             pnlMaterial.Visible = true;
             pnlMap.Visible = false;
+
 
             //using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             //{
@@ -133,6 +206,10 @@ namespace Ict4EventsWebApp
                 return;
             }
         }
+        //private void AddParameterWithValue(DbConnection con, string p, string plekId)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         /// <summary>
         /// Make only the map visible.
@@ -178,6 +255,28 @@ namespace Ict4EventsWebApp
         }
 
         /// <summary>
+        /// To do: Remove member from party.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnRemove_Click(object sender, EventArgs e)
+        {
+            string selectedgroupmember = (string)Session["SelectedMember"];
+
+            foreach (Person member in party.Members)
+            {
+                if (member.ToString() == selectedgroupmember)
+                {
+                    party.Members.Remove(member);
+                    lbGroupMembers.Items.Remove(selectedgroupmember);
+                    
+                }
+            }
+
+
+        }
+
+        /// <summary>
         /// Insert all data from previous registration forms into the database, or show a pop-up if anything goes wrong.
         /// </summary>
         /// <param name="sender"></param>
@@ -191,7 +290,7 @@ namespace Ict4EventsWebApp
             string accountId;
             string reserveringId;
             string resPolsId;
-            
+            #region location coordinates
             // Retrieve the to-be-reserved location coordinates
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
@@ -224,7 +323,9 @@ namespace Ict4EventsWebApp
 
                 plekid = com.Parameters["PlekId"].Value.ToString();
             }
+            #endregion
 
+            #region Insert group leader
             //Insert the group leader into the database.
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
@@ -264,10 +365,13 @@ namespace Ict4EventsWebApp
 
                 if (result == "0")
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_PersoonLeider')</script>");
+                    return;
                 }
             }
+            #endregion
 
+            #region highest ID person
             // Get the highest ID from the person list and raise it by 1 (new highest ID).
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
@@ -282,7 +386,9 @@ namespace Ict4EventsWebApp
                 int d = Convert.ToInt32(c);
                 persoonId = d.ToString();
             }
+            #endregion
 
+            #region Insert account
             // Insert an account into the database.
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
@@ -313,13 +419,14 @@ namespace Ict4EventsWebApp
                 string result = com.Parameters["insertGelukt"].Value.ToString();
                 if (result == "0")
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Account. Gebruikersnaam en / of email is al in gebruik.')</script>");
+                    return;
                 }
                 accountId = com.Parameters["accountId"].Value.ToString();
             }
+            #endregion
 
-            
-
+            #region Insert reservation
             // Create a reservation for the event.
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
@@ -349,11 +456,14 @@ namespace Ict4EventsWebApp
                 string result = com.Parameters["insertGelukt"].Value.ToString();
                 if (result == "0")
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Reservering.')</script>");
+                    return;
                 }
                 reserveringId = com.Parameters["reserveringIdOUT"].Value.ToString();
             }
+            #endregion
 
+            #region Insert reservation plaats
             // Create a reservation for a location within an event.
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
@@ -378,10 +488,13 @@ namespace Ict4EventsWebApp
                 string result = com.Parameters["insertGelukt"].Value.ToString();
                 if (result == "0")
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Reservering_Plaats.')</script>");
+                    return;
                 }
             }
+            #endregion
 
+            #region Insert reservation polsbandje
             // Bind a reservation to an account.
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
             {
@@ -412,11 +525,14 @@ namespace Ict4EventsWebApp
                 string result = com.Parameters["insertGelukt"].Value.ToString();
                 if (result == "0")
                 {
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Reservering_Polsbandje.')</script>");
+                    return;
                 }
                 resPolsId = com.Parameters["reserveringPID"].Value.ToString();
             }
+            #endregion
 
+            #region Insert materiaal
             // Insert all reserved materials into the database.
             while (lbMaterialToReserve.Items.Count > 0)
             {
@@ -451,37 +567,40 @@ namespace Ict4EventsWebApp
 
                 // insert the rent of the product
                 using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    com.CommandType = System.Data.CommandType.StoredProcedure;
+                    com.CommandText = "INSERT_VERHUUR";
+
+                    AddParameterWithValue(com, "PRODUCTEXEMPLAAR_ID", s);
+                    AddParameterWithValue(com, "RES_PB_ID", resPolsId);
+                    AddParameterWithValue(com, "PRIJS", bedrag1);
+                    AddParameterWithValue(com, "BETAALD", "1");
+
+                    var q = com.CreateParameter();
+                    q.DbType = DbType.Decimal;
+                    q.ParameterName = "insertGelukt";
+                    q.Direction = ParameterDirection.Output;
+                    com.Parameters.Add(q);
+
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    com.Connection = con;
+                    com.ExecuteNonQuery();
+
+                    string result = com.Parameters["insertGelukt"].Value.ToString();
+                    if (result == "0")
                     {
-                        DbCommand com = OracleClientFactory.Instance.CreateCommand();
-                        com.CommandType = System.Data.CommandType.StoredProcedure;
-                        com.CommandText = "INSERT_VERHUUR";
-
-                        AddParameterWithValue(com, "PRODUCTEXEMPLAAR_ID", s);
-                        AddParameterWithValue(com, "RES_PB_ID", resPolsId);
-                        AddParameterWithValue(com, "PRIJS", bedrag1);
-                        AddParameterWithValue(com, "BETAALD", "1");
-                        
-                        var q = com.CreateParameter();
-                        q.DbType = DbType.Decimal;
-                        q.ParameterName = "insertGelukt";
-                        q.Direction = ParameterDirection.Output;
-                        com.Parameters.Add(q);
-
-                        con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
-                        con.Open();
-                        com.Connection = con;
-                        com.ExecuteNonQuery();
-                        
-                        string result = com.Parameters["insertGelukt"].Value.ToString();
-                        if (result == "0")
-                        {
-                            Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
-                        }
-                     }
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Verhuur.')</script>");
+                        return;
+                    }
+                }
 
                 lbMaterialToReserve.Items.RemoveAt(0);
             }
+            #endregion
 
+            #region Insert party
             // If there are people in the party, insert each one of them into the database.
             foreach (Person member in party.Members)
             {
@@ -503,7 +622,7 @@ namespace Ict4EventsWebApp
                     AddParameterWithValue(com, "voornaam", member.Name);
                     AddParameterWithValue(com, "tussenvoegsel", infix);
                     AddParameterWithValue(com, "achternaam", member.Surname);
-                    
+
                     var q = com.CreateParameter();
                     q.DbType = DbType.Decimal;
                     q.ParameterName = "insertGelukt";
@@ -519,34 +638,55 @@ namespace Ict4EventsWebApp
 
                     if (result == "0")
                     {
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald')</script>");
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Persoonlid Member')</script>");
+                        return;
                     }
                 }
+
+                // Insert an account into the database.
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    com.CommandType = System.Data.CommandType.StoredProcedure;
+                    com.CommandText = "INSERT_ACCOUNT";
+
+                    AddParameterWithValue(com, "gebruikersnaam", member.Name + " " + member.Surname);
+                    AddParameterWithValue(com, "email", member.Email);
+
+                    var q = com.CreateParameter();
+                    q.DbType = DbType.Decimal;
+                    q.ParameterName = "insertGelukt";
+                    q.Direction = ParameterDirection.Output;
+                    com.Parameters.Add(q);
+
+                    var qacc = com.CreateParameter();
+                    qacc.DbType = DbType.Decimal;
+                    qacc.ParameterName = "accountId";
+                    qacc.Direction = ParameterDirection.Output;
+                    com.Parameters.Add(qacc);
+
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    com.Connection = con;
+                    com.ExecuteNonQuery();
+
+                    string result = com.Parameters["insertGelukt"].Value.ToString();
+                    if (result == "0")
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Account Member.')</script>");
+                        return;
+                    }
+                    accountId = com.Parameters["accountId"].Value.ToString();
+                }
             }
-            
+            #endregion
 
         }
 
         // 
-        private void AddParameterWithValue(DbCommand command, string parameterName, object parameterValue)
-        {
-            var parameter = command.CreateParameter();
-            parameter.ParameterName = parameterName;
-            parameter.Value = parameterValue;
-            parameter.DbType = System.Data.DbType.AnsiString;
-            parameter.Direction = System.Data.ParameterDirection.Input;
-            command.Parameters.Add(parameter);
-        }
 
-        /// <summary>
-        /// To do: Remove member from party.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnRemove_Click(object sender, EventArgs e)
-        {
 
-        }
+
 
         /// <summary>
         /// Add material to the 'to rent' list.
@@ -555,7 +695,7 @@ namespace Ict4EventsWebApp
         /// <param name="e"></param>
         protected void btMaterialAdd_Click(object sender, EventArgs e)
         {
-            int Bedrag = Convert.ToInt32(lbPrice.Text); 
+            int Bedrag = Convert.ToInt32(lbPrice.Text);
             string ToAddMaterial = lbavailableMaterial.SelectedValue.ToString();
             lbMaterialToReserve.Items.Add(ToAddMaterial);
             lbavailableMaterial.Items.Remove(ToAddMaterial);
@@ -645,5 +785,16 @@ namespace Ict4EventsWebApp
                 return;
             }
         }
+
+        protected void tbFirstName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void lbGroupMembers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+
+
     }
 }
