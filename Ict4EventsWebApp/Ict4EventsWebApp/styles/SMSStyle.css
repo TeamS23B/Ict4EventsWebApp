@@ -162,6 +162,10 @@
     height: calc(250px - 24px - 22px);
 }
 
+.post .content audio {
+    width: 100%;
+}
+
 .post.top {
     width: 900px;/*todo make @media*/
     height: 100%;
