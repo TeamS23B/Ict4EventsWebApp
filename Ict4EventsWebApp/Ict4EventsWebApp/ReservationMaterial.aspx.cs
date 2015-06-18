@@ -416,7 +416,7 @@ namespace Ict4EventsWebApp
                 smtpc.EnableSsl = false;
                 smtpc.UseDefaultCredentials = true;
 
-                string username = Server.UrlEncode(tbFirstName + " " + tbSurname);
+                string username = Server.UrlEncode(tbFirstName.Text + " " + tbSurname.Text);
 
                 var mm = new MailMessage();
                 mm.From = new MailAddress("admin@ict4events12.nl");
