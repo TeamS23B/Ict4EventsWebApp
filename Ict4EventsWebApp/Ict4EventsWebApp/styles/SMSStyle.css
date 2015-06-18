@@ -196,6 +196,10 @@
     background-color: #1C8566;
 }
 
+.post .stats div {
+    display: inline-block;
+}
+
 .post.top .stats {
     bottom: auto;
 }
@@ -210,6 +214,10 @@
 
 .cstats{
 	color: grey;	
+}
+
+.cstats div {
+    display: inline-block;
 }
 
 #newcomment{

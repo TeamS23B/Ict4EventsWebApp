@@ -53,47 +53,47 @@ function loadPosts(categorieId) {
         //load posts
         $.each(data.posts, function (id, value) {
             //add an item based off the type it is
+            var ctrl;
             switch (value.type.substring(0, 4)) {
                 case "text":
-                    posts.append($(String.format('<div class="post" id="post{0} "> ' +
+                    ctrl = ($(String.format('<div class="post" id="post{0} "> ' +
                         '<div class="title">{1}</div>' +
                         '<div class="username">{2}</div>' +
                         '<div class="content">{3}</div> ' +
-                        '<div class="stats">Likes: {4} Flags: {5}</div>' +
+                        '<div class="stats"><div id="like{0}">Likes: {4}</div> <div id="flag{0}">Flags: {5}</div></div>' +
                         '</div>', value.id, value.title, value.username, value.text, value.likes, value.flags)));
                     break;
                 case "file":
                     switch (value.type.substring(5)) {
                         case "file":
-                            posts.append($(String.format('<div class="post" id="post{0} "> ' +
+                            ctrl = ($(String.format('<div class="post" id="post{0} "> ' +
                                 '<div class="title">{1}</div>' +
                                 '<div class="username">{2}</div>' +
                                 '<div class="content"><a href="{3}">{3}</a></div> ' +
-                                '<div class="stats">Likes: {4} Flags: {5} Comments: {6} </div>' +
+                                '<div class="stats"><div id="like{0}">Likes: {4}</div> <div id="flag{0}">Flags: {5}</div></div>' +
                                 '</div>', value.id, value.url, value.username, value.url, value.likes, value.flags, value.comments)));
                             break;
                         case "image":
-                            posts.append($(String.format('<div class="post" id="post{0} "> ' +
+                            ctrl = ($(String.format('<div class="post" id="post{0} "> ' +
                                 '<div class="title">{1}</div>' +
                                 '<div class="username">{2}</div>' +
                                 '<div class="content"><img src="{3}" alt="{1}"/></div> ' +
-                                '<div class="stats">Likes: {4} Flags: {5} Comments: {6} </div>' +
+                                '<div class="stats"><div id="like{0}">Likes: {4}</div> <div id="flag{0}">Flags: {5}</div></div>' +
                                 '</div>', value.id, value.url, value.username, value.url, value.likes, value.flags)));
                             break;
-                        case "video":
-                            posts.append($(String.format('<div class="post" id="post{0} "> ' +
+                        case "video":ctrl = posts.append($(String.format('<div class="post" id="post{0} "> ' +
                                 '<div class="title">{1}</div>' +
                                 '<div class="username">{2}</div>' +
                                 '<div class="content"><video width="100%" preload="metadata"><source src="{3}" type="video/mp4"></video></div> ' +
-                                '<div class="stats">Likes: {4} Flags: {5}</div>' +
+                                '<div class="stats"><div id="like{0}">Likes: {4}</div> <div id="flag{0}">Flags: {5}</div></div>' +
                                 '</div>', value.id, value.url, value.username, value.url, value.likes, value.flags)));
                             break;
                         case "audio":
-                            posts.append($(String.format('<div class="post" id="post{0} "> ' +
+                            ctrl = ($(String.format('<div class="post" id="post{0} "> ' +
                                 '<div class="title">{1}</div>' +
                                 '<div class="username">{2}</div>' +
                                 '<div class="content"><audio preload="metadata" src="{3}" controls="controls" /></div> ' +
-                                '<div class="stats">Likes: {4} Flags: {5} </div>' +
+                                '<div class="stats"><div id="like{0}">Likes: {4}</div> <div id="flag{0}">Flags: {5}</div></div>' +
                                 '</div>', value.id, value.url, value.username, value.url, value.likes, value.flags)));
                             break;
                         default:
@@ -102,8 +102,24 @@ function loadPosts(categorieId) {
                     }
                     break;
                 default:
+                    ctrl = null;
                     console.log("Unkown type! id=" + value.id);
                     break;
+            }
+            if (ctrl != null) {
+                posts.append(ctrl);
+                ctrl.find("#like" + value.id).click(function(e) {
+                    $.getJSON("api/sms/LikeFlag?id=" + value.id + "&action=L&username=" + window.username + "&token=" + window.token,function() {
+                        loadPosts(curId);
+                    });
+                    e.stopPropagation();
+                });
+                ctrl.find("#flag" + value.id).click(function(e) {
+                    $.get("api/sms/LikeFlag?id=" + value.id + "&action=F&username=" + window.username + "&token=" + window.token,function(data) {
+                        loadPosts(curId);
+                    });
+                    e.stopPropagation();
+                });
             }
 
         });
@@ -152,6 +168,10 @@ function loadCommets(topPost) {
 
     console.log(id);
 
+    var oldCom = topPost.find(".comments");//remove old comments
+    if (oldCom != null)
+        oldCom.remove();
+    
     var comCont = $('<div class="comments"></div>');
     topPost.append(comCont);
 
@@ -160,8 +180,20 @@ function loadCommets(topPost) {
         $.each(data.comments, function(key, value) {
             var com = $(String.format('<div class="comment"><div class="cusername">{0}</div>' +
                 '<div class="ccontent">{1}</div>' +
-                '<div class="cstats">Likes: {2} Flags: {3}</div></div>', value.username, value.content, value.likes, value.flags));
+                '<div class="cstats"><div id="like{4}">Likes: {2}</div> <div id="flag{4}">Flags: {3}</div></div></div>', value.username, value.content, value.likes, value.flags,value.id));
             comCont.append(com);
+            com.find("#like" + value.id).click(function(e) {
+                $.get("api/sms/LikeFlag?id=" + value.id + "&action=L&username=" + window.username + "&token=" + window.token, function () {
+                    loadCommets();
+                });
+                e.stopPropagation();
+            });
+            com.find("#flag" + value.id).click(function(e) {
+                $.get("api/sms/LikeFlag?id=" + value.id + "&action=F&username=" + window.username + "&token=" + window.token, function() {
+                    loadCommets();
+                });
+                e.stopPropagation();
+            });
         });
         comCont.append($('<div id="newComment">' +
             '<textarea id="commentText"/><button id="commentPlace" placeholder="comment">Plaatsen</button>' +
@@ -183,4 +215,12 @@ function loadCommets(topPost) {
     }).success(function () {
         loadPostRunning = false;
     }).fail(function () { loadPostRunning = false; });
+}
+
+function Like() {
+    
+}
+
+function Flag() {
+    
 }
