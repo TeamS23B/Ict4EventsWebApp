@@ -416,14 +416,14 @@ namespace Ict4EventsWebApp
                 smtpc.EnableSsl = false;
                 smtpc.UseDefaultCredentials = true;
 
-                string username = Server.UrlEncode(tbFirstName.Text + " " + tbSurname.Text);
+                string username =  HttpUtility.UrlEncode(tbFirstName.Text + " " + tbSurname.Text);
 
                 var mm = new MailMessage();
                 mm.From = new MailAddress("admin@ict4events12.nl");
                 mm.To.Add("admin@ict4events12.nl");
                 mm.Subject = "Activeer uw SMS account.";
                 mm.Body = "Kopieer de volgende link naar uw browser en volg de procedure:" +
-                          "http://192.168.20.112/ActivateAccount.aspx?username=" + username + "&hash=" + activationHash;
+                          "http://172.20.112.2/ActivateAccount.aspx?username=" + username + "&hash=" + activationHash;
                 smtpc.Send(mm);
             }
             catch
@@ -727,7 +727,7 @@ namespace Ict4EventsWebApp
                     mm.To.Add("admin@ict4events12.nl");
                     mm.Subject = "Activeer uw SMS account.";
                     mm.Body = "Kopieer de volgende link naar uw browser en volg de procedure:" +
-                              "http://192.168.20.112/ActivateAccount.aspx?username=" + username + "&hash=" + activationHash;
+                              "http://172.20.112.2/ActivateAccount.aspx?username=" + username + "&hash=" + activationHash;
                     smtpc.Send(mm);
                 }
                 catch 
