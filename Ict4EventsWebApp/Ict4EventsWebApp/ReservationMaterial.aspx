@@ -171,7 +171,6 @@
                     </div>
                     <div class="clearDiv"></div>
                     <div>
-                        <asp:Button ID="btRMaterialTerug" runat="server" Text="Terug" />
                         <asp:Button ID="btRMAterialVerder" runat="server" Text="Voltooien" OnClick="btRMAterialVerder_Click" />
                     </div>
                 </div>
