@@ -5,10 +5,10 @@ var leftbar;
 $(document).ready(function(){
 	leftbar = $("#leftBar");
 	$("#menuButton").click(function(){
-		if(leftbar.css("margin-left")=="-250px"){
+		if(leftbar.css("margin-left")=="-300px"){
 			leftbar.css("margin-left","0px");
 		}else{
-			leftbar.css("margin-left","-250px");
+			leftbar.css("margin-left","-300px");
 		}
 	});
 });

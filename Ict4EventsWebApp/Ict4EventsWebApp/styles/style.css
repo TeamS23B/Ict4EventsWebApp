@@ -29,7 +29,7 @@ html, body{
 }
 
 #leftBar{
-	width: 250px;
+	width: 300px;
 	height: 100%;
 	color: #fff;
 	background-color: #1C8566;
@@ -55,7 +55,7 @@ html, body{
 }
 
 #search{
-	width: 200px;
+	width: 250px;
 	height: 56px;
 	margin-top: 56px;
 	border: none;
@@ -83,7 +83,7 @@ html, body{
 
 @media only screen and (max-width: 1366px){
 	#leftBar{
-		margin-left:-250px;/*auto hidden*/
+		margin-left:-300px;/*auto hidden*/
 	}
 }
 

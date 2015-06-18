@@ -26,7 +26,7 @@ namespace Ict4EventsWebApp
                 if (Authentication.Instance.IsAuthenticated(tbUsername.Text, tbPassword.Text))
                 {
                     Session["loggedIn"] = true;
-                    if (lblUsername.Text == "Administrator")
+                    if (tbUsername.Text == "Administrator")
                     {
                         Session["username"] = "admin";
                         Session["token"] = SmsConnect.Instance.AddToken("admin",true);//admin is high auterized
@@ -46,7 +46,7 @@ namespace Ict4EventsWebApp
                     }
                     else
                     {
-                        Response.Redirect("/index.html");//return to index.html
+                        Response.Redirect("/index.aspx");//return to index.html
                     }
                 }
                 else
