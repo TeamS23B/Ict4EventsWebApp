@@ -10,11 +10,6 @@
     <link href="styles/addComment.css" rel="stylesheet" />
     <script type="text/javascript" src="scripts/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" src="scripts/ui.js"></script>
-    <script>
-        $(document).ready(function() {
-            
-        });
-    </script>
 </head>
 <body>
     <div id="topBar">
@@ -25,7 +20,7 @@
     </div>
     <div id="leftBar">
         <input type="text" id="search" placeholder="Search..." /><input type="button" id="searchButton" value=" " />
-        <div class="leftBarButton" id="btAddPost">Add A Post</div>
+        <div class="leftBarButton" onclick="location.href='index.aspx';">Social Media</div>
         <div id="leftBarButtons">
         </div>
     </div>

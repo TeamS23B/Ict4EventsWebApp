@@ -29,13 +29,15 @@ namespace Ict4EventsWebApp
                     if (lblUsername.Text == "Administrator")
                     {
                         Session["username"] = "admin";
+                        Session["token"] = SmsConnect.Instance.AddToken("admin",true);//admin is high auterized
                     }
                     else
                     {
-                        Session["username"] = tbUsername.Text;    
+                        Session["username"] = tbUsername.Text;
+                        Session["token"] = SmsConnect.Instance.AddToken(tbUsername.Text);
                     }
                     
-                    Session["token"] = SmsConnect.Instance.AddToken(tbUsername.Text);
+                    
                     if (!string.IsNullOrEmpty(Request.QueryString["returnUrl"]))
                     {
 

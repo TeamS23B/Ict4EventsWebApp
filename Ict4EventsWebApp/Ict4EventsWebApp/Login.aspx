@@ -19,7 +19,7 @@
 	</div>
 	<div id="leftBar">
 		<input type="text" id="search" placeholder="Search..."/><input type="button" id="searchButton" value=" "/>
-		<div class="leftBarButton" id="btAddPost">Add A Post</div>
+		<div class="leftBarButton" onclick="location.href='ReservationMaterial.aspx';">Registreren</div>
 	</div>
     <div id="content">
         <form id="form1" runat="server">
@@ -27,7 +27,7 @@
             <asp:Label ID="lblUsername" runat="server" Text="Gebruikersnaam" CssClass="lblUsername" Font-Size="X-Large"></asp:Label>
             <asp:TextBox ID="tbUsername" runat="server" CssClass ="tbUsername" Height="20px" Width="200px" placeholder="Vul gebruikersnaam in"></asp:TextBox>
             <asp:Label ID="lblPassword" runat="server" Text="Wachtwoord" CssClass="lblPassword" Font-Size="X-Large"></asp:Label>
-            <asp:TextBox ID="tbPassword" runat="server" CssClass ="tbPassword" Height="20px" Width="200px" placeholder="Vul wachtwoord in"></asp:TextBox>
+            <asp:TextBox ID="tbPassword" runat="server" CssClass ="tbPassword" Height="20px" Width="200px" placeholder="Vul wachtwoord in" TextMode="Password"></asp:TextBox>
             <div id="ButtonMiddle">
             <asp:Button ID="BtnLogin" runat="server" Text="Login" CssClass="BtnLog" OnClick="BtnLogin_Click"/>
             </div>

@@ -19,7 +19,10 @@
     </div>
     <div id="leftBar">
         <input type="text" id="search" placeholder="Search..." /><input type="button" id="searchButton" value=" " />
-        <div class="leftBarButton" id="btAddPost">Add A Post</div>
+        <div class="leftBarButton" onclick="location.href='index.aspx';">Social Media</div>
+        <div class="leftBarButton" onclick="location.href='Check.aspx';">Toegangs Controle</div>
+        <div class="leftBarButton" onclick="location.href='MateriaalVerhuur.aspx';">Materiaal Verhuur</div>
+        <div class="leftBarButton" onclick="location.href='Admin.aspx';">Administratie</div>
     </div>
     <div id="content">
         <form id="form1" runat="server">

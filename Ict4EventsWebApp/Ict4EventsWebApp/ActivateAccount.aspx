@@ -20,7 +20,7 @@
     </div>
     <div id="leftBar">
         <input type="text" id="search" placeholder="Search..." /><input type="button" id="searchButton" value=" " />
-        <div class="leftBarButton" id="btAddPost">Add A Post</div>
+        <div class="leftBarButton" onclick="location.href='index.aspx';">Login</div>
         <div id="leftBarButtons">
         </div>
     </div>

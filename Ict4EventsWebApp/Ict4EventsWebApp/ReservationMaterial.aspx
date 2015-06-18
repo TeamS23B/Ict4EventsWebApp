@@ -23,8 +23,6 @@
                 $("#XValue").attr("value", parseInt(x));
                 $("#YValue").attr("value", parseInt(y));
                 alert("x = " + x + "y = " + y);
-
-                //todo find out xy location on image
             });
         });
     </script>
@@ -40,7 +38,7 @@
     <div id=" "></div>
     <div id="leftBar">
         <input type="text" id="search" placeholder="Search..." /><input type="button" id="searchButton" value=" " />
-        <div class="leftBarButton" id="btAddPost">Add A Post</div>
+        <div class="leftBarButton" onclick="location.href='index.aspx';">Login</div>
     </div>
     <div id="content">
         <form id="form1" runat="server">

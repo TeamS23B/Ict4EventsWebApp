@@ -19,6 +19,11 @@ namespace Ict4EventsWebApp
         /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!(bool)(Session["loggedIn"] ?? false) || (string)(Session["username"] ?? "") != "admin")
+            {
+                Response.Redirect("index.aspx");//to index and to login
+            }
+
             if (!Page.IsPostBack)
             {
                 btSubmit.Enabled = false;

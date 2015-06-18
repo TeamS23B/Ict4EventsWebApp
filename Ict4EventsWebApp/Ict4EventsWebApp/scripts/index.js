@@ -32,7 +32,13 @@ function loadPosts(categorieId) {
 
         var catTrace = $("#categorieTrace");
         catTrace.empty();
-
+        //if admin show info
+        if (data.auterized > 1)
+            catTrace.append($("<div class=\"leftBarButton\" onclick=\"location.href='ReservationMaterial.aspx';\">Registreren</div>" +
+                "<div class=\"leftBarButton\" onclick=\"location.href='Check.aspx';\">Toegangs Controle</div>" +
+                "<div class=\"leftBarButton\" onclick=\"location.href='MateriaalVerhuur.aspx';\">Materiaal Verhuur</div>" +
+                "<div class=\"leftBarButton\" onclick=\"location.href='Admin.aspx';\">Administratie</div>"));
+        
         //load categorie trace
         $.each(data.categorieTrace.reverse(), function (id, value) {
             catTrace.append(">");
