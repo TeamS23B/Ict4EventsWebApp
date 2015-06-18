@@ -149,6 +149,16 @@ IMG.displayed {
     width: 175px;
 }
 
+.validatorDisplay{
+    display: block;
+}
+
+.validator{
+    display:block;
+    float: left;
+    margin-left: 15px;
+}
+
 .labelMargin {
     display: block;
     margin-bottom: 17px;

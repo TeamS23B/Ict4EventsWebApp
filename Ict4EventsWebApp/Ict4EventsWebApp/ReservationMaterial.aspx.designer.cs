@@ -292,67 +292,67 @@ namespace Ict4EventsWebApp {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFirstName;
         
         /// <summary>
-        /// rfcLastName control.
+        /// rfvLastName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcLastName;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLastName;
         
         /// <summary>
-        /// rfcEmail control.
+        /// rfvEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcEmail;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvEmail;
         
         /// <summary>
-        /// rfcPostalCode control.
+        /// rfvPostalCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcPostalCode;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPostalCode;
         
         /// <summary>
-        /// rfcCity control.
+        /// rfvCity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcCity;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCity;
         
         /// <summary>
-        /// rfcIban control.
+        /// rfvIban control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcIban;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvIban;
         
         /// <summary>
-        /// rfcStreet control.
+        /// rfvStreet control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcStreet;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvStreet;
         
         /// <summary>
-        /// rfcHouseNr control.
+        /// rfvHouseNr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfcHouseNr;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvHouseNr;
         
         /// <summary>
         /// regexEmail control.

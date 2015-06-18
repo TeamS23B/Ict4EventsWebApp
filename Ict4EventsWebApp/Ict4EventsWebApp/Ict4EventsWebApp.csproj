@@ -95,7 +95,6 @@
     <Content Include="Global.asax" />
     <Content Include="scripts\jquery-1.11.2.min.map" />
     <Content Include="newPost.json" />
-    <Content Include="RegistrationCustomerInfo.aspx" />
     <Content Include="packages.config" />
     <Content Include="Notities.docx" />
     <Content Include="App_Browsers\chrome.browser" />
@@ -126,7 +125,6 @@
     <Content Include="styles\CheckBetaling.css" />
     <Content Include="styles\Login.css" />
     <Content Include="styles\MateriaalVerhuur.css" />
-    <Content Include="styles\RegistrationCustomerInfo.css" />
     <Content Include="styles\ReservationMaterial.css" />
     <Content Include="styles\reset.css" />
     <Content Include="styles\SMSStyle.css" />
@@ -207,13 +205,6 @@
     </Compile>
     <Compile Include="ReservationMaterial.aspx.designer.cs">
       <DependentUpon>ReservationMaterial.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="RegistrationCustomerInfo.aspx.cs">
-      <DependentUpon>RegistrationCustomerInfo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="RegistrationCustomerInfo.aspx.designer.cs">
-      <DependentUpon>RegistrationCustomerInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="SmsController.cs" />
   </ItemGroup>

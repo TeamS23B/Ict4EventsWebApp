@@ -14,6 +14,10 @@
     position: relative;
 }
 
+.validatorDisplay{
+    display: block;
+}
+
     .subFrm select {
         width: 100px;
         display: block;
@@ -55,10 +59,11 @@
         margin-bottom: 20px;
     }
 
-    .leftSettings #FVEventName {
-        float: left;
-        clear: both;
-    }
+    .validator{
+    display:block;
+    float: left;
+    margin-left: 15px;
+}
 
     .leftSettings #lblMaxVis {
         float: left;

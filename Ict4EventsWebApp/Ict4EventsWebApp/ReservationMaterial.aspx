@@ -55,41 +55,41 @@
                         <asp:Label ID="lblStreetHouseNr" CssClass="labelMargin" runat="server" Text="Straat + huisnummer:" ClientIDMode="Static"></asp:Label>
                         <asp:Label ID="lblPostalCodeCity" CssClass="labelMargin" runat="server" Text="Postcode + woonplaats:" ClientIDMode="Static"></asp:Label>
                         <asp:Label ID="lblIban" CssClass="labelMargin" runat="server" Text="Iban:" ClientIDMode="Static"></asp:Label>
-                        
+
 
                     </div>
 
                     <div class="textboxleft">
-                        <asp:TextBox ID="tbFirstName" CssClass="textBoxMargin" runat="server" OnTextChanged="tbFirstName_TextChanged">Jim</asp:TextBox>
+                        <asp:TextBox ID="tbFirstName" CssClass="textBoxMargin" runat="server" OnTextChanged="tbFirstName_TextChanged"></asp:TextBox>
                         <asp:TextBox ID="tbInfix" CssClass="textBoxMargin" runat="server"></asp:TextBox>
                         <asp:TextBox ID="tbSurname" CssClass="textBoxMargin" runat="server">Sanders</asp:TextBox>
-                        <asp:TextBox ID="tbEmail" CssClass="textBoxMargin" runat="server">jimsanders11@gmail.com</asp:TextBox>
+                        <asp:TextBox ID="tbEmail" CssClass="textBoxMargin" runat="server">jimsanders11@gmailcom</asp:TextBox>
                         <div class="streetHouse">
                             <asp:TextBox ID="tbStreet" runat="server">Barbarastraat</asp:TextBox>
                             <asp:TextBox ID="tbHouseNr" runat="server">29</asp:TextBox>
                         </div>
 
                         <div class="postal">
-                            <asp:TextBox ID="tbPostalCode" runat="server">6361VK</asp:TextBox>
+                            <asp:TextBox ID="tbPostalCode" runat="server">6361V0</asp:TextBox>
                             <asp:TextBox ID="tbCity" runat="server">Nuth</asp:TextBox>
                         </div>
 
-                        <asp:TextBox ID="tbIban" CssClass="textBoxMargin" runat="server">NL64RABO0137789440</asp:TextBox>
-                        
+                        <asp:TextBox ID="tbIban" CssClass="textBoxMargin" runat="server">L64RABO0137789440</asp:TextBox>
+
                     </div>
 
                     <div class="groupMembersInfo">
                         <asp:Label ID="lblFirstNameGM" CssClass="labelMargin" runat="server" Text="Voornaam"></asp:Label>
-                        <asp:TextBox ID="TextBox2" CssClass="textBoxMargin" runat="server">Je</asp:TextBox>
+                        <asp:TextBox ID="TextBox2" CssClass="textBoxMargin" runat="server">Rick</asp:TextBox>
 
                         <asp:Label ID="lblInfixGM" CssClass="labelMargin" runat="server" Text="Tussenvoegsel"></asp:Label>
                         <asp:TextBox ID="TextBox3" CssClass="textBoxMargin" runat="server"></asp:TextBox>
 
                         <asp:Label ID="lblSurnameGM" CssClass="labelMargin" runat="server" Text="Achternaam"></asp:Label>
-                        <asp:TextBox ID="TextBox4" CssClass="textBoxMargin" runat="server">Moeder</asp:TextBox>
+                        <asp:TextBox ID="TextBox4" CssClass="textBoxMargin" runat="server">Rongen</asp:TextBox>
 
                         <asp:Label ID="lblEmailGM" CssClass="labelMargin" runat="server" Text="Email"></asp:Label>
-                        <asp:TextBox ID="TextBox5" CssClass="textBoxMargin" runat="server">jeweet@zelluf.nl</asp:TextBox>
+                        <asp:TextBox ID="TextBox5" CssClass="textBoxMargin" runat="server">rick@gmail.com</asp:TextBox>
 
                         <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" OnClick="btnAdd_Click" />
 
@@ -98,19 +98,21 @@
 
                     <div class="selectGroupMembers">
                         <asp:Label ID="lblGroupMembers" runat="server" Text="Andere deelnemers"></asp:Label>
-                        <asp:ListBox ID="lbGroupMembers"  runat="server" OnSelectedIndexChanged="lbGroupMembers_SelectedIndexChanged"></asp:ListBox>
+                        <asp:ListBox ID="lbGroupMembers" runat="server" OnSelectedIndexChanged="lbGroupMembers_SelectedIndexChanged"></asp:ListBox>
 
-                        <asp:RequiredFieldValidator ID="rfvFirstName" CssClass="validator" ControlToValidate="tbFirstName"  ForeColor="Red" runat="server" ErrorMessage="Vul een voornaam in."></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="rfcLastName" CssClass="validator" ControlToValidate="tbSurname"  ForeColor="Red" runat="server" ErrorMessage="Vul een achternaam in."></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="rfcEmail" CssClass="validator" ControlToValidate="tbEmail"  ForeColor="Red" runat="server" ErrorMessage="Vul een email adres in."></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="rfcPostalCode" CssClass="validator" ControlToValidate="tbPostalCode"  ForeColor="Red" runat="server" ErrorMessage="Vul een postcode in."></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="rfcCity" CssClass="validator" ControlToValidate="tbCity"  ForeColor="Red" runat="server" ErrorMessage="Vul een woonplaats in."></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="rfcIban" CssClass="validator" ControlToValidate="tbIban"  ForeColor="Red" runat="server" ErrorMessage="Vul een iban nummer in."></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="rfcStreet" CssClass="validator" ControlToValidate="tbStreet"  ForeColor="Red" runat="server" ErrorMessage="Vul een straatnaam in."></asp:RequiredFieldValidator>
-                        <asp:RequiredFieldValidator ID="rfcHouseNr" CssClass="validator" ControlToValidate="tbHouseNr"  ForeColor="Red" runat="server" ErrorMessage="Vul een huisnummer in."></asp:RequiredFieldValidator>
-                        <asp:RegularExpressionValidator ID="regexEmail" CssClass="validator" runat="server" ErrorMessage="Email adres ongeldig." ForeColor="Red" ControlToValidate="tbEmail" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"></asp:RegularExpressionValidator>
-                        <asp:RegularExpressionValidator ID="regexIban" CssClass="validator" runat="server" ErrorMessage="Ongeldig NL Iban." ForeColor="Red" ControlToValidate="tbIban" ValidationExpression="^NL([0-9]{2})([A-Z]{4})([0-9]{10})$"></asp:RegularExpressionValidator>
-                        <asp:RegularExpressionValidator ID="regexPostalCode" CssClass="validator" runat="server" ErrorMessage="Postcode ongeldig." ForeColor="Red" ControlToValidate="tbPostalCode" ValidationExpression="^([0-9]{4})([A-z]{2})$"></asp:RegularExpressionValidator>
+                        <div class="validatorDisplay">
+                            <asp:RequiredFieldValidator ID="rfvFirstName" CssClass="validator" ControlToValidate="tbFirstName" ForeColor="Red" runat="server" ErrorMessage="Vul een voornaam in."></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="rfvLastName" CssClass="validator" ControlToValidate="tbSurname" ForeColor="Red" runat="server" ErrorMessage="Vul een achternaam in."></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="rfvEmail" CssClass="validator" ControlToValidate="tbEmail" ForeColor="Red" runat="server" ErrorMessage="Vul een email adres in."></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="rfvPostalCode" CssClass="validator" ControlToValidate="tbPostalCode" ForeColor="Red" runat="server" ErrorMessage="Vul een postcode in."></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="rfvCity" CssClass="validator" ControlToValidate="tbCity" ForeColor="Red" runat="server" ErrorMessage="Vul een woonplaats in."></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="rfvIban" CssClass="validator" ControlToValidate="tbIban" ForeColor="Red" runat="server" ErrorMessage="Vul een iban nummer in."></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="rfvStreet" CssClass="validator" ControlToValidate="tbStreet" ForeColor="Red" runat="server" ErrorMessage="Vul een straatnaam in."></asp:RequiredFieldValidator>
+                            <asp:RequiredFieldValidator ID="rfvHouseNr" CssClass="validator" ControlToValidate="tbHouseNr" ForeColor="Red" runat="server" ErrorMessage="Vul een huisnummer in."></asp:RequiredFieldValidator>
+                            <asp:RegularExpressionValidator ID="regexEmail" CssClass="validator" runat="server" ErrorMessage="Email adres ongeldig." ForeColor="Red" ControlToValidate="tbEmail" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"></asp:RegularExpressionValidator>
+                            <asp:RegularExpressionValidator ID="regexIban" CssClass="validator" runat="server" ErrorMessage="Ongeldig NL Iban." ForeColor="Red" ControlToValidate="tbIban" ValidationExpression="^NL([0-9]{2})([A-Z]{4})([0-9]{10})$"></asp:RegularExpressionValidator>
+                            <asp:RegularExpressionValidator ID="regexPostalCode" CssClass="validator" runat="server" ErrorMessage="Postcode ongeldig." ForeColor="Red" ControlToValidate="tbPostalCode" ValidationExpression="^([0-9]{4})([A-z]{2})$"></asp:RegularExpressionValidator>
+                        </div>
                     </div>
 
                     <div class="clearDiv"></div>
