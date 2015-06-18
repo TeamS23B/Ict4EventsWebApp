@@ -384,7 +384,7 @@ OR bb.BIJDRAGE_ID = :bid";
                     };
                     break;
                 default:
-                    o = new {id = r["id"], Type = "unkown"};
+                    o = new {id = r["id"], type = "unkown"};
                     break;
             }
             return o;

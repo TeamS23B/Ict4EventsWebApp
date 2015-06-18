@@ -9,8 +9,7 @@
     <link href="styles/style.css" rel="stylesheet" />
     <script src="scripts/jquery-1.11.2.min.js"></script>
     <script src="scripts/ui.js"></script>
-    <script src="scripts/Login.js"></script>
-    <title></title>
+    <title>Login | Ict4Events</title>
 </head>
 <body>
     <div id="topBar">

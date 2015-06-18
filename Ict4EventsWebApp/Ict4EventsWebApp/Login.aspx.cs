@@ -13,6 +13,7 @@ namespace Ict4EventsWebApp
         {
             if ((bool) (Session["loggedIn"]??false))//logout if the user is already logged in
             {
+                SmsConnect.Instance.RemoveToken((string)Session["username"]);
                 lblError.Text = "Uitgelogd";
                 Session.Clear();
             }
@@ -20,26 +21,43 @@ namespace Ict4EventsWebApp
 
         protected void BtnLogin_Click(object sender, EventArgs e)
         {
-            if (Authentication.Instance.IsAuthenticated(tbUsername.Text, tbPassword.Text))
+            try
             {
-                Session["loggedIn"] = true;
-                Session["username"] = tbUsername.Text;
-                Session["token"] = SmsConnect.Instance.AddToken(tbUsername.Text);
-                if (!string.IsNullOrEmpty(Request.QueryString["returnUrl"]))
+                if (Authentication.Instance.IsAuthenticated(tbUsername.Text, tbPassword.Text))
                 {
+                    Session["loggedIn"] = true;
+                    if (lblUsername.Text == "Administrator")
+                    {
+                        Session["username"] = "admin";
+                    }
+                    else
+                    {
+                        Session["username"] = tbUsername.Text;    
+                    }
+                    
+                    Session["token"] = SmsConnect.Instance.AddToken(tbUsername.Text);
+                    if (!string.IsNullOrEmpty(Request.QueryString["returnUrl"]))
+                    {
 
-// ReSharper disable once AssignNullToNotNullAttribute
-                    Response.Redirect(Server.UrlDecode(Request.QueryString["returnUrl"]));//return to returnUrl with server.UrlDecode
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        Response.Redirect(Server.UrlDecode(Request.QueryString["returnUrl"]));//return to returnUrl with server.UrlDecode
+                    }
+                    else
+                    {
+                        Response.Redirect("/index.html");//return to index.html
+                    }
                 }
                 else
                 {
-                    Response.Redirect("/index.html");//return to index.html
+                    lblError.Text = "Could not log in user, username or password incorrect!";
                 }
             }
-            else
+            catch (Exception)
             {
+                //if there is an exception then the user can't login
                 lblError.Text = "Could not log in user, username or password incorrect!";
             }
+            
         }
     }
 }

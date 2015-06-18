@@ -97,6 +97,10 @@
     font-weight: normal;
 }
 
+.topRight {
+    float: right;
+}
+
 #postSpacerTop{
 	height: 68px;
 }
@@ -160,6 +164,10 @@
     padding-right: 4px;
     overflow: hidden;
     height: calc(250px - 24px - 22px);
+}
+
+.post .content audio {
+    width: 100%;
 }
 
 .post.top {

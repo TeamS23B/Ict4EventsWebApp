@@ -52,7 +52,7 @@ function loadPosts(categorieId) {
         //load posts
         $.each(data.posts, function (id, value) {
             //add an item based off the type it is
-            switch (value.type.substr(0, 4)) {
+            switch (value.type.substring(0, 4)) {
                 case "text":
                     posts.append($(String.format('<div class="post" id="post{0} "> ' +
                         '<div class="title">{1}</div>' +
@@ -62,7 +62,7 @@ function loadPosts(categorieId) {
                         '</div>', value.id, value.title, value.username, value.text, value.likes, value.flags)));
                     break;
                 case "file":
-                    switch (value.type.substr(5)) {
+                    switch (value.type.substring(5)) {
                         case "file":
                             posts.append($(String.format('<div class="post" id="post{0} "> ' +
                                 '<div class="title">{1}</div>' +
@@ -91,9 +91,9 @@ function loadPosts(categorieId) {
                             posts.append($(String.format('<div class="post" id="post{0} "> ' +
                                 '<div class="title">{1}</div>' +
                                 '<div class="username">{2}</div>' +
-                                '<div class="content"><audio width="100%" preload="metadata"><source src="{3}" type="audio/{6}"></audoi></div> ' +
+                                '<div class="content"><audio preload="metadata" src="{3}" controls="controls" /></div> ' +
                                 '<div class="stats">Likes: {4} Flags: {5} </div>' +
-                                '</div>', value.id, value.url, value.username, value.url, value.likes, value.flags, value.subType)));
+                                '</div>', value.id, value.url, value.username, value.url, value.likes, value.flags)));
                             break;
                         default:
                             console.log("Unkown filetype!" + value.id);
