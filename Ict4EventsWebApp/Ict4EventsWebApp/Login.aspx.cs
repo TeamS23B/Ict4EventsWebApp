@@ -55,7 +55,7 @@ namespace Ict4EventsWebApp
             catch (Exception)
             {
                 //if there is an exception then the user can't login
-                lblError.Text = "Could not log in user, username or password incorrect!";
+                lblError.Text = "Could not log in user, username or password incorrect!<Exception>";
             }
             
         }

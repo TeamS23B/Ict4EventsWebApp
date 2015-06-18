@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Ict4EventsWebApp
 {
@@ -281,6 +282,92 @@ OR bb.BIJDRAGE_ID = :bid";
             return Json(o);
         }
 
+        [HttpGet, Route("api/sms/LikeFlag")]
+        public IHttpActionResult LikeFlag(int id, string action, string username, string token)
+        {
+            if (SmsConnect.Instance.CheckUser(username, token) < 1)
+            {
+                return Json(new { succes = false, errormessage = "Not Authenticated", likes = 0, flags = 0});
+            }
+            if (!(action == "L" || action == "F"))
+            {
+                return Json(new { succes = false, errormessage = "Action not L or F", likes = 0, flags = 0 });
+            }
+
+            //load all the data
+            var con = OracleClientFactory.Instance.CreateConnection();
+            con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+            con.Open();
+
+            int _likes, _flags;
+
+            using (var com = con.CreateCommand())
+            {
+                //use a stored procedure to add a like or flag
+                com.CommandType=CommandType.StoredProcedure;
+                com.CommandText = "AddLikeFlag";
+
+                //parameter creation
+                var pUsrn = com.CreateParameter();
+                var pPost = com.CreateParameter();
+                var pAction = com.CreateParameter();
+                var pLikes = com.CreateParameter();
+                var pFlags = com.CreateParameter();
+                
+                //names
+                pUsrn.ParameterName = "username";
+                pPost.ParameterName = "postId";
+                pAction.ParameterName = "action";
+                pLikes.ParameterName = "likes";
+                pFlags.ParameterName = "flags";
+                
+                //directions
+                pUsrn.Direction = ParameterDirection.Input;
+                pPost.Direction = ParameterDirection.Input;
+                pAction.Direction = ParameterDirection.Input;
+                pLikes.Direction = ParameterDirection.Output;
+                pFlags.Direction = ParameterDirection.Output;
+                
+                //types
+                pUsrn.DbType = DbType.String;
+                pPost.DbType = DbType.Int32;
+                pAction.DbType = DbType.String;
+                pLikes.DbType=DbType.Int32;
+                pFlags.DbType=DbType.Int32;
+                
+                //values
+                pUsrn.Value = username;
+                pPost.Value = id;
+                pAction.Value = action;
+
+                com.Parameters.Add(pUsrn);
+                com.Parameters.Add(pPost);
+                com.Parameters.Add(pAction);
+                com.Parameters.Add(pLikes);
+                com.Parameters.Add(pFlags);
+
+                try
+                {
+                    com.ExecuteNonQuery();
+
+                    _likes = Convert.ToInt32(pLikes.Value);
+                    _flags = Convert.ToInt32(pFlags.Value);
+                }
+                catch (OracleException ex)
+                {
+                    if (ex.Number == 20000)
+                    {
+                        return Json(new { succes = false, errormessage = "Action not L or F, Oracle", likes = 0, flags = 0 });
+                    }
+                    throw;
+                }
+            }
+
+            con.Close();
+            con.Dispose();
+
+            return Json(new {succes = true, errormessage = "N/A", likes = _likes, flags = _flags});
+        }
 
         //Errormessages:
         //N/A No error message
