@@ -92,7 +92,6 @@
                         <asp:TextBox ID="TextBox5" CssClass="textBoxMargin" runat="server">jeweet@zelluf.nl</asp:TextBox>
 
                         <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" OnClick="btnAdd_Click" />
-                        <asp:Button ID="btnRemove" CssClass="buttonMargin" runat="server" Text="Verwijderen" OnClick="btnRemove_Click"/>
 
                         <asp:Button ID="btnNextStep" runat="server" Text="Verder" OnClick="btnNextStep_Click" />
                     </div>
@@ -173,7 +172,7 @@
                     <div class="clearDiv"></div>
                     <div>
                         <asp:Button ID="btRMaterialTerug" runat="server" Text="Terug" />
-                        <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder" OnClick="btRMAterialVerder_Click" />
+                        <asp:Button ID="btRMAterialVerder" runat="server" Text="Voltooien" OnClick="btRMAterialVerder_Click" />
                     </div>
                 </div>
             </asp:Panel>
