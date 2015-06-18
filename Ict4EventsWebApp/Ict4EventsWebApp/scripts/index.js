@@ -168,8 +168,10 @@ function loadCommets(topPost) {
 
     console.log(id);
 
-    comCont.find(".comments").remove();//remove old comments
-
+    var oldCom = topPost.find(".comments");//remove old comments
+    if (oldCom != null)
+        oldCom.remove();
+    
     var comCont = $('<div class="comments"></div>');
     topPost.append(comCont);
 
