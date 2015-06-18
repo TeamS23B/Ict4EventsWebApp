@@ -68,6 +68,13 @@ namespace Ict4EventsWebApp
 
             string a = XValue.Value;
             string b = YValue.Value;
+
+            if (a == "" || b == "")
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('geen plaats gekozen')</script>");
+                return;
+            }
+
             string plekId;
 
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
@@ -232,58 +239,7 @@ namespace Ict4EventsWebApp
         /// <param name="e"></param>
         protected void btRMAterialVerder_Click(object sender, EventArgs e)
         {
-            pnlOverview.Visible = true;
-            pnlMaterial.Visible = false;
-        }
 
-        /// <summary>
-        /// Add a new member to the party.
-        /// Also update the party session with the latest party-version.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnAdd_Click(object sender, EventArgs e)
-        {
-            Person person = new Person(TextBox2.Text, TextBox3.Text, TextBox4.Text, TextBox5.Text);
-            party.AddMember(person);
-            lbGroupMembers.Items.Add(person.ToString());
-            Session["party"] = party;
-            TextBox2.Text = "";
-            TextBox3.Text = "";
-            TextBox4.Text = "";
-            TextBox5.Text = "";
-
-        }
-
-        /// <summary>
-        /// To do: Remove member from party.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnRemove_Click(object sender, EventArgs e)
-        {
-            string selectedgroupmember = (string)Session["SelectedMember"];
-
-            foreach (Person member in party.Members)
-            {
-                if (member.ToString() == selectedgroupmember)
-                {
-                    party.Members.Remove(member);
-                    lbGroupMembers.Items.Remove(selectedgroupmember);
-
-                }
-            }
-
-
-        }
-
-        /// <summary>
-        /// Insert all data from previous registration forms into the database, or show a pop-up if anything goes wrong.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btCMaterialVerder_Click(object sender, EventArgs e)
-        {
             string a = XValue.Value;
             string b = YValue.Value;
             string plekid;
@@ -692,6 +648,546 @@ namespace Ict4EventsWebApp
                     }
                     accountId = com.Parameters["accountId"].Value.ToString();
                 }
+            }
+            #endregion
+        }
+
+        /// <summary>
+        /// Add a new member to the party.
+        /// Also update the party session with the latest party-version.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            Person person = new Person(TextBox2.Text, TextBox3.Text, TextBox4.Text, TextBox5.Text);
+            party.AddMember(person);
+            lbGroupMembers.Items.Add(person.ToString());
+            Session["party"] = party;
+            TextBox2.Text = "";
+            TextBox3.Text = "";
+            TextBox4.Text = "";
+            TextBox5.Text = "";
+
+        }
+
+        /// <summary>
+        /// To do: Remove member from party.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnRemove_Click(object sender, EventArgs e)
+        {
+            string selectedgroupmember = (string)Session["SelectedMember"];
+
+            foreach (Person member in party.Members)
+            {
+                if (member.ToString() == selectedgroupmember)
+                {
+                    party.Members.Remove(member);
+                    lbGroupMembers.Items.Remove(selectedgroupmember);
+
+                }
+            }
+
+
+        }
+
+        /// <summary>
+        /// Insert all data from previous registration forms into the database, or show a pop-up if anything goes wrong.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btCMaterialVerder_Click(object sender, EventArgs e)
+        {
+            string a = XValue.Value;
+            string b = YValue.Value;
+            string plekid;
+            string persoonId;
+            string accountId;
+            string reserveringId;
+            string resPolsId;
+            string activationHash = "Error";
+
+            #region location coordinates
+            // Retrieve the to-be-reserved location coordinates
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "GET_PLEKID";
+
+                var p1 = com.CreateParameter();
+                p1.DbType = DbType.Decimal;
+                p1.ParameterName = "X";
+                p1.Value = Convert.ToInt32(a);
+                com.Parameters.Add(p1);
+
+                var p2 = com.CreateParameter();
+                p2.DbType = DbType.Decimal;
+                p2.ParameterName = "Y";
+                p2.Value = Convert.ToInt32(b);
+                com.Parameters.Add(p2);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "PlekId";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                plekid = com.Parameters["PlekId"].Value.ToString();
+            }
+            #endregion
+
+            #region Insert group leader
+            //Insert the group leader into the database.
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "INSERT_PERSOONLEIDER";
+                string infix;
+                if (tbInfix.Text == "")
+                {
+                    infix = " ";
+                }
+                else
+                {
+                    infix = tbInfix.Text;
+                }
+
+                AddParameterWithValue(com, "voornaam", tbFirstName.Text);
+                AddParameterWithValue(com, "tussenvoegsel", infix);
+                AddParameterWithValue(com, "achternaam", tbSurname.Text);
+                AddParameterWithValue(com, "straat", tbStreet.Text);
+                AddParameterWithValue(com, "huisnr", tbHouseNr.Text);
+                AddParameterWithValue(com, "postcode", tbPostalCode.Text);
+                AddParameterWithValue(com, "banknr", tbIban.Text);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "insertGelukt";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                string result = com.Parameters["insertGelukt"].Value.ToString();
+
+                if (result == "0")
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_PersoonLeider')</script>");
+                    return;
+                }
+            }
+            #endregion
+
+            #region highest ID person
+            // Get the highest ID from the person list and raise it by 1 (new highest ID).
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandText = "SELECT MAX(ID) FROM PERSOON";
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+
+                string c = com.ExecuteScalar().ToString();
+                int d = Convert.ToInt32(c);
+                persoonId = d.ToString();
+            }
+            #endregion
+
+            #region Insert account
+            // Insert an account into the database.
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "INSERT_ACCOUNT";
+
+                AddParameterWithValue(com, "gebruikersnaam", tbFirstName.Text.ToString() + " " + tbSurname.Text.ToString());
+                AddParameterWithValue(com, "email", tbEmail.Text);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "insertGelukt";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                var qacc = com.CreateParameter();
+                qacc.DbType = DbType.Decimal;
+                qacc.ParameterName = "accountId";
+                qacc.Direction = ParameterDirection.Output;
+                com.Parameters.Add(qacc);
+
+                
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                string result = com.Parameters["insertGelukt"].Value.ToString();
+                if (result == "0")
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Account. Gebruikersnaam en / of email is al in gebruik.')</script>");
+                    return;
+                }
+
+                accountId = com.Parameters["accountId"].Value.ToString();
+
+            }
+
+            #region get activation hash from leader
+            // Get the activation hash of the selected user
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                if (con == null)
+                {
+
+                }
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                if (com == null)
+                {
+
+                }
+                com.Connection = con;
+                com.CommandText = "Select activatieHash FROM account WHERE id = :1";
+                AddParameterWithValue(com, "accId", accountId);
+                DbDataReader reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    activationHash = (string)reader["activatieHash"];
+                }
+            }
+
+            // Send activation mail to leader.
+            var smtpc = new SmtpClient();
+            smtpc.Host = "172.20.112.4";
+            smtpc.EnableSsl = false;
+            smtpc.UseDefaultCredentials = true;
+
+            string username = Server.UrlEncode(tbFirstName + " " + tbSurname);
+
+            var mm = new MailMessage();
+            mm.From = new MailAddress("admin@ict4events12.nl");
+            mm.To.Add("admin@ict4events12.nl");
+            mm.Subject = "Activeer uw SMS account.";
+            mm.Body = "Kopieer de volgende link naar uw browser en volg de procedure:" +
+                      "http://192.168.20.112/ActivateAccount.aspx?username=" + username + "&hash=" + activationHash;
+            smtpc.Send(mm);
+            #endregion
+
+            
+
+            
+
+            #endregion
+
+            #region Insert reservation
+            // Create a reservation for the event.
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "INSERT_RESERVERING";
+
+                AddParameterWithValue(com, "persoonId", persoonId);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "insertGelukt";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                var qacc = com.CreateParameter();
+                qacc.DbType = DbType.Decimal;
+                qacc.ParameterName = "reserveringIdOUT";
+                qacc.Direction = ParameterDirection.Output;
+                com.Parameters.Add(qacc);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                string result = com.Parameters["insertGelukt"].Value.ToString();
+                if (result == "0")
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Reservering.')</script>");
+                    return;
+                }
+                reserveringId = com.Parameters["reserveringIdOUT"].Value.ToString();
+            }
+            #endregion
+
+            #region Insert reservation plaats
+            // Create a reservation for a location within an event.
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "INSERT_RESERVERING_PLAATS";
+
+                AddParameterWithValue(com, "reserveringId", reserveringId);
+                AddParameterWithValue(com, "plaatsId", plekid);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "insertGelukt";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                string result = com.Parameters["insertGelukt"].Value.ToString();
+                if (result == "0")
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Reservering_Plaats.')</script>");
+                    return;
+                }
+            }
+            #endregion
+
+            #region Insert reservation polsbandje
+            // Bind a reservation to an account.
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                com.CommandType = System.Data.CommandType.StoredProcedure;
+                com.CommandText = "INSERT_RESERVERING_POLSBANDJE";
+
+                AddParameterWithValue(com, "reservering_Id", reserveringId);
+                AddParameterWithValue(com, "account_Id", accountId);
+
+                var q = com.CreateParameter();
+                q.DbType = DbType.Decimal;
+                q.ParameterName = "insertGelukt";
+                q.Direction = ParameterDirection.Output;
+                com.Parameters.Add(q);
+
+                var qacc = com.CreateParameter();
+                qacc.DbType = DbType.Decimal;
+                qacc.ParameterName = "reserveringPID";
+                qacc.Direction = ParameterDirection.Output;
+                com.Parameters.Add(qacc);
+
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                com.Connection = con;
+                com.ExecuteNonQuery();
+
+                string result = com.Parameters["insertGelukt"].Value.ToString();
+                if (result == "0")
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Reservering_Polsbandje.')</script>");
+                    return;
+                }
+                resPolsId = com.Parameters["reserveringPID"].Value.ToString();
+            }
+            #endregion
+
+            #region Insert materiaal
+            // Insert all reserved materials into the database.
+            while (lbMaterialToReserve.Items.Count > 0)
+            {
+                string s = lbMaterialToReserve.Items[0].ToString();
+                s = s.Substring(0, s.IndexOf("."));
+
+                string bedrag1 = "0";
+
+                // Get the price of the product.
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    if (con == null)
+                    {
+
+                    }
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+
+                    }
+                    com.Connection = con;
+                    com.CommandText = "Select prijs FROM product WHERE product.id = :1 AND rownum = 1";
+                    AddParameterWithValue(com, "prodId", s);
+                    DbDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        bedrag1 = reader[0].ToString();
+                    }
+                }
+
+                // insert the rent of the product
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    com.CommandType = System.Data.CommandType.StoredProcedure;
+                    com.CommandText = "INSERT_VERHUUR";
+
+                    AddParameterWithValue(com, "PRODUCTEXEMPLAAR_ID", s);
+                    AddParameterWithValue(com, "RES_PB_ID", resPolsId);
+                    AddParameterWithValue(com, "PRIJS", bedrag1);
+                    AddParameterWithValue(com, "BETAALD", "1");
+
+                    var q = com.CreateParameter();
+                    q.DbType = DbType.Decimal;
+                    q.ParameterName = "insertGelukt";
+                    q.Direction = ParameterDirection.Output;
+                    com.Parameters.Add(q);
+
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    com.Connection = con;
+                    com.ExecuteNonQuery();
+
+                    string result = com.Parameters["insertGelukt"].Value.ToString();
+                    if (result == "0")
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Verhuur.')</script>");
+                        return;
+                    }
+                }
+
+                lbMaterialToReserve.Items.RemoveAt(0);
+            }
+            #endregion
+
+            #region Insert party
+            // If there are people in the party, insert each one of them into the database.
+            foreach (Person member in party.Members)
+            {
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    com.CommandType = System.Data.CommandType.StoredProcedure;
+                    com.CommandText = "INSERT_PERSOONLID";
+                    string infix;
+                    if (member.Infix == null)
+                    {
+                        infix = " ";
+                    }
+                    else
+                    {
+                        infix = member.Infix;
+                    }
+
+                    AddParameterWithValue(com, "voornaam", member.Name);
+                    AddParameterWithValue(com, "tussenvoegsel", infix);
+                    AddParameterWithValue(com, "achternaam", member.Surname);
+
+                    var q = com.CreateParameter();
+                    q.DbType = DbType.Decimal;
+                    q.ParameterName = "insertGelukt";
+                    q.Direction = ParameterDirection.Output;
+                    com.Parameters.Add(q);
+
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    com.Connection = con;
+                    com.ExecuteNonQuery();
+
+                    string result = com.Parameters["insertGelukt"].Value.ToString();
+
+                    if (result == "0")
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Persoonlid Member')</script>");
+                        return;
+                    }
+                }
+
+                // Insert an account into the database.
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    com.CommandType = System.Data.CommandType.StoredProcedure;
+                    com.CommandText = "INSERT_ACCOUNT";
+
+                    AddParameterWithValue(com, "gebruikersnaam", member.Name + " " + member.Surname);
+                    AddParameterWithValue(com, "email", member.Email);
+
+                    var q = com.CreateParameter();
+                    q.DbType = DbType.Decimal;
+                    q.ParameterName = "insertGelukt";
+                    q.Direction = ParameterDirection.Output;
+                    com.Parameters.Add(q);
+
+                    var qacc = com.CreateParameter();
+                    qacc.DbType = DbType.Decimal;
+                    qacc.ParameterName = "accountId";
+                    qacc.Direction = ParameterDirection.Output;
+                    com.Parameters.Add(qacc);
+
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    com.Connection = con;
+                    com.ExecuteNonQuery();
+
+                    string result = com.Parameters["insertGelukt"].Value.ToString();
+                    if (result == "0")
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Account Member.')</script>");
+                        return;
+                    }
+                    accountId = com.Parameters["accountId"].Value.ToString();
+                }
+
+                // Get the activation hash of the selected member
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    if (con == null)
+                    {
+
+                    }
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+
+                    }
+                    com.Connection = con;
+                    com.CommandText = "Select activatieHash FROM account WHERE id = :1";
+                    AddParameterWithValue(com, "accId", accountId);
+                    DbDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        activationHash = (string)reader["activatieHash"];
+                    }
+                }
+
+                // Send activation mail to member
+                smtpc = new SmtpClient();
+                smtpc.Host = "172.20.112.4";
+                smtpc.EnableSsl = false;
+                smtpc.UseDefaultCredentials = true;
+
+                username = Server.UrlEncode(tbFirstName + " " + tbSurname);
+
+                mm = new MailMessage();
+                mm.From = new MailAddress("admin@ict4events12.nl");
+                mm.To.Add("admin@ict4events12.nl");
+                mm.Subject = "Activeer uw SMS account.";
+                mm.Body = "Kopieer de volgende link naar uw browser en volg de procedure:" +
+                          "http://192.168.20.112/ActivateAccount.aspx?username=" + username + "&hash=" + activationHash;
+                smtpc.Send(mm);
             }
             #endregion
 
