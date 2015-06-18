@@ -52,7 +52,7 @@ namespace Ict4EventsWebApp
                         pUsrn.DbType = DbType.String;
                         pUsrn.Direction = ParameterDirection.Input;
                         pUsrn.ParameterName = "usrn";
-                        pUsrn.Value = "admin";//tijdelijk Session["username"];
+                        pUsrn.Value = Session["username"];
 
                         com.Parameters.Add(pUsrn);
 
@@ -117,7 +117,7 @@ namespace Ict4EventsWebApp
                         pUsrn.DbType = DbType.String;
                         pUsrn.Direction = ParameterDirection.Input;
                         pUsrn.ParameterName = "usrn";
-                        pUsrn.Value = "admin";//tijdelijk Session["username"];
+                        pUsrn.Value = Session["username"];
 
                         com.Parameters.Add(pUsrn);
 
@@ -177,7 +177,7 @@ namespace Ict4EventsWebApp
                         pUsrn.DbType = DbType.String;
                         pUsrn.Direction = ParameterDirection.Input;
                         pUsrn.ParameterName = "usrn";
-                        pUsrn.Value = "admin";//tijdelijk Session["username"];
+                        pUsrn.Value = Session["username"];
 
                         com.Parameters.Add(pUsrn);
 

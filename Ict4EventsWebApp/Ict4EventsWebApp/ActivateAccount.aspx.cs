@@ -88,6 +88,8 @@ namespace Ict4EventsWebApp
         {
             using (var con = Oracle.ManagedDataAccess.Client.OracleClientFactory.Instance.CreateConnection())
             {
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
                 using (var com = con.CreateCommand())
                 {
                     com.CommandText = "UPDATE account SET geactiveerd = 1 WHERE gebruikersnaam = :usrn";

@@ -97,6 +97,10 @@
     font-weight: normal;
 }
 
+.topRight {
+    float: right;
+}
+
 #postSpacerTop{
 	height: 68px;
 }

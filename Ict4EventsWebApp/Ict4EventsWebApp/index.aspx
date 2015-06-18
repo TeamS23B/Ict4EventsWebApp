@@ -31,6 +31,9 @@
             <img src="images/Menu.png" alt="Menu">
         </div>
         <div id="categorieTrace"></div>
+        <div class="topRight">
+            <a href="Login.aspx">Logout</a> - <%= Session["username"]%>
+        </div>
     </div>
     <div id="leftBar">
         <input type="text" id="search" placeholder="Search..." /><input type="button" id="searchButton" value=" " />

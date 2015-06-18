@@ -130,6 +130,10 @@
     <Content Include="styles\reset.css" />
     <Content Include="styles\SMSStyle.css" />
     <Content Include="styles\style.css" />
+    <Content Include="upload\18\testimage.png" />
+    <Content Include="upload\21\Avicii - Hey Brother %28Lyric%29.mp3" />
+    <Content Include="upload\2\testimage.png" />
+    <Content Include="upload\73\Avicii - Hey Brother %28Lyric%29.mp3" />
     <Content Include="videos\Deez Nuts.mp4" />
     <Content Include="videos\Flute.mp4" />
     <Content Include="videos\Sad.mp4" />
@@ -215,7 +219,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
-    <Folder Include="upload\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
