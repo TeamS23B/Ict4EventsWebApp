@@ -157,6 +157,7 @@ IMG.displayed {
 .selectGroupMembers {
    display: block;
    float: left;
+   max-width: 250px
 }
 
 #lbGroupMembers{
