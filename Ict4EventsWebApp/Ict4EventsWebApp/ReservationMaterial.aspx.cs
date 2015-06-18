@@ -67,6 +67,13 @@ namespace Ict4EventsWebApp
 
             string a = XValue.Value;
             string b = YValue.Value;
+
+            if (a == "" || b == "")
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('geen plaats gekozen')</script>");
+                return;
+            }
+
             string plekId;
 
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())

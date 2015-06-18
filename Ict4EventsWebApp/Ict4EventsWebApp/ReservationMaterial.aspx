@@ -124,8 +124,9 @@
                     <div class="top">
                         <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
                         <img id="showImage" alt="Camping" src="images/Camping.png" />
-                        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Verder" />
+                        <asp:Button ID="btMapVerder" runat="server" OnClick="Button1_Click" Text="Verder" />
                     </div>
+                    <div class="clearDiv"></div>
                 </div>
                 <asp:HiddenField ID="XValue" runat="server" ClientIDMode="Static" />
                 <asp:HiddenField ID="YValue" runat="server" ClientIDMode="Static" />
