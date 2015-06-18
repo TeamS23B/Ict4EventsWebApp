@@ -741,6 +741,7 @@ namespace Ict4EventsWebApp
                 
             }
             #endregion
+            Response.Redirect("RegistrationMaterial.aspx");
         }
 
         /// <summary>
