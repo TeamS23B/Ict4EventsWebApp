@@ -196,6 +196,37 @@
     background-color: #1C8566;
 }
 
+.post.top .stats {
+    bottom: auto;
+}
+
+.comments{
+	margin-top: 32px;	
+}
+
+.cusername{
+	font-weight: bold;	
+}
+
+.cstats{
+	color: grey;	
+}
+
+#newcomment{
+	vertical-align: bottom;
+}
+
+#commentText{
+	width: calc(100% - 100px);
+	height: 50px;
+}
+
+#commentPlace{
+	width: 90px;
+	height: 50px;
+	vertical-align: bottom;
+}
+
 .clear {
     clear: both;
 }

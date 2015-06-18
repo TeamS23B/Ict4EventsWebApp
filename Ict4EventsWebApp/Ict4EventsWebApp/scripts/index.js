@@ -12,6 +12,7 @@ if (!String.format) {
 }
 
 var loadRunning = false;
+var loadPostRunning = false;
 
 function loadPosts(categorieId) {
     if (loadRunning) return;//fix for event spam :D
@@ -117,6 +118,7 @@ function loadPosts(categorieId) {
             c.click(function (ev) {
                 ev.stopPropagation(); //stop it from getting through
             });
+            loadCommets(c);
         });
 
 
@@ -141,4 +143,44 @@ function onCatClick(event) {//FIXED: spam click, don't know why
     }
 
     return false;
+}
+
+function loadCommets(topPost) {
+    if (loadPostRunning)
+        return;
+    var id = topPost.attr("id").substring(4);
+
+    console.log(id);
+
+    var comCont = $('<div class="comments"></div>');
+    topPost.append(comCont);
+
+    loadPostRunning = true;
+    $.getJSON("api/sms/PostComments?id=" + id + "&username=" + window.username + "&token=" + window.token, function (data) {
+        $.each(data.comments, function(key, value) {
+            var com = $(String.format('<div class="comment"><div class="cusername">{0}</div>' +
+                '<div class="ccontent">{1}</div>' +
+                '<div class="cstats">Likes: {2} Flags: {3}</div></div>', value.username, value.content, value.likes, value.flags));
+            comCont.append(com);
+        });
+        comCont.append($('<div id="newComment">' +
+            '<textarea id="commentText"/><button id="commentPlace" placeholder="comment">Plaatsen</button>' +
+            '</div>'));
+        $("#commentPlace").click(function() {
+            var comment = $("#commentText").val();
+            $.getJSON("api/sms/PlaceComment?id="+id+"&comment="+comment+"&username="+window.username+"&token="+window.token,function(data) {
+                if (!data.succes) {
+                    $("#commentText").val(data.errormessage);
+                } else {
+                    var com = $(String.format('<div class="comment"><div class="cusername">{0}</div>' +
+                    '<div class="ccontent">{1}</div>' +
+                    '<div class="cstats">Likes: {2} Flags: {3}</div></div>', window.username, comment, 0, 0));
+                    comCont.append(com);
+                    $("#commentText").val("");
+                }
+            });
+        });
+    }).success(function () {
+        loadPostRunning = false;
+    }).fail(function () { loadPostRunning = false; });
 }

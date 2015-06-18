@@ -210,6 +210,7 @@ OR bb.BIJDRAGE_ID = :bid";
                     o.posts.Add(GetPostItem(r));
                 }
             }
+            con.Dispose();
             //return all the data in json format
             return Json(o);
         }
@@ -222,44 +223,134 @@ OR bb.BIJDRAGE_ID = :bid";
             {
                 return Json(new { autherized = 0 });
             }
+
             var o =
-                new
+               new
+               {
+                   comments = new List<object>()
+               };
+            
+            //load all the data
+            var con = Oracle.ManagedDataAccess.Client.OracleClientFactory.Instance.CreateConnection();
+            con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+            con.Open();
+
+            //load top categories
+            using (var com = con.CreateCommand())
+            {
+                //get all comments on a post
+                com.CommandText =
+                    "SELECT b.bijdrage_id AS id, a.GEBRUIKERSNAAM AS username, bij.DATUM AS datetime, inhoud AS content, NVL(likes,0) AS likes, NVL(flags,0) AS flags " +
+                    "FROM bericht b, bijdrage_bericht bb, account a, bijdrage bij LEFT JOIN " +
+                    "  (SELECT SUM(likepost) AS likes, SUM(ongewenst) AS flags, bijdrage_id " +
+                    "  FROM account_bijdrage " +
+                    "  GROUP BY bijdrage_id) lf ON lf.bijdrage_id = bij.id " +
+                    "WHERE b.BIJDRAGE_ID = bb.BERICHT_ID " +
+                    "AND b.BIJDRAGE_ID = bij.id " +
+                    "AND bij.ACCOUNT_ID = a.ID " +
+                    "AND bb.BIJDRAGE_ID = :bid";
+                var pBid = com.CreateParameter();
+                pBid.DbType=DbType.Int32;
+                pBid.Direction=ParameterDirection.Input;
+                pBid.ParameterName = "bid";
+                pBid.Value = id;
+                com.Parameters.Add(pBid);
+
+                var r = com.ExecuteReader();
+                while (r.Read())
                 {
-                    autherized = auterized,
-                    id = 0,
-                    title = "aapje",
-                    username = "aapje",
-                    date = DateTime.Now,
-                    likes = 0,
-                    flags = 0,
-                    commentCnt = 2,
-                    comments = new List<object>()
-                };
-            o.comments.Add(
-                new
-                {
-                    id = 0,
-                    title = "aapje",
-                    username = "aapje",
-                    date = DateTime.Now,
-                    likes = 0,
-                    flags = 0,
-                    commentCnt = 0,
-                    comments = new List<object>()
-                });
-            o.comments.Add(
-                new
-                {
-                    id = 0,
-                    title = "aapje",
-                    username = "aapje",
-                    date = DateTime.Now,
-                    likes = 0,
-                    flags = 0,
-                    commentCnt = 0,
-                    comments = new List<object>()
-                });
+                    //add a comment
+                    o.comments.Add(
+                        new
+                        {
+                            id = r["id"],
+                            content = r["content"],
+                            username = r["username"],
+                            date = r["datetime"],
+                            likes = r["likes"],
+                            flags = r["flags"]
+                        });
+                }
+            }
+
+            //close connection
+            con.Close();
+            con.Dispose();
+
+            //return as json object
             return Json(o);
+        }
+
+
+        //Errormessages:
+        //N/A No error message
+        //WIP Work in progress
+        //Not Authenticated, username or token don't match
+        [HttpGet, Route("api/sms/placeComment")]
+        public IHttpActionResult PlaceComment(int id, string comment, string username, string token)
+        {
+            if (SmsConnect.Instance.CheckUser(username, token) < 1)
+            {
+                return Json(new {succes = false, errormessage = "Not Authenticated"});
+            }
+
+            /*
+             * commant
+             * INSERT INTO BIJDRAGE values (null,1,sysdate,'bericht');
+             * INSERT INTO bericht VALUES ((SELECT MAX(id) FROM bijdrage),null,'aapje');
+             * INSERT INTO BIJDRAGE_BERICHT VALUES (1,(SELECT MAX(id) FROM bijdrage));
+             */
+
+            //load all the data
+            var con = Oracle.ManagedDataAccess.Client.OracleClientFactory.Instance.CreateConnection();
+            con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+            con.Open();
+            //insert into bijdrage
+            using (var com = con.CreateCommand())
+            {
+                com.CommandText = "INSERT INTO BIJDRAGE values (null,(SELECT id FROM account WHERE gebruikersnaam = :usrn),sysdate,'bericht')";
+                var pUsrn = com.CreateParameter();
+                pUsrn.DbType=DbType.String;
+                pUsrn.Direction=ParameterDirection.Input;
+                pUsrn.ParameterName = "usrn";
+                pUsrn.Value = username;
+                com.Parameters.Add(pUsrn);
+
+                com.ExecuteNonQuery();
+            }
+
+            //insert into bericht
+            using (var com = con.CreateCommand())
+            {
+                com.CommandText = "INSERT INTO bericht VALUES ((SELECT MAX(id) FROM bijdrage),null,:comtxt)";
+                var pComtxt = com.CreateParameter();
+                pComtxt.DbType = DbType.String;
+                pComtxt.Direction = ParameterDirection.Input;
+                pComtxt.ParameterName = "comtxt";
+                pComtxt.Value = HttpUtility.UrlDecode(comment);
+                com.Parameters.Add(pComtxt);
+
+                com.ExecuteNonQuery();
+            }
+
+            //insert into bijdrage_bericht
+            using (var com = con.CreateCommand())
+            {
+                com.CommandText = "INSERT INTO BIJDRAGE_BERICHT VALUES (:bid,(SELECT MAX(id) FROM bijdrage))";
+                var pBid = com.CreateParameter();
+                pBid.DbType = DbType.Int32;
+                pBid.Direction = ParameterDirection.Input;
+                pBid.ParameterName = "bid";
+                pBid.Value = id;
+                com.Parameters.Add(pBid);
+
+                com.ExecuteNonQuery();
+            }
+
+            con.Close();
+            con.Dispose();
+
+            return Json(new {succes = true, errormessage = "N/A"});
         }
 
         private void GetBreadCrumbTrace(List<object> categorieTrace, IDataRecord r)
