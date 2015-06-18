@@ -11,22 +11,74 @@
     box-shadow: 0px 5px 10px 2px #000000;
     box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.3);
     padding: 6px;
+    position: relative;
 }
 
-.subFrm select{
-    width:100px;
-    display:block;
-}
+    .subFrm select {
+        width: 100px;
+        display: block;
+    }
 
-.subFrm h1{
-    font-size: 20px;
-    text-align:center;
-}
+    .subFrm h1 {
+        font-size: 20px;
+        text-align: center;
+    }
 
 .leftSettings {
     float: left;
     width: 50%;
 }
+
+    .leftSettings #lblNaam {
+        float: left;
+        clear: both;
+        font-weight: bold;
+    }
+
+    .leftSettings #tbName {
+        float: left;
+        clear: both;
+        width: 200px;
+        margin-bottom: 20px;
+    }
+
+    .leftSettings #lblLocatie {
+        float: left;
+        clear: both;
+        font-weight: bold;
+    }
+
+    .leftSettings #ddlLocation {
+        float: left;
+        clear: both;
+        width: 204px;
+        margin-bottom: 20px;
+    }
+
+    .leftSettings #FVEventName {
+        float: left;
+        clear: both;
+    }
+
+    .leftSettings #lblMaxVis {
+        float: left;
+        clear: both;
+        font-weight: bold;
+    }
+
+    .leftSettings #tbMaxVis {
+        float: left;
+        clear: both;
+        width: 200px;
+        margin-bottom: 20px;
+    }
+
+    .leftSettings #btnAddEvent {
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+    }
+
 
 .rightSettings {
     float: right;
@@ -34,5 +86,101 @@
 }
 
 .debug {
-    clear:both;
+    clear: both;
+}
+
+#lblUsers {
+    font-weight: bold;
+}
+
+.Users select {
+    width: 500px;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+#lblMsgUsers {
+    font-weight: bold;
+}
+
+.Messages select {
+    width: 500px;
+    height: 90px;
+    margin-bottom: 20px;
+}
+
+
+#lbRentedMat {
+    width: 500px;
+    height: 90px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+#cbBlock {
+    float: left;
+    clear: left;
+}
+
+#lblBlock {
+    float: left;
+    clear: right;
+}
+
+#lblRentedMat {
+    float: left;
+    clear: both;
+    font-weight: bold;
+}
+
+#lblMats {
+    font-weight: bold;
+}
+
+#lbMaterials {
+    width: 500px;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+#lblBrand, #lblSeries, #tbSeries, #lblTypeNr, #lblPrice, #lblCat {
+    float: left;
+    clear: both;
+}
+
+#lblBrand {
+    margin-top: 20px;
+}
+
+#tbBrand, #tbSeries, #tbTypeNr, #tbPrice, #ddlCat {
+    float: left;
+    clear: both;
+    margin-bottom: 20px;
+    width: 496px;
+}
+
+#ddlCat{
+    width: 500px;
+}
+
+#btnAddCopy {
+    float: left;
+    clear: left;
+    width: 240px;
+}
+
+#btnRmvCopy {
+    float: right;
+    width: 240px;
+}
+
+#btnUpdate {
+    float: left;
+    clear: left;
+    width: 240px;
+}
+
+#btnNew{
+    float: right;
+    width: 240px;
 }

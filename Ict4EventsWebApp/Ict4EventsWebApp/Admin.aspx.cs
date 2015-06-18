@@ -68,7 +68,7 @@ namespace Ict4EventsWebApp
                             //return "Error! No Command";
                         }
                         com2.Connection = con;
-                        com2.CommandText = "SELECT gebruikersnaam FROM account";
+                        com2.CommandText = "SELECT gebruikersnaam FROM account ORDER BY gebruikersnaam";
                         DbDataReader reader2 = com2.ExecuteReader();
                         lbUsers.Items.Clear();
                         while (reader2.Read())
@@ -228,7 +228,7 @@ namespace Ict4EventsWebApp
                     while (reader.Read())
                     {
                         //Checks the Checkbox, if the person is blocked it's checked else it's unchecked
-                        lbMessages.Items.Add(reader[0].ToString() + reader[1].ToString());
+                        lbMessages.Items.Add(reader[0].ToString() + " " + reader[1].ToString());
                         if ((short)reader[2] == 0)
                         {
                             cbBlock.Checked = true;
@@ -249,7 +249,6 @@ namespace Ict4EventsWebApp
                     AddParameterWithValue(com2, "gebrnm", lbUsers.SelectedValue.ToString());
                     DbDataReader reader2 = com2.ExecuteReader();
                     lbRentedMat.Items.Clear();
-                    lbMessages.Items.Clear();
                     while (reader2.Read())
                     {
                         lbRentedMat.Items.Add(string.Format("{0} {1} {2}", reader2[0].ToString(), reader2[1].ToString(), reader2[2].ToString()));

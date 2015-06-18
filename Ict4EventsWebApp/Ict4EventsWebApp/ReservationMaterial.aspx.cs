@@ -707,6 +707,8 @@ namespace Ict4EventsWebApp
             string accountId;
             string reserveringId;
             string resPolsId;
+            string activationHash = "Error";
+
             #region location coordinates
             // Retrieve the to-be-reserved location coordinates
             using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
@@ -828,6 +830,8 @@ namespace Ict4EventsWebApp
                 qacc.Direction = ParameterDirection.Output;
                 com.Parameters.Add(qacc);
 
+                
+
                 con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
                 con.Open();
                 com.Connection = con;
@@ -839,20 +843,56 @@ namespace Ict4EventsWebApp
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Database insert gefaald: Insert_Account. Gebruikersnaam en / of email is al in gebruik.')</script>");
                     return;
                 }
+
                 accountId = com.Parameters["accountId"].Value.ToString();
+
             }
 
-            //var smtpc = new SmtpClient();
-            //smtpc.Host = "172.20.112.3";
-            //smtpc.EnableSsl = false;
-            //smtpc.UseDefaultCredentials = true;
+            #region get activation hash from leader
+            // Get the activation hash of the selected user
+            using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+            {
+                if (con == null)
+                {
 
-            //var mm = new MailMessage();
-            //mm.From = new MailAddress("admin@");
-            //mm.To.Add(tbTarget.Text);
-            //mm.Subject = tbSubject.Text;
-            //mm.Body = tbText.Text;
-            //smtpc.Send(mm);
+                }
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                con.Open();
+                DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                if (com == null)
+                {
+
+                }
+                com.Connection = con;
+                com.CommandText = "Select activatieHash FROM account WHERE id = :1";
+                AddParameterWithValue(com, "accId", accountId);
+                DbDataReader reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    activationHash = (string)reader["activatieHash"];
+                }
+            }
+
+            // Send activation mail to leader.
+            var smtpc = new SmtpClient();
+            smtpc.Host = "172.20.112.4";
+            smtpc.EnableSsl = false;
+            smtpc.UseDefaultCredentials = true;
+
+            string username = Server.UrlEncode(tbFirstName + " " + tbSurname);
+
+            var mm = new MailMessage();
+            mm.From = new MailAddress("admin@ict4events12.nl");
+            mm.To.Add("admin@ict4events12.nl");
+            mm.Subject = "Activeer uw SMS account.";
+            mm.Body = "Kopieer de volgende link naar uw browser en volg de procedure:" +
+                      "http://192.168.20.112/ActivateAccount.aspx?username=" + username + "&hash=" + activationHash;
+            smtpc.Send(mm);
+            #endregion
+
+            
+
+            
 
             #endregion
 
@@ -1108,6 +1148,46 @@ namespace Ict4EventsWebApp
                     }
                     accountId = com.Parameters["accountId"].Value.ToString();
                 }
+
+                // Get the activation hash of the selected member
+                using (DbConnection con = OracleClientFactory.Instance.CreateConnection())
+                {
+                    if (con == null)
+                    {
+
+                    }
+                    con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+                    con.Open();
+                    DbCommand com = OracleClientFactory.Instance.CreateCommand();
+                    if (com == null)
+                    {
+
+                    }
+                    com.Connection = con;
+                    com.CommandText = "Select activatieHash FROM account WHERE id = :1";
+                    AddParameterWithValue(com, "accId", accountId);
+                    DbDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        activationHash = (string)reader["activatieHash"];
+                    }
+                }
+
+                // Send activation mail to member
+                smtpc = new SmtpClient();
+                smtpc.Host = "172.20.112.4";
+                smtpc.EnableSsl = false;
+                smtpc.UseDefaultCredentials = true;
+
+                username = Server.UrlEncode(tbFirstName + " " + tbSurname);
+
+                mm = new MailMessage();
+                mm.From = new MailAddress("admin@ict4events12.nl");
+                mm.To.Add("admin@ict4events12.nl");
+                mm.Subject = "Activeer uw SMS account.";
+                mm.Body = "Kopieer de volgende link naar uw browser en volg de procedure:" +
+                          "http://192.168.20.112/ActivateAccount.aspx?username=" + username + "&hash=" + activationHash;
+                smtpc.Send(mm);
             }
             #endregion
 
