@@ -74,9 +74,26 @@
                             <asp:TextBox ID="tbCity" runat="server">Nuth</asp:TextBox>
                         </div>
 
-
                         <asp:TextBox ID="tbIban" CssClass="textBoxMargin" runat="server">NL64RABO0137789440</asp:TextBox>
                         
+                    </div>
+
+                    <div class="groupMembersInfo">
+                        <asp:Label ID="lblFirstNameGM" CssClass="labelMargin" runat="server" Text="Voornaam"></asp:Label>
+                        <asp:TextBox ID="TextBox2" CssClass="textBoxMargin" runat="server">Je</asp:TextBox>
+
+                        <asp:Label ID="lblInfixGM" CssClass="labelMargin" runat="server" Text="Tussenvoegsel"></asp:Label>
+                        <asp:TextBox ID="TextBox3" CssClass="textBoxMargin" runat="server"></asp:TextBox>
+
+                        <asp:Label ID="lblSurnameGM" CssClass="labelMargin" runat="server" Text="Achternaam"></asp:Label>
+                        <asp:TextBox ID="TextBox4" CssClass="textBoxMargin" runat="server">Moeder</asp:TextBox>
+
+                        <asp:Label ID="lblEmailGM" CssClass="labelMargin" runat="server" Text="Email"></asp:Label>
+                        <asp:TextBox ID="TextBox5" CssClass="textBoxMargin" runat="server">jeweet@zelluf.nl</asp:TextBox>
+
+                        <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" OnClick="btnAdd_Click" />
+
+                        <asp:Button ID="btnNextStep" runat="server" Text="Verder" OnClick="btnNextStep_Click" />
                     </div>
 
                     <div class="selectGroupMembers">
@@ -96,24 +113,6 @@
                         <asp:RegularExpressionValidator ID="regexPostalCode" CssClass="validator" runat="server" ErrorMessage="Postcode ongeldig." ForeColor="Red" ControlToValidate="tbPostalCode" ValidationExpression="^([0-9]{4})([A-z]{2})$"></asp:RegularExpressionValidator>
                     </div>
 
-                    <div class="groupMembersInfo">
-                        <asp:Label ID="lblFirstNameGM" CssClass="labelMargin" runat="server" Text="Voornaam"></asp:Label>
-                        <asp:TextBox ID="TextBox2" CssClass="textBoxMargin" runat="server">Je</asp:TextBox>
-
-                        <asp:Label ID="lblInfixGM" CssClass="labelMargin" runat="server" Text="Tussenvoegsel"></asp:Label>
-                        <asp:TextBox ID="TextBox3" CssClass="textBoxMargin" runat="server"></asp:TextBox>
-
-                        <asp:Label ID="lblSurnameGM" CssClass="labelMargin" runat="server" Text="Achternaam"></asp:Label>
-                        <asp:TextBox ID="TextBox4" CssClass="textBoxMargin" runat="server">Moeder</asp:TextBox>
-
-                        <asp:Label ID="lblEmailGM" CssClass="labelMargin" runat="server" Text="Email"></asp:Label>
-                        <asp:TextBox ID="TextBox5" CssClass="textBoxMargin" runat="server">jeweet@zelluf.nl</asp:TextBox>
-
-                        <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" OnClick="btnAdd_Click" />
-                        <asp:Button ID="btnRemove" CssClass="buttonMargin" runat="server" Text="Verwijderen" OnClick="btnRemove_Click"/>
-
-                        <asp:Button ID="btnNextStep" runat="server" Text="Verder" OnClick="btnNextStep_Click" />
-                    </div>
                     <div class="clearDiv"></div>
                 </div>
             </asp:Panel>
@@ -124,8 +123,9 @@
                     <div class="top">
                         <asp:Label runat="server" Font-Bold="True">Plek</asp:Label>
                         <img id="showImage" alt="Camping" src="images/Camping.png" />
-                        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Verder" />
+                        <asp:Button ID="btMapVerder" runat="server" OnClick="Button1_Click" Text="Verder" />
                     </div>
+                    <div class="clearDiv"></div>
                 </div>
                 <asp:HiddenField ID="XValue" runat="server" ClientIDMode="Static" />
                 <asp:HiddenField ID="YValue" runat="server" ClientIDMode="Static" />
@@ -172,7 +172,7 @@
                     <div class="clearDiv"></div>
                     <div>
                         <asp:Button ID="btRMaterialTerug" runat="server" Text="Terug" />
-                        <asp:Button ID="btRMAterialVerder" runat="server" Text="Verder" OnClick="btRMAterialVerder_Click" />
+                        <asp:Button ID="btRMAterialVerder" runat="server" Text="Voltooien" OnClick="btRMAterialVerder_Click" />
                     </div>
                 </div>
             </asp:Panel>
