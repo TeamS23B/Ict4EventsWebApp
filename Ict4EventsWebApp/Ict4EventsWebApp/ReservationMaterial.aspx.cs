@@ -409,20 +409,28 @@ namespace Ict4EventsWebApp
                 }
             }
 
-            var smtpc = new SmtpClient();
-            smtpc.Host = "172.20.112.4";
-            smtpc.EnableSsl = false;
-            smtpc.UseDefaultCredentials = true;
+            try
+            {
+                var smtpc = new SmtpClient();
+                smtpc.Host = "172.20.112.4";
+                smtpc.EnableSsl = false;
+                smtpc.UseDefaultCredentials = true;
 
-            string username = Server.UrlEncode(tbFirstName + " " + tbSurname);
+                string username = Server.UrlEncode(tbFirstName + " " + tbSurname);
 
-            var mm = new MailMessage();
-            mm.From = new MailAddress("admin@ict4events12.nl");
-            mm.To.Add("admin@ict4events12.nl");
-            mm.Subject = "Activeer uw SMS account.";
-            mm.Body = "Kopieer de volgende link naar uw browser en volg de procedure:" +
-                      "http://192.168.20.112/ActivateAccount.aspx?username=" + username + "&hash=" + activationHash;
-            smtpc.Send(mm);
+                var mm = new MailMessage();
+                mm.From = new MailAddress("admin@ict4events12.nl");
+                mm.To.Add("admin@ict4events12.nl");
+                mm.Subject = "Activeer uw SMS account.";
+                mm.Body = "Kopieer de volgende link naar uw browser en volg de procedure:" +
+                          "http://192.168.20.112/ActivateAccount.aspx?username=" + username + "&hash=" + activationHash;
+                smtpc.Send(mm);
+            }
+            catch
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Activatiemail kan niet verzonden worden.')</script>");
+            }
+            
             #endregion
 
             #region Insert reservation
@@ -702,21 +710,31 @@ namespace Ict4EventsWebApp
                     }
                 }
 
+                
                 // Send activation mail to member
-                smtpc = new SmtpClient();
-                smtpc.Host = "172.20.112.4";
-                smtpc.EnableSsl = false;
-                smtpc.UseDefaultCredentials = true;
 
-                username = Server.UrlEncode(tbFirstName + " " + tbSurname);
+                try 
+                {
+                    var smtpc = new SmtpClient();
+                    smtpc.Host = "172.20.112.4";
+                    smtpc.EnableSsl = false;
+                    smtpc.UseDefaultCredentials = true;
 
-                mm = new MailMessage();
-                mm.From = new MailAddress("admin@ict4events12.nl");
-                mm.To.Add("admin@ict4events12.nl");
-                mm.Subject = "Activeer uw SMS account.";
-                mm.Body = "Kopieer de volgende link naar uw browser en volg de procedure:" +
-                          "http://192.168.20.112/ActivateAccount.aspx?username=" + username + "&hash=" + activationHash;
-                smtpc.Send(mm);
+                    string username = Server.UrlEncode(member.Name + " " + member.Surname);
+
+                    var mm = new MailMessage();
+                    mm.From = new MailAddress("admin@ict4events12.nl");
+                    mm.To.Add("admin@ict4events12.nl");
+                    mm.Subject = "Activeer uw SMS account.";
+                    mm.Body = "Kopieer de volgende link naar uw browser en volg de procedure:" +
+                              "http://192.168.20.112/ActivateAccount.aspx?username=" + username + "&hash=" + activationHash;
+                    smtpc.Send(mm);
+                }
+                catch 
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Actievatiemail kan niet verzonden worden. Member.')</script>");
+                } 
+                
             }
             #endregion
         }
