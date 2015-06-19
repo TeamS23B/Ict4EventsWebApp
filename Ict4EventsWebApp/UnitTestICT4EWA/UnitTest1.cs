@@ -39,5 +39,52 @@ namespace UnitTestICT4EWA
 
             
         }
+
+        [TestMethod]
+        public void TestAuthentication()
+        {
+            var inst = Authentication.Instance;//get the instance
+            Assert.IsTrue(inst.IsAuthenticated("Administrator","Administrator"));//test login
+            try
+            {
+                var result = inst.IsAuthenticated("Administrator", "aapje");
+                if (result)
+                    Assert.Fail("Dit not fail and true Administrator aapje");
+                
+            }
+            catch (Exception)
+            {
+                
+            }
+
+            try
+            {
+                var result = inst.IsAuthenticated("aapje", "aapje"); //should throw
+                if(result)
+                    Assert.Fail("Did not fail and true aapje aapje");
+            }
+            catch (Exception)
+            {
+                
+            }
+            
+        }
+        [TestMethod]
+        public void TestSmsConnect()
+        {
+            var inst = SmsConnect.Instance;
+            var token = inst.AddToken("aapje");
+            Assert.IsFalse(string.IsNullOrEmpty(token));//check token
+
+            Assert.IsTrue(inst.CheckUser("aapje", token) == 1);//check if user is logged in
+
+            inst.RemoveToken("aapje");
+
+            token = inst.AddToken("aapje", true);
+
+            Assert.IsTrue(inst.CheckUser("aapje", token) == 2);//check high autherized
+
+            inst.RemoveToken("aapje");
+        }
     }
 }
