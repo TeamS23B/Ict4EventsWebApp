@@ -61,30 +61,6 @@ namespace Ict4EventsWebApp
 
     public class SmsController : ApiController
     {
-        [HttpGet, Route("api/sms/newPosts")]
-        public IHttpActionResult GetNewPosts()
-        {
-            var o = new { posts = new List<Post>() };
-            var p = new Post();
-            p.Comments.Add(new KeyValuePair<string, string>("Rick", "Wahahahaha"));
-            p.Comments.Add(new KeyValuePair<string, string>("Rick", "FU"));
-            p.Content = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.";
-            p.Likes = 5;
-            p.Flags = 0;
-            p.Uploader = "Jim";
-            p.Title = "Le me, Le latijn!";
-            o.posts.Add(p);
-            p = new Post();
-            p.Comments.Add(new KeyValuePair<string, string>("Rick", "Wahahahaha"));
-            p.Comments.Add(new KeyValuePair<string, string>("Rick2", "FU"));
-            p.Content = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.";
-            p.Likes = 5;
-            p.Flags = 0;
-            p.Uploader = "Jim";
-            p.Title = "Le me, Le latijn!";
-            o.posts.Add(p);
-            return Json(o);
-        }
 
         [HttpGet, Route("api/sms/postsOfCategorie")]
         public IHttpActionResult GetPostOfCategorie(int id, string username, string token)
@@ -164,6 +140,7 @@ ORDER BY t1.bijdrage_id";
                     GetBreadCrumbTrace(o.categorieTrace,r);
             }
             
+            //all categories in categorie
             using (var com = con.CreateCommand())
             {
                 com.CommandText =
@@ -184,6 +161,7 @@ WHERE categorie_id=:bid";
                 }
             }
 
+            //all posts in categorie
             using (var com = con.CreateCommand())
             {
                 com.CommandText =
@@ -438,6 +416,70 @@ OR bb.BIJDRAGE_ID = :bid";
             con.Dispose();
 
             return Json(new {succes = true, errormessage = "N/A"});
+        }
+
+        [HttpGet, Route("api/sms/search")]
+        public IHttpActionResult Search(string q, string username, string token)
+        {
+            /*;*/
+            
+            //check parameters
+            if (q.Length < 1)
+            {
+                return Json(new {succes=false, errormessage="q is empty"});
+            }
+            if (SmsConnect.Instance.CheckUser(username, token) < 1)
+            {
+                return Json(new { succes = false, errormessage = "Not Authenticated" });
+            }
+
+            var o = new
+            {
+                categories = new List<object>(),
+                posts = new List<object>()
+            };
+
+            var regexQ = "(" + q.Replace(" ", ")|(") + ")";//generate an regex statement
+
+            //execute query
+            var con = Oracle.ManagedDataAccess.Client.OracleClientFactory.Instance.CreateConnection();
+            con.ConnectionString = ConfigurationManager.ConnectionStrings["OracleConnection"].ConnectionString;
+            con.Open();
+            //insert into bijdrage
+            using (var com = con.CreateCommand())
+            {
+                com.CommandText = @"SELECT b.id AS id, b.soort as soort, be.BESTANDSLOCATIE AS url, bi.TITEL AS title, bi.INHOUD AS TEXT, c.naam AS catname, NVL(lf.likes,0) AS likes, NVL(lf.flags,0) AS flags, a.GEBRUIKERSNAAM AS username
+FROM bijdrage b LEFT JOIN bestand be ON b.ID = be.BIJDRAGE_ID 
+  LEFT JOIN bericht bi ON b.ID = bi.BIJDRAGE_ID 
+  LEFT JOIN bijdrage_bericht bb ON bi.BIJDRAGE_ID = bb.bericht_id 
+  LEFT JOIN CATEGORIE c ON b.ID=c.BIJDRAGE_ID
+  LEFT JOIN (SELECT bijdrage_id, SUM(likepost) AS likes, SUM(ongewenst) AS flags FROM account_bijdrage GROUP BY bijdrage_id) lf ON lf.bijdrage_id = b.ID 
+  JOIN account a ON b.ACCOUNT_ID=a.id
+WHERE (b.soort <> 'bericht' OR bi.titel IS NOT NULL)
+AND REGEXP_LIKE(b.id||b.soort||be.bestandslocatie||bi.titel||bi.inhoud||c.NAAM||a.gebruikersnaam,:pQuery,'i')";
+                var pQuery = com.CreateParameter();
+                pQuery.DbType = DbType.String;
+                pQuery.Direction = ParameterDirection.Input;
+                pQuery.ParameterName = "pQuery";
+                pQuery.Value = regexQ;
+                com.Parameters.Add(pQuery);
+
+                var r = com.ExecuteReader();
+                while (r.Read())
+                {
+                    if ((string) (r["soort"] ?? "") == "categorie")
+                        //if it is an categorie add it as if it is an categorie
+                    {
+                        o.categories.Add(new { id = Convert.ToInt32(r["id"]), title = (string)r["catname"] });
+                    }
+                    else//else add it as an post
+                    {
+                        o.posts.Add(GetPostItem(r));
+                    }
+
+                }
+            }
+            return Json(o);
         }
 
         private void GetBreadCrumbTrace(List<object> categorieTrace, IDataRecord r)

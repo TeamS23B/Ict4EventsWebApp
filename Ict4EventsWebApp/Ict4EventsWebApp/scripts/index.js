@@ -13,6 +13,123 @@ if (!String.format) {
 
 var loadRunning = false;
 var loadPostRunning = false;
+var searching = false;
+
+
+function search(q) {
+    if (searching) return;//no dubbel tap
+    searching = true;
+    window.curId = 1;
+    $.getJSON("api/sms/search?q=" + q + "&username=" + window.username + "&token=" + window.token, function (data) {
+        //set catTrace to ">Search: %q"
+        var catTrace = $("#categorieTrace");
+        catTrace.empty();
+        catTrace.append('>Search: '+q);
+
+
+        var cats = $("#categories");
+        cats.empty();
+
+        //load categories
+        $.each(data.categories, function (id, value) {
+            cats.append($('<div class="categorie" id="cat' + value.id + '">' + value.title + '</div>')).one("click", onCatClick);
+        });
+
+        var posts = $("#posts");
+        posts.empty();
+
+        //load posts
+        $.each(data.posts, function (id, value) {
+            //add an item based off the type it is
+            var ctrl;
+            switch (value.type.substring(0, 4)) {
+                case "text":
+                    ctrl = ($(String.format('<div class="post" id="post{0} "> ' +
+                        '<div class="title">{1}</div>' +
+                        '<div class="username">{2}</div>' +
+                        '<div class="content">{3}</div> ' +
+                        '<div class="stats"><div id="like{0}">Likes: {4}</div> <div id="flag{0}">Flags: {5}</div></div>' +
+                        '</div>', value.id, value.title, value.username, value.text, value.likes, value.flags)));
+                    break;
+                case "file":
+                    switch (value.type.substring(5)) {
+                        case "file":
+                            ctrl = ($(String.format('<div class="post" id="post{0} "> ' +
+                                '<div class="title">{1}</div>' +
+                                '<div class="username">{2}</div>' +
+                                '<div class="content"><a href="{3}">{3}</a></div> ' +
+                                '<div class="stats"><div id="like{0}">Likes: {4}</div> <div id="flag{0}">Flags: {5}</div></div>' +
+                                '</div>', value.id, value.url, value.username, value.url, value.likes, value.flags, value.comments)));
+                            break;
+                        case "image":
+                            ctrl = ($(String.format('<div class="post" id="post{0} "> ' +
+                                '<div class="title">{1}</div>' +
+                                '<div class="username">{2}</div>' +
+                                '<div class="content"><img src="{3}" alt="{1}"/></div> ' +
+                                '<div class="stats"><div id="like{0}">Likes: {4}</div> <div id="flag{0}">Flags: {5}</div></div>' +
+                                '</div>', value.id, value.url, value.username, value.url, value.likes, value.flags)));
+                            break;
+                        case "video": ctrl = posts.append($(String.format('<div class="post" id="post{0} "> ' +
+                                '<div class="title">{1}</div>' +
+                                '<div class="username">{2}</div>' +
+                                '<div class="content"><video width="100%" preload="metadata"><source src="{3}" type="video/mp4"></video></div> ' +
+                                '<div class="stats"><div id="like{0}">Likes: {4}</div> <div id="flag{0}">Flags: {5}</div></div>' +
+                                '</div>', value.id, value.url, value.username, value.url, value.likes, value.flags)));
+                            break;
+                        case "audio":
+                            ctrl = ($(String.format('<div class="post" id="post{0} "> ' +
+                                '<div class="title">{1}</div>' +
+                                '<div class="username">{2}</div>' +
+                                '<div class="content"><audio preload="metadata" src="{3}" controls="controls" /></div> ' +
+                                '<div class="stats"><div id="like{0}">Likes: {4}</div> <div id="flag{0}">Flags: {5}</div></div>' +
+                                '</div>', value.id, value.url, value.username, value.url, value.likes, value.flags)));
+                            break;
+                        default:
+                            console.log("Unkown filetype!" + value.id);
+                            break;
+                    }
+                    break;
+                default:
+                    ctrl = null;
+                    console.log("Unkown type! id=" + value.id);
+                    break;
+            }
+            if (ctrl != null) {
+                posts.append(ctrl);
+                ctrl.find("#like" + value.id).click(function (e) {
+                    $.getJSON("api/sms/LikeFlag?id=" + value.id + "&action=L&username=" + window.username + "&token=" + window.token, function () {
+                        search(q);
+                    });
+                    e.stopPropagation();
+                });
+                ctrl.find("#flag" + value.id).click(function (e) {
+                    $.get("api/sms/LikeFlag?id=" + value.id + "&action=F&username=" + window.username + "&token=" + window.token, function (data) {
+                        search(q);
+                    });
+                    e.stopPropagation();
+                });
+            }
+
+        });
+
+        $(".post").click(function (e) {
+            e.stopPropagation(); //stop event, first need to create it
+            var c = $(this).clone(); //make a clone and add the top class to it
+            //enable controls for video and audio
+            $(this).find("video, audio").attr("controls", "controls");
+            c.addClass('top');
+            $("#content").append(c); //append to #content
+            c.click(function (ev) {
+                ev.stopPropagation(); //stop it from getting through
+            });
+            loadCommets(c);
+        });
+
+
+    }).success(function () {
+        searching = false;
+    }).fail(function () { searching = false; });
+}
 
 function loadPosts(categorieId) {
     if (loadRunning) return;//fix for event spam :D

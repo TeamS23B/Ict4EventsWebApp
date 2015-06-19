@@ -116,11 +116,8 @@
     margin-right: auto;
 }
 
-#posts {
-    padding-top: 24px;
-}
-
 .categorie, .post {
+    padding: 4px;
     position: relative;
     background-color: #fff;
     float: left;
@@ -140,6 +137,7 @@
 /*Posts*/
 .post {
     height: 250px;
+    margin-top: 32px;
 }
 
 .post .title, .post .username {

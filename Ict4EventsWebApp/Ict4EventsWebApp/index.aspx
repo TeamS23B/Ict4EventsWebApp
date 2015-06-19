@@ -20,7 +20,28 @@
             $("#btAddPost").click(function() {
                 window.location.href = "AddComment.aspx?id="+window.curId;
             });
+            $("#search").keyup(function(e) {
+                if (e.keyCode == 13) {
+                    var q = $("#search").val();
+                    var stateObj = { foo: "bar" };
+                    history.pushState(stateObj, "The new page", "?q=" + q);//change url
+                    search(q);
+                }
+            });
+            $("#searchButton").click(function() {
+                var q = $("#search").val();
+                var stateObj = { foo: "bar" };
+                history.pushState(stateObj, "The new page", "?q=" + q);//change url
+                search(q);
+            });
+            <% if (string.IsNullOrEmpty(Request.QueryString["q"]))//load posts
+               { %>
             loadPosts(window.curId);
+            <% }
+               else//load the search
+               { %>
+            search('<%=Request.QueryString["q"]%>');
+            <% } %>
         });
 
     </script>
