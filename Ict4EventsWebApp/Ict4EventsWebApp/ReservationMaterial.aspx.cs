@@ -31,20 +31,21 @@ namespace Ict4EventsWebApp
                 pnlMaterial.Visible = false;
                 pnlOverview.Visible = false;
                 pnlMap.Visible = false;
-            }
-            if (Session["party"] == null)
-            {
-                party = new Party();
-            }
-            else
-            {
-                party = (Party)Session["party"];
-
-                foreach (Person person in party.Members)
+                if (Session["party"] == null)
                 {
-                    lbGroupMembers.Items.Add(person.ToString());
+                    party = new Party();
+                }
+                else
+                {
+                    party = (Party)Session["party"];
+
+                    foreach (Person person in party.Members)
+                    {
+                        lbGroupMembers.Items.Add(person.ToString());
+                    }
                 }
             }
+            
 
         }
 
@@ -737,6 +738,8 @@ namespace Ict4EventsWebApp
                 
             }
             #endregion
+
+            Session.Remove("party");
 
             Response.Redirect("index.aspx");
         }

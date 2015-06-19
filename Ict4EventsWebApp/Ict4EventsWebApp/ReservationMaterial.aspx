@@ -60,34 +60,34 @@
                     <div class="textboxleft">
                         <asp:TextBox ID="tbFirstName" CssClass="textBoxMargin" runat="server" OnTextChanged="tbFirstName_TextChanged"></asp:TextBox>
                         <asp:TextBox ID="tbInfix" CssClass="textBoxMargin" runat="server"></asp:TextBox>
-                        <asp:TextBox ID="tbSurname" CssClass="textBoxMargin" runat="server">Sanders</asp:TextBox>
-                        <asp:TextBox ID="tbEmail" CssClass="textBoxMargin" runat="server">jimsanders11@gmailcom</asp:TextBox>
+                        <asp:TextBox ID="tbSurname" CssClass="textBoxMargin" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="tbEmail" CssClass="textBoxMargin" runat="server"></asp:TextBox>
                         <div class="streetHouse">
-                            <asp:TextBox ID="tbStreet" runat="server">Barbarastraat</asp:TextBox>
-                            <asp:TextBox ID="tbHouseNr" runat="server">29</asp:TextBox>
+                            <asp:TextBox ID="tbStreet" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="tbHouseNr" runat="server"></asp:TextBox>
                         </div>
 
                         <div class="postal">
-                            <asp:TextBox ID="tbPostalCode" runat="server">6361V0</asp:TextBox>
-                            <asp:TextBox ID="tbCity" runat="server">Nuth</asp:TextBox>
+                            <asp:TextBox ID="tbPostalCode" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="tbCity" runat="server"></asp:TextBox>
                         </div>
 
-                        <asp:TextBox ID="tbIban" CssClass="textBoxMargin" runat="server">L64RABO0137789440</asp:TextBox>
+                        <asp:TextBox ID="tbIban" CssClass="textBoxMargin" runat="server"></asp:TextBox>
 
                     </div>
 
                     <div class="groupMembersInfo">
                         <asp:Label ID="lblFirstNameGM" CssClass="labelMargin" runat="server" Text="Voornaam"></asp:Label>
-                        <asp:TextBox ID="TextBox2" CssClass="textBoxMargin" runat="server">Rick</asp:TextBox>
+                        <asp:TextBox ID="TextBox2" CssClass="textBoxMargin" runat="server"></asp:TextBox>
 
                         <asp:Label ID="lblInfixGM" CssClass="labelMargin" runat="server" Text="Tussenvoegsel"></asp:Label>
                         <asp:TextBox ID="TextBox3" CssClass="textBoxMargin" runat="server"></asp:TextBox>
 
                         <asp:Label ID="lblSurnameGM" CssClass="labelMargin" runat="server" Text="Achternaam"></asp:Label>
-                        <asp:TextBox ID="TextBox4" CssClass="textBoxMargin" runat="server">Rongen</asp:TextBox>
+                        <asp:TextBox ID="TextBox4" CssClass="textBoxMargin" runat="server"></asp:TextBox>
 
                         <asp:Label ID="lblEmailGM" CssClass="labelMargin" runat="server" Text="Email"></asp:Label>
-                        <asp:TextBox ID="TextBox5" CssClass="textBoxMargin" runat="server">rick@gmail.com</asp:TextBox>
+                        <asp:TextBox ID="TextBox5" CssClass="textBoxMargin" runat="server"></asp:TextBox>
 
                         <asp:Button ID="btnAdd" CssClass="buttonMargin" runat="server" Text="Toevoegen" OnClick="btnAdd_Click" />
 
@@ -173,6 +173,7 @@
                     <div>
                         <asp:Button ID="btRMAterialVerder" runat="server" Text="Voltooien" OnClick="btRMAterialVerder_Click" />
                     </div>
+                    <div class="clearDiv"></div>
                 </div>
             </asp:Panel>
 
