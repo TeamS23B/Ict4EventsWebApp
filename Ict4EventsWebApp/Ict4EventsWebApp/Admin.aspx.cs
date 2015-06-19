@@ -95,9 +95,9 @@ namespace Ict4EventsWebApp
                         DatabaseError();
                         return;
                     }
-                    catch (DbException)
+                    catch (DbException ex)
                     {
-                        ConnectieError();
+                        ConnectieError(ex);
                         return;
                     }
                 }
@@ -113,6 +113,12 @@ namespace Ict4EventsWebApp
         private void ConnectieError()
         {
             Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('Er is geen connectie')</script>");
+            return;
+        }
+
+        private void ConnectieError(Exception ex)
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Scripts", "<script>alert('" + ex.Message + "')</script>");
             return;
         }
         /// <summary>
@@ -151,9 +157,9 @@ namespace Ict4EventsWebApp
                     DatabaseError();
                     return;
                 }
-                catch (DbException)
+                catch (DbException ex)
                 {
-                    ConnectieError();
+                    ConnectieError(ex);
                     return;
                 }
             }
@@ -187,14 +193,14 @@ namespace Ict4EventsWebApp
                     int locationId = Convert.ToInt32(location.Substring(0, location.IndexOf(".")));
                     AddParameterWithValue(com, "locId", locationId);
                     AddParameterWithValue(com, "naam", tbName.Text);
-                    AddParameterWithValue(com, "datumStart", clStartDate.SelectedDate.ToString());
-                    AddParameterWithValue(com, "datumEinde", clEndDate.SelectedDate.ToString());
+                    AddParameterWithValue(com, "datumStart", clStartDate.SelectedDate.Day + "-" + clStartDate.SelectedDate.Month + "-" + clStartDate.SelectedDate.Year);
+                    AddParameterWithValue(com, "datumEinde", clEndDate.SelectedDate.Day + "-" + clEndDate.SelectedDate.Month + "-" + clEndDate.SelectedDate.Year);
                     AddParameterWithValue(com, "maxBezoekers", Convert.ToInt32(tbMaxVis.Text));
                     com.ExecuteNonQuery();
                 }
-                catch (DbException)
+                catch (DbException ex)
                 {
-                    ConnectieError();
+                    ConnectieError(ex);
                     return;
                 }
 
@@ -265,9 +271,9 @@ namespace Ict4EventsWebApp
                     DatabaseError();
                     return;
                 }
-                catch (DbException)
+                catch (DbException ex)
                 {
-                    ConnectieError();
+                    ConnectieError(ex);
                     return;
                 }
             }
@@ -314,9 +320,9 @@ namespace Ict4EventsWebApp
                     DatabaseError();
                     return;
                 }
-                catch (DbException)
+                catch (DbException ex)
                 {
-                    ConnectieError();
+                    ConnectieError(ex);
                     return;
                 }
 
@@ -369,9 +375,9 @@ namespace Ict4EventsWebApp
                         DatabaseError();
                         return;
                     }
-                    catch (DbException)
+                    catch (DbException ex)
                     {
-                        ConnectieError();
+                        ConnectieError(ex);
                         return;
                     }
 
@@ -434,9 +440,9 @@ namespace Ict4EventsWebApp
                         DatabaseError();
                         return;
                     }
-                    catch (DbException)
+                    catch (DbException ex)
                     {
-                        ConnectieError();
+                        ConnectieError(ex);
                         return;
                     }
                 }
@@ -495,9 +501,9 @@ namespace Ict4EventsWebApp
                         DatabaseError();
                         return;
                     }
-                    catch (DbException)
+                    catch (DbException ex)
                     {
-                        ConnectieError();
+                        ConnectieError(ex);
                         return;
                     }
                 }
@@ -545,9 +551,9 @@ namespace Ict4EventsWebApp
                     DatabaseError();
                     return;
                 }
-                catch (DbException)
+                catch (DbException ex)
                 {
-                    ConnectieError();
+                    ConnectieError(ex);
                     return;
                 }
             }
@@ -589,9 +595,9 @@ namespace Ict4EventsWebApp
                     DatabaseError();
                     return;
                 }
-                catch (DbException)
+                catch (DbException ex)
                 {
-                    ConnectieError();
+                    ConnectieError(ex);
                     return;
                 }
             }

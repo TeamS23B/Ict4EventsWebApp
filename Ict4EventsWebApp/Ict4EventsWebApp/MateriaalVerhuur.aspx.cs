@@ -94,8 +94,8 @@ namespace Ict4EventsWebApp
                         com.CommandText = "INSERT INTO verhuur (productexemplaar_id, res_pb_id, datumIn, datumUit, Prijs, Betaald) SELECT productexemplaar.id, :1, TO_DATE(:2, 'DD-MM-YYYY HH24:MI:SS'), TO_DATE(:3, 'DD-MM-YYYY HH24:MI:SS'), prijs, 1 FROM product INNER JOIN productexemplaar ON product.id = productexemplaar.product_id WHERE product.id = :4 AND rownum = 1";
                         string respbidval = Session["ResPbId"] as string;
                         AddParameterWithValue(com, "respbId", respbidval);
-                        AddParameterWithValue(com, "datumIn", DateTime.Today.ToString());
-                        AddParameterWithValue(com, "datumEind", clEndDate.SelectedDate.ToString());
+                        AddParameterWithValue(com, "datumIn", DateTime.Today.Day + "-" + DateTime.Today.Month + "-" + DateTime.Today.Year);
+                        AddParameterWithValue(com, "datumEind", clEndDate.SelectedDate.Day + "-" + clEndDate.SelectedDate.Month + "-" + clEndDate.SelectedDate.Year);
                         string prodIdVal = lbProducten.SelectedValue.ToString().Substring(0, lbProducten.SelectedValue.ToString().IndexOf("."));
                         AddParameterWithValue(com, "prodId", prodIdVal);
 
