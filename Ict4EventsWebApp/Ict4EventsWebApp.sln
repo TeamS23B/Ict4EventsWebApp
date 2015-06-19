@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ict4EventsWebApp", "Ict4EventsWebApp\Ict4EventsWebApp.csproj", "{82BB670C-8519-4225-AE7C-5B2CE4B987F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestICT4EWA", "UnitTestICT4EWA\UnitTestICT4EWA.csproj", "{68B9A1A2-1BC5-4FD2-B9D4-A03EDB0E3D43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{82BB670C-8519-4225-AE7C-5B2CE4B987F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82BB670C-8519-4225-AE7C-5B2CE4B987F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82BB670C-8519-4225-AE7C-5B2CE4B987F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68B9A1A2-1BC5-4FD2-B9D4-A03EDB0E3D43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68B9A1A2-1BC5-4FD2-B9D4-A03EDB0E3D43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68B9A1A2-1BC5-4FD2-B9D4-A03EDB0E3D43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68B9A1A2-1BC5-4FD2-B9D4-A03EDB0E3D43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
